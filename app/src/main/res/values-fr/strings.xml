@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Android</string>
+
+    <string name="title_activity_main">Accueil</string>
+    <string name="title_activity_inscription">Inscription</string>
+
+    <string name="action_settings">Paramètres</string>
+
+    <string name="first_name">Prénom</string>
+    <string name="last_name">Nom</string>
+    <string name="pseudo">Pseudo</string>
+    <string name="password">Mot de passe</string>
+    <string name="password_confim">Mot de passe de confirmation</string>
+
+    <string name="connection">Connexion</string>
+    <string name="registration">Inscription</string>
+
+
+</resources>

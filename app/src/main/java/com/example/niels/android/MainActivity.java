@@ -1,15 +1,18 @@
 package com.example.niels.android;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
+
+    Intent intent =  null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +21,33 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        //Recuperer les informations
+        final EditText pseudo = (EditText) findViewById(R.id.pseudo);
+        final EditText password = (EditText) findViewById(R.id.password);
+
+
+        //Appuie sur bouton Connexion
+        ((Button) findViewById(R.id.connection)).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                //verification du pseudo et mot de passe
             }
         });
+
+
+        //Appuie sur bouton Inscription
+        ((Button) findViewById(R.id.registration)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //on va à l'activité inscription
+                intent =  new Intent(MainActivity.this, Inscription.class);
+                startActivity(intent);
+
+            }
+        });
+
+
+
     }
 
     @Override
