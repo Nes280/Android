@@ -6,9 +6,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Inscription extends AppCompatActivity {
 
@@ -32,7 +34,43 @@ public class Inscription extends AppCompatActivity {
         ((Button) findViewById(R.id.registration)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //on va à l'activité inscription
+
+                //Recupération des info saisies
+                String n = nom.getText().toString();
+                String p = prenom.getText().toString();
+                String ps = pseudo.getText().toString();
+                String mdp = password.getText().toString();
+                String mdp_c = password_conf.getText().toString();
+
+                //Un champ n'est pas rempli
+                if(n.isEmpty() || p.isEmpty() || ps.isEmpty() || mdp.isEmpty() || mdp_c.isEmpty())
+                {
+                    Toast.makeText(Inscription.this, "Veuillez verifier les champs", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //Les mdp ne sont pas pareils
+                if(!mdp.equals(mdp_c))
+                {
+                    Toast.makeText(Inscription.this, "Veuillez verifier les champs passwords", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //Verification pseudo
+
+                //Ajout dans la base de données
+                Toast.makeText(Inscription.this, "Insertion", Toast.LENGTH_LONG).show();
+
+                DatabaseHandler db = new DatabaseHandler(Inscription.this);
+
+                String format = "dd/MM/yy H:mm:ss";
+                java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
+                java.util.Date date = new java.util.Date();
+                System.out.println( formater.format( date ) );
+                Log.e("date ", formater.format( date ) + "" );
+                db.addUser(new User(n, p, ps, mdp, date));
+
+                //on va à l'activité main
                 intent = new Intent(Inscription.this, MainActivity.class);
                 startActivity(intent);
 
