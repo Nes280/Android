@@ -46,7 +46,7 @@ public class DetailsFragment extends Fragment{
             // the view hierarchy; it would just never be used.
             return null;
         }
-
+/*
         ScrollView scroller = new ScrollView(getActivity());
         TextView text = new TextView(getActivity());
         int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
@@ -55,5 +55,7 @@ public class DetailsFragment extends Fragment{
         scroller.addView(text);
         text.setText("Bla Bla");//Shakespeare.DIALOGUE[getShownIndex()]);
         return scroller;
+*/
+        return inflater.inflate(R.layout.content2_accueil,container, false);
     }
 }

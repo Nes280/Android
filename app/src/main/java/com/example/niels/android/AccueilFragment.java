@@ -89,8 +89,8 @@ public class AccueilFragment extends ListFragment {
             getListView().setItemChecked(index, true);
 
             // Check what fragment is currently shown, replace if needed.
-            /*DetailsFragment details = (DetailsFragment)
-                    getFragmentManager().findFragmentById(R.id.details);
+            DetailsFragment details = (DetailsFragment)
+                    getFragmentManager().findFragmentById(R.id.detail);
             if (details == null || details.getShownIndex() != index) {
                 // Make new fragment to show this selection.
                 details = DetailsFragment.newInstance(index);
@@ -99,13 +99,13 @@ public class AccueilFragment extends ListFragment {
                 // with this one inside the frame.
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 if (index == 0) {
-                    ft.replace(R.id.details, details);
+                    ft.replace(R.id.detail, details);
                 } else {
-                    ft.replace(R.id.a_item, details);
+                    //ft.replace(R.id.a_item, details);
                 }
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
-            }*/
+            }
 
         } else {
             // Otherwise we need to launch a new activity to display
