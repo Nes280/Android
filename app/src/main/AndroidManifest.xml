@@ -25,6 +25,10 @@
         <activity
             android:name=".Accueil"
             android:label="@string/title_activity_accueil"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DetailsActivity"
+            android:label="@string/title_activity_details"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
