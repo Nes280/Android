@@ -5,8 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 import android.util.Log;
 
+import java.io.File;
 import java.sql.Date;
 
 /**
@@ -16,7 +18,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     //Base de données
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "userBD.db";
+    private static final String DATABASE_NAME = "AndroidBD.db";
 
     //Table
     private static final String TABLE_USER = "users";
@@ -42,7 +44,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private SQLiteDatabase maBaseDeDonnees;
 
     public DatabaseHandler(Context contexte){
-        super(contexte,DATABASE_NAME, null, DATABASE_VERSION);
+        super(contexte, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
@@ -52,8 +54,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists " + TABLE_USER + ";");
-        onCreate(db);
+        /*db.execSQL("drop table if exists " + TABLE_USER + ";");
+        onCreate(db);*/
     }
 
     public void addUser(User user){

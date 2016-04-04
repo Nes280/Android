@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //verification du pseudo et mot de passe
+                intent = new Intent(MainActivity.this, Accueil.class);
+                startActivity(intent);
             }
         });
 

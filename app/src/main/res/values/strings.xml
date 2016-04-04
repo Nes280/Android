@@ -14,7 +14,7 @@
 
     <string name="connection">Connection</string>
     <string name="registration">Registration</string>
-
+    <string name="title_activity_accueil">Accueil</string>
 
 
 </resources>
