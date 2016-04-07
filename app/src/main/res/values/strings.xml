@@ -16,6 +16,7 @@
     <string name="registration">Registration</string>
     <string name="title_activity_accueil">Accueil</string>
     <string name="title_activity_details">DetailsActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
 
 
 </resources>

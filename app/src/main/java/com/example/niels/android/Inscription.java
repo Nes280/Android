@@ -12,6 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.niels.bdd.*;
+
+import java.util.List;
+
 public class Inscription extends AppCompatActivity {
 
     Intent intent = null;
@@ -61,14 +65,23 @@ public class Inscription extends AppCompatActivity {
                 //Ajout dans la base de données
                 Toast.makeText(Inscription.this, "Insertion", Toast.LENGTH_LONG).show();
 
-                DatabaseHandler db = new DatabaseHandler(Inscription.this);
+                //DatabaseHandler db = new DatabaseHandler(Inscription.this);
+                BddUser db = new BddUser(Inscription.this);
+                db.open();
 
                 String format = "dd/MM/yy H:mm:ss";
                 java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
                 java.util.Date date = new java.util.Date();
-                System.out.println( formater.format( date ) );
-                Log.e("date ", formater.format( date ) + "" );
+                System.out.println(formater.format(date));
+                Log.e("date ", formater.format(date) + "");
                 db.addUser(new User(n, p, ps, mdp, date));
+
+                List<User> u = db.getAllContact();
+                Log.e("taille liste", u.size() + "");
+                for(int i = 0; i < u.size(); i++)
+                {
+                    Log.e("nom " , u.get(i).get_nom());
+                }
 
                 //on va à l'activité main
                 intent = new Intent(Inscription.this, MainActivity.class);

@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.util.Log;
 
+import com.example.niels.bdd.User;
+
 import java.io.File;
 import java.sql.Date;
 

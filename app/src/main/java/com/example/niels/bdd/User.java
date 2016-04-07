@@ -1,10 +1,9 @@
-package com.example.niels.android;
+package com.example.niels.bdd;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by Elsa on 30/03/2016.
+ * Created by Elsa on 07/04/2016.
  */
 public class User {
 
@@ -83,6 +82,4 @@ public class User {
     public void set_date(Date d){
         this._date = d;
     }
-
-
 }
