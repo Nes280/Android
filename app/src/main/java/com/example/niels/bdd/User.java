@@ -7,12 +7,12 @@ import java.util.Date;
  */
 public class User {
 
-    int _id;
-    String _nom;
-    String _prenom;
-    String _pseudo;
-    String _password;
-    Date _date;
+    private int _id;
+    private String _nom;
+    private String _prenom;
+    private String _pseudo;
+    private String _password;
+    private Date _date;
 
     public User(){}
 

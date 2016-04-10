@@ -65,7 +65,6 @@ public class Inscription extends AppCompatActivity {
                 //Ajout dans la base de données
                 Toast.makeText(Inscription.this, "Insertion", Toast.LENGTH_LONG).show();
 
-                //DatabaseHandler db = new DatabaseHandler(Inscription.this);
                 BddUser db = new BddUser(Inscription.this);
                 db.open();
 
