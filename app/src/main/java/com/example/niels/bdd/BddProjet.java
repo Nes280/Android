@@ -36,6 +36,7 @@ public class BddProjet extends SQLiteOpenHelper {
     private static final String TABLE_ACTIVITE = "activite";
     private static final String COLONNE_ID_ACTIVITE = "idActivite";
     private static final String COLONNE_NOM_ACTIVITE = "nomActivite";
+    private static final String COLONNE_DESCRIPTION_ACTIVITE = "descriptionActivite";
     private static final String COLONNE_ID_USER_ACTIVITE = "idUser";
     private static final String COLONNE_DATE_CREATION_ACTIVITE = "dateCreation";
     private static final String COLONNE_TYPE = "type";
@@ -44,21 +45,25 @@ public class BddProjet extends SQLiteOpenHelper {
     private static final String REQUETE_CREATION_BASE_ACTIVITE = "create table " + TABLE_ACTIVITE +
             "(" + COLONNE_ID_ACTIVITE + " integer primary key autoincrement, " +
             COLONNE_NOM_ACTIVITE + " text not null, " +
+            COLONNE_DESCRIPTION_ACTIVITE + " text not null, " +
             COLONNE_ID_USER_ACTIVITE + " integer not null, " +
             COLONNE_DATE_CREATION_ACTIVITE + " date not null, " +
-            COLONNE_TYPE + " text not null);";
+            COLONNE_TYPE + " integer not null);"; //0 publique 1 privee
 
 
     //Table MembreActivite
     private static final String TABLE_ACTIVITE_MEMBRE = "membreActivite";
     private static final String COLONNE_ID_USER_MEMBRE = "idUser";
     private static final String COLONNE_ID_ACTIVITE_MEMBRE = "idActivite";
+    private static final String COLONNE_DATE_INSCRIPTION_MEMBRE = "dateInscriptionMembre";
+
 
     //Requêtes de création table MembreActivite
     private static final String REQUETE_CREATION_BASE_ACTIVITE_MEMBRE = "create table " + TABLE_ACTIVITE_MEMBRE +
             "(" + COLONNE_ID_USER_MEMBRE + " integer, " +
             COLONNE_ID_ACTIVITE_MEMBRE + " integer, " +
-             "primary key(" + COLONNE_ID_USER_MEMBRE +"," + COLONNE_ID_ACTIVITE_MEMBRE+"));";
+            COLONNE_DATE_INSCRIPTION_MEMBRE + " date not null, " +
+            "primary key(" + COLONNE_ID_USER_MEMBRE +"," + COLONNE_ID_ACTIVITE_MEMBRE+"));";
 
 
     //Table Forum
@@ -66,7 +71,7 @@ public class BddProjet extends SQLiteOpenHelper {
     private static final String COLONNE_ID_USER_FORUM = "idUser";
     private static final String COLONNE_ID_ACTIVITE_FORUM = "idActivite";
     private static final String COLONNE_COMMENTAIRE_FORUM = "commentaire";
-    private static final String COLONNE_DATE_FORUM = "date";
+    private static final String COLONNE_DATE_FORUM = "dateCommentaire";
 
 
     //Requêtes de création table Activite
@@ -78,8 +83,31 @@ public class BddProjet extends SQLiteOpenHelper {
             "primary key(" + COLONNE_ID_USER_FORUM +"," + COLONNE_ID_ACTIVITE_FORUM+"));";
 
 
-    //Manque table evenement
+    //Table Evenement
+    private static final String TABLE_EVENEMENT = "evenement";
+    private static final String COLONNE_ID_EVENEMENT = "idEvenement";
+    private static final String COLONNE_ID_USER_EVENEMENT = "idUser";
+    private static final String COLONNE_ID_ACTIVITE_EVENEMENT = "idActivite";
+    private static final String COLONNE_LATITUDE_EVENEMENT = "latitude";
+    private static final String COLONNE_LONGITUDE_EVENEMENT = "longitude";
+    private static final String COLONNE_NOM_EVENEMENT = "nomEvenement";
+    private static final String COLONNE_DESCRIPTION_EVENEMENT = "descriptionEvenement";
+    private static final String COLONNE_PHOTO_EVENEMENT = "photoEvenement";
+    private static final String COLONNE_DATE_EVENEMENT = "dateCommentaire";
 
+
+    //Requêtes de création table Activite
+    private static final String REQUETE_CREATION_BASE_EVENEMENT = "create table " + TABLE_EVENEMENT +
+            "(" + COLONNE_ID_EVENEMENT + " integer primary key autoincrement, " +
+            COLONNE_ID_USER_EVENEMENT + " integer not null, " +
+            COLONNE_ID_ACTIVITE_EVENEMENT + " integer not null, " +
+            COLONNE_LATITUDE_EVENEMENT + " double, " +
+            COLONNE_LONGITUDE_EVENEMENT + " double, " +
+            COLONNE_NOM_EVENEMENT + "text not null, "+
+            COLONNE_DESCRIPTION_EVENEMENT + "text not null, "+
+            COLONNE_PHOTO_EVENEMENT + "text, "+
+            COLONNE_DATE_EVENEMENT + " date not null "+
+            ");";
 
     //Instance de la base qui sera manipulé au travers de cette classe
     //private SQLiteDatabase maBaseDeDonnees;
@@ -94,6 +122,7 @@ public class BddProjet extends SQLiteOpenHelper {
         db.execSQL(REQUETE_CREATION_BASE_ACTIVITE);
         db.execSQL(REQUETE_CREATION_BASE_ACTIVITE_MEMBRE);
         db.execSQL(REQUETE_CREATION_BASE_FORUM);
+        db.execSQL(REQUETE_CREATION_BASE_EVENEMENT);
     }
 
     @Override

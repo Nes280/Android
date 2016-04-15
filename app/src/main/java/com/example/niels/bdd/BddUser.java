@@ -60,7 +60,7 @@ public class BddUser {
     }
 
 
-    public User getContactByPseudo(String pseudo){
+    public User getUserByPseudo(String pseudo){
         bdd = bddProjet.getReadableDatabase();
 
         String whereClause = COLONNE_PSEUDO_USER + " = ? ";
@@ -84,17 +84,23 @@ public class BddUser {
         if(cursor.getCount() <= 0)
             return null;
 
-        User user = new User(Integer.parseInt(cursor.getString(0)),
+        /*User user = new User(Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1),
                 cursor.getString(2),
                 cursor.getString(3),
                 cursor.getString(4),
-                valueOf(cursor.getString(5)));
-
+                valueOf(cursor.getString(5)));*/
+        User user = new User();
+        user.set_id(Integer.parseInt(cursor.getString(0)));
+        user.set_nom(cursor.getString(1));
+        user.set_prenom(cursor.getString(2));
+        user.set_pseudo(cursor.getString(3));
+        user.set_password(cursor.getString(4));
+        //user.set_date(valueOf(cursor.));
         return user;
     }
 
-    public List<User> getAllContact(){
+    public List<User> getAllUsers(){
         List<User> userList = new ArrayList<User>();
         String query = "select * from " + TABLE_USER;
         Cursor cursor = bdd.rawQuery(query, null);

@@ -49,33 +49,50 @@ public class Inscription extends AppCompatActivity {
                 //Un champ n'est pas rempli
                 if(n.isEmpty() || p.isEmpty() || ps.isEmpty() || mdp.isEmpty() || mdp_c.isEmpty())
                 {
-                    Toast.makeText(Inscription.this, "Veuillez verifier les champs", Toast.LENGTH_SHORT).show();
+                    //A changer
+                    Toast.makeText(Inscription.this, "Veuillez verifier les champs", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 //Les mdp ne sont pas pareils
                 if(!mdp.equals(mdp_c))
                 {
-                    Toast.makeText(Inscription.this, "Veuillez verifier les champs passwords", Toast.LENGTH_SHORT).show();
+                    //A changer
+                    Toast.makeText(Inscription.this, "Veuillez verifier les champs passwords", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                else if(mdp.length() < 5)
+                {
+                    //A changer
+                    Toast.makeText(Inscription.this, "Le mot de passe doit comporter 5 caractères", Toast.LENGTH_LONG).show();
                     return;
                 }
 
+                //Base de données
+                BddUser db = new BddUser(Inscription.this);
+                db.open();
+
                 //Verification pseudo
+                User user = db.getUserByPseudo(ps);
+                if(user != null )
+                {
+                    //A changer
+                    Toast.makeText(Inscription.this, "Pseudo déjà existant", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 //Ajout dans la base de données
                 Toast.makeText(Inscription.this, "Insertion", Toast.LENGTH_LONG).show();
-
-                BddUser db = new BddUser(Inscription.this);
-                db.open();
 
                 String format = "dd/MM/yy H:mm:ss";
                 java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
                 java.util.Date date = new java.util.Date();
                 System.out.println(formater.format(date));
                 Log.e("date ", formater.format(date) + "");
+                //Crypter le mot de passe
                 db.addUser(new User(n, p, ps, mdp, date));
 
-                List<User> u = db.getAllContact();
+                List<User> u = db.getAllUsers();
                 Log.e("taille liste", u.size() + "");
                 for(int i = 0; i < u.size(); i++)
                 {
