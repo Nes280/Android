@@ -29,7 +29,7 @@ public class BddProjet extends SQLiteOpenHelper {
             COLONNE_PRENOM_USER + " text not null, " +
             COLONNE_PSEUDO_USER + " text not null, " +
             COLONNE_PASSWORD_USER + " text not null, " +
-            COLONNE_DATE_USER + " date not null);";
+            COLONNE_DATE_USER + " text not null);";
 
 
     //Table Activite

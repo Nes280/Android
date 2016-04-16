@@ -54,7 +54,7 @@ public class BddUser {
         values.put(COLONNE_PRENOM_USER, user.get_prenom());
         values.put(COLONNE_PSEUDO_USER, user.get_pseudo());
         values.put(COLONNE_PASSWORD_USER, user.get_password());
-        values.put(COLONNE_DATE_USER, user.get_date().toString());
+        values.put(COLONNE_DATE_USER, user.get_date());
 
         bdd.insert(TABLE_USER, null, values);
     }
@@ -96,7 +96,9 @@ public class BddUser {
         user.set_prenom(cursor.getString(2));
         user.set_pseudo(cursor.getString(3));
         user.set_password(cursor.getString(4));
-        //user.set_date(valueOf(cursor.));
+        //Date date = valueOf(cursor.getString(5));
+        //Log.e("date bd ", " " + date + " ");
+        user.set_date(cursor.getString(5));
         return user;
     }
 
@@ -112,7 +114,9 @@ public class BddUser {
                 user.set_prenom(cursor.getString(2));
                 user.set_pseudo(cursor.getString(3));
                 user.set_password(cursor.getString(4));
-                //user.set_date(valueOf(cursor.));
+                /*String date = cursor.getString(5);
+                Log.e("date bd " , " " + date + " ");*/
+                user.set_date(cursor.getString(5));
                 userList.add(user);
             }while(cursor.moveToNext());
         }

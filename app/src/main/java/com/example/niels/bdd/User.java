@@ -1,6 +1,6 @@
 package com.example.niels.bdd;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Created by Elsa on 07/04/2016.
@@ -12,11 +12,11 @@ public class User {
     private String _prenom;
     private String _pseudo;
     private String _password;
-    private Date _date;
+    private String _date;
 
     public User(){}
 
-    public User(String nom, String prenom, String pseudo, String mdp, Date d)
+    public User(String nom, String prenom, String pseudo, String mdp, String d)
     {
         this._nom = nom;
         this._prenom = prenom;
@@ -25,7 +25,7 @@ public class User {
         this._date = d;
     }
 
-    public User(int i, String nom, String prenom, String pseudo, String mdp, Date d)
+    public User(int i, String nom, String prenom, String pseudo, String mdp, String d)
     {
         this._id = i;
         this._nom = nom;
@@ -75,11 +75,11 @@ public class User {
         this._password = password;
     }
 
-    public Date get_date(){
+    public String get_date(){
         return this._date;
     }
 
-    public void set_date(Date d){
+    public void set_date(String d){
         this._date = d;
     }
 }
