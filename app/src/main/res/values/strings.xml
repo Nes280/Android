@@ -18,5 +18,17 @@
     <string name="title_activity_details">DetailsActivity</string>
     <string name="title_activity_main2">Main2Activity</string>
 
+    <string name="verifChamps">There are not all information filled</string>
+    <string name="verifPassword">Please check the passwords fields</string>
+    <string name="verifTaillePassword">The password must be at least 5 characters</string>
+    <string name="verifPseudo">Existing nickname</string>
+    <string name="verifExistancePseudo">The nickname does not exist</string>
+    <string name="verifConnexionPassword">Bad information</string>
+
+
+
+
+
+
 
 </resources>

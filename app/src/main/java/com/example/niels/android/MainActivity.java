@@ -4,11 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.niels.Code.Hashage;
+import com.example.niels.bdd.BddUser;
+import com.example.niels.bdd.User;
+
+import java.util.logging.ConsoleHandler;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,7 +38,43 @@ public class MainActivity extends AppCompatActivity {
         ((Button) findViewById(R.id.connection)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Recupération des informations du formulaire
+                String p = pseudo.getText().toString();
+                String mdp = password.getText().toString();
+
+                //Verification que l'utilisateur a rempli tous les champs
+                if(p.isEmpty() || mdp.isEmpty())
+                {
+                    Toast.makeText(MainActivity.this, R.string.verifChamps, Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 //verification du pseudo et mot de passe
+                BddUser db = new BddUser(MainActivity.this);
+                db.open();
+
+                User u = db.getUserByPseudo(p);
+
+                //Le pseudo existe pas
+                if(u == null){
+                    Toast.makeText(MainActivity.this, R.string.verifExistancePseudo, Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                String mdpUser = u.get_password();
+
+                //Verification du mot de passe
+                Hashage h = new Hashage();
+                String mdpHash = h.computeSHAHash(mdp);
+
+                /*Log.e("mdpUser ", mdpUser + " ");
+                Log.e("mdpHash ", mdpHash + " ");*/
+
+                if(!mdpUser.equals(mdpHash)){
+                    Toast.makeText(MainActivity.this, R.string.verifConnexionPassword, Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 intent = new Intent(MainActivity.this, Accueil.class);
                 startActivity(intent);
             }

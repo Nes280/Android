@@ -15,6 +15,16 @@
 
     <string name="connection">Connexion</string>
     <string name="registration">Inscription</string>
+    <string name="title_activity_accueil">Accueil</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="verifChamps">Il n\'y a pas toutes les informations remplies</string>
+    <string name="verifPassword">Veuillez verifier les champs passwords</string>
+    <string name="verifTaillePassword">Le mot de passe doit au minimun comporter 5 caractères</string>
+    <string name="verifPseudo">Pseudo déjà existant</string>
+    <string name="verifExistancePseudo">Le pseudo n\'existe pas</string>
+    <string name="verifConnexionPassword">Mauvaises informations</string>
 
 
 </resources>

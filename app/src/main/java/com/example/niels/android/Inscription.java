@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.niels.bdd.*;
+import com.example.niels.Code.*;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -29,8 +30,6 @@ import static android.util.Base64.encodeToString;
 public class Inscription extends AppCompatActivity {
 
     Intent intent = null;
-    private String SHAHash;
-    public static int NO_OPTIONS=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,22 +60,19 @@ public class Inscription extends AppCompatActivity {
                 //Un champ n'est pas rempli
                 if(n.isEmpty() || p.isEmpty() || ps.isEmpty() || mdp.isEmpty() || mdp_c.isEmpty())
                 {
-                    //A changer
-                    Toast.makeText(Inscription.this, "Veuillez verifier les champs", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Inscription.this, R.string.verifChamps, Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 //Les mdp ne sont pas pareils
                 if(!mdp.equals(mdp_c))
                 {
-                    //A changer
-                    Toast.makeText(Inscription.this, "Veuillez verifier les champs passwords", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Inscription.this, R.string.verifPassword, Toast.LENGTH_LONG).show();
                     return;
                 }
                 else if(mdp.length() < 5)
                 {
-                    //A changer
-                    Toast.makeText(Inscription.this, "Le mot de passe doit comporter 5 caractères", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Inscription.this, R.string.verifTaillePassword, Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -89,7 +85,7 @@ public class Inscription extends AppCompatActivity {
                 if(user != null )
                 {
                     //A changer
-                    Toast.makeText(Inscription.this, "Pseudo déjà existant", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Inscription.this, R.string.verifPseudo, Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -107,20 +103,21 @@ public class Inscription extends AppCompatActivity {
                 Log.e("Date Sql" , formater.format(dateSql) + "" );*/
 
                 //Crypter le mot de passe
-                computeSHAHash(mdp);
-                //Log.e("mdp crypte", SHAHash + " ");
+                Hashage h = new Hashage();
+                String mdpHash = h.computeSHAHash(mdp);
+                Log.e("mdp crypte", mdpHash + " ");
 
                 //Ajout dans la bd
-                db.addUser(new User(n, p, ps, mdp, formater.format(dateJava)));
+                db.addUser(new User(n, p, ps, mdpHash, formater.format(dateJava)));
 
-                List<User> u = db.getAllUsers();
+                /*List<User> u = db.getAllUsers();
                 Log.e("taille liste", u.size() + "");
                 for(int i = 0; i < u.size(); i++)
                 {
                     //Date d = u.get(i).get_date();
                     Log.e("nom " , u.get(i).get_nom());
                     Log.e("date ", u.get(i).get_date() + " ");
-                }
+                }*/
 
                 //on va à l'activité main
                 intent = new Intent(Inscription.this, MainActivity.class);
@@ -130,43 +127,6 @@ public class Inscription extends AppCompatActivity {
         });
     }
 
-    //Convertisseur
-    private static String convertToHex(byte[] data) throws java.io.IOException
-    {
 
-        StringBuffer sb = new StringBuffer();
-        String hex=null;
-
-        hex= encodeToString(data, 0, data.length, NO_OPTIONS);
-
-        sb.append(hex);
-
-        return sb.toString();
-    }
-
-
-    //Cryptage en SHA 1
-    public void computeSHAHash(String password) {
-        MessageDigest mdSha1 = null;
-        try {
-            mdSha1 = MessageDigest.getInstance("SHA-1");
-        } catch (NoSuchAlgorithmException e1) {
-            Log.e("myapp", "Error initializing SHA1 message digest");
-        }
-        try {
-            mdSha1.update(password.getBytes("ASCII"));
-        } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        byte[] data = mdSha1.digest();
-        try {
-            SHAHash = convertToHex(data);
-        } catch (IOException ex) {
-            // TODO Auto-generated catch block
-            ex.printStackTrace();
-        }
-    }
 
 }
