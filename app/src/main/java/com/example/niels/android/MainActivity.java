@@ -16,7 +16,6 @@ import com.example.niels.Code.Hashage;
 import com.example.niels.bdd.BddUser;
 import com.example.niels.bdd.User;
 
-import java.util.logging.ConsoleHandler;
 
 public class MainActivity extends AppCompatActivity {
 

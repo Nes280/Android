@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,16 +14,6 @@ import android.widget.Toast;
 
 import com.example.niels.bdd.*;
 import com.example.niels.Code.*;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
-import java.util.List;
-
-import static android.util.Base64.encodeToString;
-
 
 
 public class Inscription extends AppCompatActivity {
