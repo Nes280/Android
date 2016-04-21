@@ -1,9 +1,16 @@
 package com.example.niels.android;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,10 +22,14 @@ import android.widget.Toast;
 import com.example.niels.bdd.*;
 import com.example.niels.Code.*;
 
+import java.util.List;
+
 
 public class Inscription extends AppCompatActivity {
 
     Intent intent = null;
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,38 +90,68 @@ public class Inscription extends AppCompatActivity {
                 }
 
                 //Ajout dans la base de données
-                Toast.makeText(Inscription.this, "Insertion", Toast.LENGTH_LONG).show();
+                //Toast.makeText(Inscription.this, "Insertion", Toast.LENGTH_LONG).show();
 
-                //Date du jours
-                String format = "dd/MM/yy H:mm:ss";
-                java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
-                java.util.Date dateJava = new java.util.Date();
-                System.out.println(formater.format(dateJava));
-                Log.e("date Java ", formater.format(dateJava) + "");
+                //Demande de permission
+                int permissionCheck = ContextCompat.checkSelfPermission(Inscription.this,
+                        Manifest.permission.INTERNET);
 
-                /*Date dateSql = new Date(dateJava.getTime());
-                Log.e("Date Sql" , formater.format(dateSql) + "" );*/
+                int permissionCheck2 = ContextCompat.checkSelfPermission(Inscription.this,
+                        Manifest.permission.ACCESS_NETWORK_STATE);
 
-                //Crypter le mot de passe
-                Hashage h = new Hashage();
-                String mdpHash = h.computeSHAHash(mdp);
-                Log.e("mdp crypte", mdpHash + " ");
-
-                //Ajout dans la bd
-                db.addUser(new User(n, p, ps, mdpHash, formater.format(dateJava)));
-
-                /*List<User> u = db.getAllUsers();
-                Log.e("taille liste", u.size() + "");
-                for(int i = 0; i < u.size(); i++)
+                if (permissionCheck == PackageManager.PERMISSION_GRANTED && permissionCheck2 == PackageManager.PERMISSION_GRANTED)
                 {
-                    //Date d = u.get(i).get_date();
-                    Log.e("nom " , u.get(i).get_nom());
-                    Log.e("date ", u.get(i).get_date() + " ");
-                }*/
+                    //startActivity(callintent);
+                    //Toast.makeText(Inscription.this, "Permission", Toast.LENGTH_LONG).show();
+                    ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                    if(networkInfo != null && networkInfo.isConnected()){
+                        Toast.makeText(Inscription.this, "connecté", Toast.LENGTH_LONG).show();
+                        //Date du jours
+                        String format = "dd/MM/yy H:mm:ss";
+                        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
+                        java.util.Date dateJava = new java.util.Date();
+                        System.out.println(formater.format(dateJava));
+                        Log.e("date Java ", formater.format(dateJava) + "");
 
-                //on va à l'activité main
-                intent = new Intent(Inscription.this, MainActivity.class);
-                startActivity(intent);
+                        /*Date dateSql = new Date(dateJava.getTime());
+                        Log.e("Date Sql" , formater.format(dateSql) + "" );*/
+
+                        //Crypter le mot de passe
+                        Hashage h = new Hashage();
+                        String mdpHash = h.computeSHAHash(mdp);
+                        Log.e("mdp crypte", mdpHash + " ");
+
+                        //Ajout dans la bd
+                        db.addUser(new User(n, p, ps, mdpHash, formater.format(dateJava)));
+
+                        List<User> u = db.getAllUsers();
+                        Log.e("taille liste", u.size() + "");
+                        for(int i = 0; i < u.size(); i++)
+                        {
+                            //Date d = u.get(i).get_date();
+                            Log.e("nom " , u.get(i).get_nom());
+                            Log.e("date ", u.get(i).get_date() + " ");
+                        }
+
+                        //on va à l'activité main
+                        intent = new Intent(Inscription.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(Inscription.this, "Vous devez vous connecter à internet", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+                else
+                {
+                    ActivityCompat.requestPermissions(Inscription.this,
+                            new String[]{Manifest.permission.INTERNET},
+                            REQUEST_CODE_ASK_PERMISSIONS);
+                    Log.e("erreur", "permission denied ");
+                }
+
+
 
             }
         });
