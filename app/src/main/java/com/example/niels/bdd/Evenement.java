@@ -14,7 +14,7 @@ public class Evenement {
     private String _nomEvenements;
     private String _descriptionEvenement;
     private String _photo;
-    private Date _dateEvenement;
+    private String _dateEvenement;
 
     public int get_idEvenement() {
         return _idEvenement;
@@ -80,11 +80,11 @@ public class Evenement {
         this._photo = _photo;
     }
 
-    public Date get_dateEvenement() {
+    public String get_dateEvenement() {
         return _dateEvenement;
     }
 
-    public void set_dateEvenement(Date _dateEvenement) {
+    public void set_dateEvenement(String _dateEvenement) {
         this._dateEvenement = _dateEvenement;
     }
 }

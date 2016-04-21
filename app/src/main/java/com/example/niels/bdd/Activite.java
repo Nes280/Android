@@ -10,12 +10,12 @@ public class Activite {
     private int _idActivite;
     private String _nomActivite;
     private int _idUtilisateur;
-    private Date _dateCreation;
-    private String _type;
+    private String _dateCreation;
+    private int _type;
 
     public Activite(){}
 
-    public Activite(String nom, int idUtilisateur, Date date, String type)
+    public Activite(String nom, int idUtilisateur, String date, int type)
     {
         this.set_nomActivite(nom);
         this.set_idUtilisateur(idUtilisateur);
@@ -23,7 +23,7 @@ public class Activite {
         this.set_type(type);
     }
 
-    public Activite(int i, String nom, int idUtilisateur, Date date, String type)
+    public Activite(int i, String nom, int idUtilisateur, String date, int type)
     {
         this.set_idActivite(i);
         this.set_nomActivite(nom);
@@ -57,19 +57,19 @@ public class Activite {
         this._idUtilisateur = _idUtilisateur;
     }
 
-    public Date get_dateCreation() {
+    public String get_dateCreation() {
         return _dateCreation;
     }
 
-    public void set_dateCreation(Date _dateCreation) {
+    public void set_dateCreation(String _dateCreation) {
         this._dateCreation = _dateCreation;
     }
 
-    public String get_type() {
+    public int get_type() {
         return _type;
     }
 
-    public void set_type(String _type) {
+    public void set_type(int _type) {
         this._type = _type;
     }
 }

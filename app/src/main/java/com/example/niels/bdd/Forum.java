@@ -10,11 +10,11 @@ public class Forum {
     private int _idActivite;
     private int _idUtilisateur;
     private String _commentaire;
-    private Date _dateEdit;
+    private String _dateEdit;
 
     public Forum(){}
 
-    public Forum(int idA, int idU, String com, Date d){
+    public Forum(int idA, int idU, String com, String d){
         this.set_idActivite(idA);
         this.set_idUtilisateur(idU);
         this.set_commentaire(com);
@@ -45,11 +45,11 @@ public class Forum {
         this._commentaire = _commentaire;
     }
 
-    public Date get_dateEdit() {
+    public String get_dateEdit() {
         return _dateEdit;
     }
 
-    public void set_dateEdit(Date _dateEdit) {
+    public void set_dateEdit(String _dateEdit) {
         this._dateEdit = _dateEdit;
     }
 }

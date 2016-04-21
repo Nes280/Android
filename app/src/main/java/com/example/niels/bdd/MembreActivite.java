@@ -9,11 +9,11 @@ public class MembreActivite {
 
     private int _idActivite;
     private int _idUtilisateur;
-    private Date _dateInscription;
+    private String _dateInscription;
 
     public MembreActivite(){}
 
-    public MembreActivite(int idA, int idU, Date d){
+    public MembreActivite(int idA, int idU, String d){
         this.set_idActivite(idA);
         this.set_idUtilisateur(idU);
         this.set_dateInscription(d);
@@ -35,11 +35,11 @@ public class MembreActivite {
         this._idUtilisateur = _idUtilisateur;
     }
 
-    public Date get_dateInscription() {
+    public String get_dateInscription() {
         return _dateInscription;
     }
 
-    public void set_dateInscription(Date _dateInscription) {
+    public void set_dateInscription(String _dateInscription) {
         this._dateInscription = _dateInscription;
     }
 }
