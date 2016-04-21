@@ -25,6 +25,7 @@
     <string name="verifPseudo">Pseudo déjà existant</string>
     <string name="verifExistancePseudo">Le pseudo n\'existe pas</string>
     <string name="verifConnexionPassword">Mauvaises informations</string>
+    <string name="demandeDeConnexion">Vous devez vous connecter à internet</string>
 
 
 </resources>

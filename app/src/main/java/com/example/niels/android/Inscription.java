@@ -22,6 +22,12 @@ import android.widget.Toast;
 import com.example.niels.bdd.*;
 import com.example.niels.Code.*;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 
@@ -106,7 +112,7 @@ public class Inscription extends AppCompatActivity {
                     ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                     NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
                     if(networkInfo != null && networkInfo.isConnected()){
-                        Toast.makeText(Inscription.this, "connecté", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(Inscription.this, "connecté", Toast.LENGTH_LONG).show();
                         //Date du jours
                         String format = "dd/MM/yy H:mm:ss";
                         java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
@@ -122,8 +128,27 @@ public class Inscription extends AppCompatActivity {
                         String mdpHash = h.computeSHAHash(mdp);
                         Log.e("mdp crypte", mdpHash + " ");
 
+                        String date = formater.format(dateJava);
+
+                        try {
+
+                            URL url = new URL("http://folionielsbenichou.franceserv.com/Android/" +
+                                    "nouvelUtilisateur.php?nom=" + nom +"&prenom=" + prenom + "&pseudo=" +
+                                    pseudo + "&motDePasse=" + mdpHash + "&date=" + date);
+                            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                            //readStream(in);
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                            Toast.makeText(Inscription.this,"Malformé", Toast.LENGTH_LONG).show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Toast.makeText(Inscription.this,"Autre", Toast.LENGTH_LONG).show();
+
+                        }
+
                         //Ajout dans la bd
-                        db.addUser(new User(n, p, ps, mdpHash, formater.format(dateJava)));
+                        db.addUser(new User(n, p, ps, mdpHash,formater.format(dateJava) ));
 
                         List<User> u = db.getAllUsers();
                         Log.e("taille liste", u.size() + "");
@@ -139,9 +164,8 @@ public class Inscription extends AppCompatActivity {
                         startActivity(intent);
                     }
                     else{
-                        Toast.makeText(Inscription.this, "Vous devez vous connecter à internet", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Inscription.this, R.string.demandeDeConnexion, Toast.LENGTH_LONG).show();
                     }
-
                 }
                 else
                 {

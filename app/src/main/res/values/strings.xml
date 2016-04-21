@@ -24,6 +24,7 @@
     <string name="verifPseudo">Existing nickname</string>
     <string name="verifExistancePseudo">The nickname does not exist</string>
     <string name="verifConnexionPassword">Bad information</string>
+    <string name="demandeDeConnexion">You must connect to internet</string>
 
 
 
