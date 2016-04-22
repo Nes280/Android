@@ -131,12 +131,11 @@ public class Inscription extends AppCompatActivity {
                         String date = formater.format(dateJava);
 
                         try {
-
                             URL url = new URL("http://folionielsbenichou.franceserv.com/Android/" +
                                     "nouvelUtilisateur.php?nom=" + nom +"&prenom=" + prenom + "&pseudo=" +
                                     pseudo + "&motDePasse=" + mdpHash + "&date=" + date);
                             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                            //InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                             //readStream(in);
                         } catch (MalformedURLException e) {
                             e.printStackTrace();

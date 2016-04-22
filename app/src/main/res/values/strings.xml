@@ -26,10 +26,8 @@
     <string name="verifConnexionPassword">Bad information</string>
     <string name="demandeDeConnexion">You must connect to internet</string>
 
-
-
-
-
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 
 </resources>
