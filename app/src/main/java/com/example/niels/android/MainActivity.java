@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                intent = new Intent(MainActivity.this, Accueil.class);
+                intent = new Intent(MainActivity.this, Accueil_Utilisateur.class);
                 startActivity(intent);
             }
         });

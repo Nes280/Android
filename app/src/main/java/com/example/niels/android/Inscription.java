@@ -135,6 +135,9 @@ public class Inscription extends AppCompatActivity {
                                     "nouvelUtilisateur.php?nom=" + nom +"&prenom=" + prenom + "&pseudo=" +
                                     pseudo + "&motDePasse=" + mdpHash + "&date=" + date);
                             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                            //urlConnection.connect();
+                            //int response = urlConnection.getResponseCode();
+                            //Toast.makeText(Inscription.this,"Response " + response, Toast.LENGTH_LONG).show();
                             //InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                             //readStream(in);
                         } catch (MalformedURLException e) {
