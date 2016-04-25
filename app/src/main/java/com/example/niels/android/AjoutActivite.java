@@ -1,10 +1,10 @@
 package com.example.niels.android;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.view.View;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,15 +12,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-public class Accueil_Utilisateur extends AppCompatActivity
+public class AjoutActivite extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_accueil__utilisateur);
+        setContentView(R.layout.activity_ajout_activite);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -56,7 +55,7 @@ public class Accueil_Utilisateur extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.accueil__utilisateur, menu);
+        getMenuInflater().inflate(R.menu.ajout_activite, menu);
         return true;
     }
 
@@ -81,21 +80,19 @@ public class Accueil_Utilisateur extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.autresActivite) {
+        if (id == R.id.nav_camera) {
             // Handle the camera action
-        } else if (id == R.id.creerActivite) {
-            Intent intent = new Intent(Accueil_Utilisateur.this, AjoutActivite.class);
-            startActivity(intent);
+        } else if (id == R.id.nav_gallery) {
 
-        } /*else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
-        } */else if (id == R.id.modifProfil) {
+        } else if (id == R.id.nav_share) {
 
-       } /*else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_send) {
 
-        }*/
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

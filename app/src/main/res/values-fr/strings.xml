@@ -31,5 +31,10 @@
     <string name="menuCreerActivite">Créer une activité</string>
     <string name="menuModifProfil">Modifier le profil</string>
 
+    <string name="title_activity_ajout_activite">Nouvelle activité</string>
+    <string name="radio_public">Publique</string>
+    <string name="radio_private">Privée</string>
+    <string name="name_activity">Nom de l\'activité</string>
+
 
 </resources>

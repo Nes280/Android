@@ -30,8 +30,11 @@
     <string name="menuCreerActivite">Create activity</string>
     <string name="menuModifProfil">Modify the profile</string>
 
-
-
+    <string name="title_activity_ajout_activite">New activity</string>
+    <string name="radio_public">Public</string>
+    <string name="radio_private">Private</string>
+    <string name="name_activity">Activity name</string>
+    <string name="description">Description</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
