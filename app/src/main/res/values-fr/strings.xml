@@ -27,5 +27,9 @@
     <string name="verifConnexionPassword">Mauvaises informations</string>
     <string name="demandeDeConnexion">Vous devez vous connecter à internet</string>
 
+    <string name="menuAutresActivite">Autres activités</string>
+    <string name="menuCreerActivite">Créer une activité</string>
+    <string name="menuModifProfil">Modifier le profil</string>
+
 
 </resources>
