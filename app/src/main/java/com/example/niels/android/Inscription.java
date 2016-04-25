@@ -6,9 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +21,6 @@ import android.widget.Toast;
 import com.example.niels.bdd.*;
 import com.example.niels.Code.*;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -35,6 +33,7 @@ public class Inscription extends AppCompatActivity {
 
     Intent intent = null;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    String n, p, ps, mdpHash, date;
 
 
     @Override
@@ -57,27 +56,23 @@ public class Inscription extends AppCompatActivity {
             public void onClick(View v) {
 
                 //Recupération des info saisies
-                String n = nom.getText().toString();
-                String p = prenom.getText().toString();
-                String ps = pseudo.getText().toString();
+                n = nom.getText().toString();
+                p = prenom.getText().toString();
+                ps = pseudo.getText().toString();
                 String mdp = password.getText().toString();
                 String mdp_c = password_conf.getText().toString();
 
                 //Un champ n'est pas rempli
-                if(n.isEmpty() || p.isEmpty() || ps.isEmpty() || mdp.isEmpty() || mdp_c.isEmpty())
-                {
+                if (n.isEmpty() || p.isEmpty() || ps.isEmpty() || mdp.isEmpty() || mdp_c.isEmpty()) {
                     Toast.makeText(Inscription.this, R.string.verifChamps, Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 //Les mdp ne sont pas pareils
-                if(!mdp.equals(mdp_c))
-                {
+                if (!mdp.equals(mdp_c)) {
                     Toast.makeText(Inscription.this, R.string.verifPassword, Toast.LENGTH_LONG).show();
                     return;
-                }
-                else if(mdp.length() < 5)
-                {
+                } else if (mdp.length() < 5) {
                     Toast.makeText(Inscription.this, R.string.verifTaillePassword, Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -88,8 +83,7 @@ public class Inscription extends AppCompatActivity {
 
                 //Verification pseudo
                 User user = db.getUserByPseudo(ps);
-                if(user != null )
-                {
+                if (user != null) {
                     //A changer
                     Toast.makeText(Inscription.this, R.string.verifPseudo, Toast.LENGTH_LONG).show();
                     return;
@@ -105,13 +99,12 @@ public class Inscription extends AppCompatActivity {
                 int permissionCheck2 = ContextCompat.checkSelfPermission(Inscription.this,
                         Manifest.permission.ACCESS_NETWORK_STATE);
 
-                if (permissionCheck == PackageManager.PERMISSION_GRANTED && permissionCheck2 == PackageManager.PERMISSION_GRANTED)
-                {
+                if (permissionCheck == PackageManager.PERMISSION_GRANTED && permissionCheck2 == PackageManager.PERMISSION_GRANTED) {
                     //startActivity(callintent);
                     //Toast.makeText(Inscription.this, "Permission", Toast.LENGTH_LONG).show();
                     ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                     NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-                    if(networkInfo != null && networkInfo.isConnected()){
+                    if (networkInfo != null && networkInfo.isConnected()) {
                         //Toast.makeText(Inscription.this, "connecté", Toast.LENGTH_LONG).show();
                         //Date du jours
                         String format = "dd/MM/yy H:mm:ss";
@@ -125,52 +118,32 @@ public class Inscription extends AppCompatActivity {
 
                         //Crypter le mot de passe
                         Hashage h = new Hashage();
-                        String mdpHash = h.computeSHAHash(mdp);
+                        mdpHash = h.computeSHAHash(mdp);
                         Log.e("mdp crypte", mdpHash + " ");
 
-                        String date = formater.format(dateJava);
+                        date = formater.format(dateJava);
+                        String s = "test";
 
-                        try {
-                            URL url = new URL("http://folionielsbenichou.franceserv.com/Android/" +
-                                    "nouvelUtilisateur.php?nom=" + nom +"&prenom=" + prenom + "&pseudo=" +
-                                    pseudo + "&motDePasse=" + mdpHash + "&date=" + date);
-                            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                            //urlConnection.connect();
-                            //int response = urlConnection.getResponseCode();
-                            //Toast.makeText(Inscription.this,"Response " + response, Toast.LENGTH_LONG).show();
-                            //InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                            //readStream(in);
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                            Toast.makeText(Inscription.this,"Malformé", Toast.LENGTH_LONG).show();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            Toast.makeText(Inscription.this,"Autre", Toast.LENGTH_LONG).show();
-
-                        }
+                        new AccesBD().execute(s);
 
                         //Ajout dans la bd
-                        db.addUser(new User(n, p, ps, mdpHash,formater.format(dateJava) ));
+                        db.addUser(new User(n, p, ps, mdpHash, formater.format(dateJava)));
 
                         List<User> u = db.getAllUsers();
                         Log.e("taille liste", u.size() + "");
-                        for(int i = 0; i < u.size(); i++)
-                        {
+                        for (int i = 0; i < u.size(); i++) {
                             //Date d = u.get(i).get_date();
-                            Log.e("nom " , u.get(i).get_nom());
+                            Log.e("nom ", u.get(i).get_nom());
                             Log.e("date ", u.get(i).get_date() + " ");
                         }
 
                         //on va à l'activité main
                         intent = new Intent(Inscription.this, MainActivity.class);
                         startActivity(intent);
-                    }
-                    else{
+                    } else {
                         Toast.makeText(Inscription.this, R.string.demandeDeConnexion, Toast.LENGTH_LONG).show();
                     }
-                }
-                else
-                {
+                } else {
                     ActivityCompat.requestPermissions(Inscription.this,
                             new String[]{Manifest.permission.INTERNET},
                             REQUEST_CODE_ASK_PERMISSIONS);
@@ -178,11 +151,64 @@ public class Inscription extends AppCompatActivity {
                 }
 
 
-
             }
         });
     }
 
 
+    private class AccesBD extends AsyncTask<String, Void, String> {
 
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                return downloadUrl(params[0]);
+            } catch (IOException e) {
+                return "Unable to retrieve web page. URL maybe invalide ";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(Inscription.this, "Response " + result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private String downloadUrl(String myurl) throws IOException {
+        try{
+            InputStream is = null;
+            int len = 500;
+            URL url = new URL("http://folionielsbenichou.franceserv.com/Android/" +
+                    "nouvelUtilisateur.php?nom=" + n + "&prenom=" + p + "&pseudo=" +
+                    ps + "&motDePasse=" + mdpHash + "&date=" + date);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setReadTimeout(10000);
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setDoInput(true);
+            urlConnection.connect();
+            int response = urlConnection.getResponseCode();
+            //Toast.makeText(Inscription.this, "Response " + response, Toast.LENGTH_LONG).show();
+            Log.e("resultat", response + " ");
+            is = urlConnection.getInputStream();
+
+            //String contentAsString = readIt(is, len);
+            //InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            //readStream(in);
+            //String [] tab = new String[0];
+            //tab[0] = "Ok";
+            return "ok";
+        }
+        catch(MalformedURLException e) {
+            e.printStackTrace();
+            //Toast.makeText(Inscription.this, "Malformé", Toast.LENGTH_LONG).show();
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+            //Toast.makeText(Inscription.this, "Autre", Toast.LENGTH_LONG).show();
+        }
+
+        return myurl;
+    }
 }
+
+
+
