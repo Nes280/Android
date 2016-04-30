@@ -21,8 +21,13 @@ import android.widget.Toast;
 import com.example.niels.bdd.*;
 import com.example.niels.Code.*;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -169,33 +174,53 @@ public class Inscription extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
+            Log.e("rep" , " res " + result);
             Toast.makeText(Inscription.this, "Response " + result, Toast.LENGTH_LONG).show();
         }
     }
 
     private String downloadUrl(String myurl) throws IOException {
-        try{
-            InputStream is = null;
-            int len = 500;
-            URL url = new URL("http://folionielsbenichou.franceserv.com/Android/" +
+        InputStream is = null;
+        int len = 500;
+        //Afficher l'url
+        String u = "http://folionielsbenichou.franceserv.com/Android/" +
+                    "nouvelUtilisateur.php?nom=" + n + "&prenom=" + p + "&pseudo=" +
+                    ps + "&motDePasse=" + mdpHash + "&date=" + date;
+            Log.e("url" ,  u);
+
+        URL url = new URL("http://folionielsbenichou.franceserv.com/Android/" +
                     "nouvelUtilisateur.php?nom=" + n + "&prenom=" + p + "&pseudo=" +
                     ps + "&motDePasse=" + mdpHash + "&date=" + date);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        //URL url = new URL("http://www.google.com/");
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+        try{
             urlConnection.setReadTimeout(10000);
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
             urlConnection.connect();
+
+            /*URL url = new URL("http://www.android.com/");
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            try {
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                readStream(in);
+            }
+            finally{
+                urlConnection.disconnect();
+            }*/
+
             int response = urlConnection.getResponseCode();
             //Toast.makeText(Inscription.this, "Response " + response, Toast.LENGTH_LONG).show();
             Log.e("resultat", response + " ");
             is = urlConnection.getInputStream();
 
-            //String contentAsString = readIt(is, len);
+            String contentAsString = readIt(is, len);
             //InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             //readStream(in);
             //String [] tab = new String[0];
             //tab[0] = "Ok";
-            return "ok";
+            return contentAsString;
         }
         catch(MalformedURLException e) {
             e.printStackTrace();
@@ -205,8 +230,42 @@ public class Inscription extends AppCompatActivity {
             e.printStackTrace();
             //Toast.makeText(Inscription.this, "Autre", Toast.LENGTH_LONG).show();
         }
+        finally{
+            urlConnection.disconnect();
+        }
 
         return myurl;
+    }
+
+
+    private static String readStream(InputStream is) {
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+
+        String line = null;
+        try {
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+        } catch (IOException e) {
+            Log.e("e", "IOException", e);
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                Log.e("e", "IOException", e);
+            }
+        }
+        return sb.toString();
+    }
+
+    public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
+        Reader reader = null;
+        reader = new InputStreamReader(stream, "UTF-8");
+        char[] buffer = new char[len];
+        reader.read(buffer);
+        return new String(buffer);
     }
 }
 
