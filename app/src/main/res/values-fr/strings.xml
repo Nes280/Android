@@ -38,6 +38,9 @@
     <string name="radio_public">Publique</string>
     <string name="radio_private">Privée</string>
     <string name="name_activity">Nom de l\'activité</string>
+    <string name="send_activity">Créer</string>
+    <string name="empty_field_activity">Tous les champs doivent être remplis.</string>
+    <string name="success_activity">L\'activitée a bien été créée.</string>
 
 
 </resources>

@@ -13,9 +13,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Toast;
+
+import com.example.niels.bdd.Activite;
+import com.example.niels.bdd.BddActivite;
+import com.example.niels.bdd.BddUser;
+import com.example.niels.bdd.User;
 
 public class AjoutActivite extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    String nom, description;
+    int publication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +53,49 @@ public class AjoutActivite extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Recuperer les informations
+        final EditText tb_nom = (EditText) findViewById(R.id.editText);
+        final EditText tb_description = (EditText) findViewById(R.id.editText2);
+        final RadioButton br_publication = (RadioButton) findViewById(R.id.radioPublique);
+
+        //bouton d'envoi
+        ((Button) findViewById(R.id.btn_activity)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //récuperation du pseudo
+                BddUser dbd = new BddUser(AjoutActivite.this);
+                dbd.open();
+                User u = dbd.getUserByIsConnected();
+                int idUser = u.get_id();
+
+                //creation de la date
+                String format = "dd/MM/yy H:mm:ss";
+                java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
+                java.util.Date dateJava = new java.util.Date();
+
+                //recuperation des valeurs
+                nom = tb_nom.getText().toString();
+                description = tb_description.getText().toString();
+                if (br_publication.isChecked())
+                    publication = 0;
+                else publication = 1;
+
+                //test si tout va bien.
+                if (nom.isEmpty() || description.isEmpty()) {
+                    Toast.makeText(AjoutActivite.this, R.string.empty_field_activity, Toast.LENGTH_LONG).show();
+                    return;
+                } else // on envoi la nouvelle activite en BD
+                {
+                    BddActivite bd = new BddActivite(AjoutActivite.this);
+                    bd.open();
+                    bd.addActivite(new Activite(nom, description, idUser, formater.format(dateJava), publication));
+                    //Toast.makeText(AjoutActivite.this, bd."", Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
     }
 
     @Override

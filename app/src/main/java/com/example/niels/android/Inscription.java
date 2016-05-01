@@ -18,10 +18,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.niels.bdd.*;
-import com.example.niels.Code.*;
+import com.example.niels.Code.Hashage;
+import com.example.niels.bdd.BddUser;
+import com.example.niels.bdd.User;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +31,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
+import java.net.URLEncoder;
 
 
 public class Inscription extends AppCompatActivity {
@@ -182,15 +182,25 @@ public class Inscription extends AppCompatActivity {
         InputStream is = null;
         int len = 500;
         //Afficher l'url
-        String u = "http://folionielsbenichou.franceserv.com/Android/" +
-                    "nouvelUtilisateur.php?nom=" + n + "&prenom=" + p + "&pseudo=" +
-                    ps + "&motDePasse=" + mdpHash + "&date=" + date;
-            Log.e("url" ,  u);
 
-        URL url = new URL("http://folionielsbenichou.franceserv.com/Android/" +
-                    "nouvelUtilisateur.php?nom=" + n + "&prenom=" + p + "&pseudo=" +
-                    ps + "&motDePasse=" + mdpHash + "&date=" + date);
-        //URL url = new URL("http://www.google.com/");
+
+        String nom = URLEncoder.encode(n, "utf-8");
+        String prenom = URLEncoder.encode(p, "utf-8");
+        String pseudo = URLEncoder.encode(ps, "utf-8");
+        String pass = URLEncoder.encode(mdpHash, "utf-8");
+        String dateT = URLEncoder.encode(date, "utf-8");
+        //String host = "http://folionielsbenichou.franceserv.com";
+        String host = "http://192.168.1.10:8080";
+        String u = host+"/Android/nouvelUtilisateur.php?nom=" +nom+"&prenom="+prenom+"&pseudo="+ps+"&motDePasse="+mdpHash+"&date="+dateT;
+        Log.e("url" ,  u);
+        //URL url = new URL("http://folionielsbenichou.franceserv.com/Android/" +
+        //            "nouvelUtilisateur.php?nom=" + n + "&prenom=" + p + "&pseudo=" +
+        //            ps + "&motDePasse=" + "aaa" + "&date=" + date);
+        //URL url = new URL("https://secure.php.net/manual/fr/index.php");
+        //String fr = "fr";
+        //URL url = new URL("http://folionielsbenichou.franceserv.com/Android/ok.html");
+        URL url = new URL(host+"/Android/nouvelUtilisateur.php?nom=" +nom+"&prenom="+prenom+"&pseudo="+ps+"&motDePasse="+mdpHash+"&date="+dateT);
+
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
         try{
@@ -208,6 +218,8 @@ public class Inscription extends AppCompatActivity {
             finally{
                 urlConnection.disconnect();
             }*/
+
+
 
             int response = urlConnection.getResponseCode();
             //Toast.makeText(Inscription.this, "Response " + response, Toast.LENGTH_LONG).show();
@@ -266,6 +278,8 @@ public class Inscription extends AppCompatActivity {
         reader.read(buffer);
         return new String(buffer);
     }
+
+
 }
 
 

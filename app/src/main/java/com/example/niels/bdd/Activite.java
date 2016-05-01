@@ -1,7 +1,5 @@
 package com.example.niels.bdd;
 
-import java.util.Date;
-
 /**
  * Created by Elsa on 10/04/2016.
  */
@@ -12,24 +10,27 @@ public class Activite {
     private int _idUtilisateur;
     private String _dateCreation;
     private int _type;
+    private String _descActivite;
 
     public Activite(){}
 
-    public Activite(String nom, int idUtilisateur, String date, int type)
+    public Activite(String nom, String description, int idUtilisateur, String date, int type)
     {
         this.set_nomActivite(nom);
         this.set_idUtilisateur(idUtilisateur);
         this.set_dateCreation(date);
         this.set_type(type);
+        this.set_description(description);
     }
 
-    public Activite(int i, String nom, int idUtilisateur, String date, int type)
+    public Activite(int i, String nom,String description, int idUtilisateur, String date, int type)
     {
         this.set_idActivite(i);
         this.set_nomActivite(nom);
         this.set_idUtilisateur(idUtilisateur);
         this.set_dateCreation(date);
         this.set_type(type);
+        this.set_description(description);
     }
 
 
@@ -39,6 +40,14 @@ public class Activite {
 
     public void set_idActivite(int _idActivite) {
         this._idActivite = _idActivite;
+    }
+
+    public void set_description(String _description) {
+        this._descActivite = _description;
+    }
+
+    public String get_descActivite(){
+        return _descActivite;
     }
 
     public String get_nomActivite() {
