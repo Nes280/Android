@@ -83,14 +83,20 @@ public class AjoutActivite extends AppCompatActivity
 
         if (id == R.id.autresActivite) {
             // Handle the camera action
-        } else if (id == R.id.accueil) {
+        }
+        else if (id == R.id.accueil) {
             Intent intent = new Intent(AjoutActivite.this, Accueil_Utilisateur.class);
             startActivity(intent);
-        } else if (id == R.id.modifProfil) {
+        }
+        else if (id == R.id.modifProfil) {
 
-        } /*else if (id == R.id.nav_manage) {
+        }
+        else if (id == R.id.deconnexion) {
 
-        } else if (id == R.id.nav_share) {
+            /*Intent intent = new Intent(AjoutActivite.this, Accueil_Utilisateur.class);
+            startActivity(intent);*/
+        }
+        /*else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 

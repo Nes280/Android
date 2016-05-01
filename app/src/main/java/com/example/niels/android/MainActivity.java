@@ -16,6 +16,8 @@ import com.example.niels.Code.Hashage;
 import com.example.niels.bdd.BddUser;
 import com.example.niels.bdd.User;
 
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
                 BddUser db = new BddUser(MainActivity.this);
                 db.open();
 
+                db.updateAll();
+
                 User u = db.getUserByPseudo(p);
 
                 //Le pseudo existe pas
@@ -72,6 +76,26 @@ public class MainActivity extends AppCompatActivity {
                 if(!mdpUser.equals(mdpHash)){
                     Toast.makeText(MainActivity.this, R.string.verifConnexionPassword, Toast.LENGTH_LONG).show();
                     return;
+                }
+
+                List<User> usc = db.getAllUsers();
+                Log.e("taille liste", usc.size() + "");
+                for (int i = 0; i < usc.size(); i++) {
+                    //Date d = u.get(i).get_date();
+                    Log.e("nom ", usc.get(i).get_nom());
+                    Log.e("date ", usc.get(i).get_date() + " ");
+                    Log.e("isConneced ", usc.get(i).get_isConnect() + " ");
+                }
+
+                db.setIsConnected(p, 1);
+
+                List<User> us = db.getAllUsers();
+                Log.e("taille liste", us.size() + "");
+                for (int i = 0; i < us.size(); i++) {
+                    //Date d = u.get(i).get_date();
+                    Log.e("nom ", us.get(i).get_nom());
+                    Log.e("date ", us.get(i).get_date() + " ");
+                    Log.e("isConneced ", us.get(i).get_isConnect() + " ");
                 }
 
                 intent = new Intent(MainActivity.this, Accueil_Utilisateur.class);

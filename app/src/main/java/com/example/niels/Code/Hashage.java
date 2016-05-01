@@ -45,7 +45,6 @@ public class Hashage {
         try {
             mdSha1.update(password.getBytes("ASCII"));
         } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -53,7 +52,6 @@ public class Hashage {
         try {
             SHAHash = convertToHex(data);
         } catch (IOException ex) {
-            // TODO Auto-generated catch block
             ex.printStackTrace();
         }
 

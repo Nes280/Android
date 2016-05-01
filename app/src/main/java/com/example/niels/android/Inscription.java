@@ -89,7 +89,6 @@ public class Inscription extends AppCompatActivity {
                 //Verification pseudo
                 User user = db.getUserByPseudo(ps);
                 if (user != null) {
-                    //A changer
                     Toast.makeText(Inscription.this, R.string.verifPseudo, Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -105,7 +104,6 @@ public class Inscription extends AppCompatActivity {
                         Manifest.permission.ACCESS_NETWORK_STATE);
 
                 if (permissionCheck == PackageManager.PERMISSION_GRANTED && permissionCheck2 == PackageManager.PERMISSION_GRANTED) {
-                    //startActivity(callintent);
                     //Toast.makeText(Inscription.this, "Permission", Toast.LENGTH_LONG).show();
                     ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                     NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -129,18 +127,19 @@ public class Inscription extends AppCompatActivity {
                         date = formater.format(dateJava);
                         String s = "test";
 
-                        new AccesBD().execute(s);
+                        //A décommenter : Acces à la bd externe
+                        //new AccesBD().execute(s);
 
-                        //Ajout dans la bd
-                        db.addUser(new User(n, p, ps, mdpHash, formater.format(dateJava)));
+                        //Ajout dans la bd locale
+                        db.addUser(new User(n, p, ps, mdpHash, formater.format(dateJava),0));
 
-                        List<User> u = db.getAllUsers();
+                        /*List<User> u = db.getAllUsers();
                         Log.e("taille liste", u.size() + "");
                         for (int i = 0; i < u.size(); i++) {
                             //Date d = u.get(i).get_date();
                             Log.e("nom ", u.get(i).get_nom());
                             Log.e("date ", u.get(i).get_date() + " ");
-                        }
+                        }*/
 
                         //on va à l'activité main
                         intent = new Intent(Inscription.this, MainActivity.class);
@@ -154,8 +153,6 @@ public class Inscription extends AppCompatActivity {
                             REQUEST_CODE_ASK_PERMISSIONS);
                     Log.e("erreur", "permission denied ");
                 }
-
-
             }
         });
     }

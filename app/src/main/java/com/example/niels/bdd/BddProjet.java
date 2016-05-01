@@ -21,6 +21,7 @@ public class BddProjet extends SQLiteOpenHelper {
     private static final String COLONNE_PSEUDO_USER = "pseudo";
     private static final String COLONNE_PASSWORD_USER = "password";
     private static final String COLONNE_DATE_USER = "date";
+    private static final String COLONNE_ISCONNECT_USER = "isConnect";
 
     //Requêtes de création table User
     private static final String REQUETE_CREATION_BASE_USER = "create table " + TABLE_USER +
@@ -29,7 +30,8 @@ public class BddProjet extends SQLiteOpenHelper {
             COLONNE_PRENOM_USER + " text not null, " +
             COLONNE_PSEUDO_USER + " text not null, " +
             COLONNE_PASSWORD_USER + " text not null, " +
-            COLONNE_DATE_USER + " text not null);";
+            COLONNE_DATE_USER + " text not null, " +
+            COLONNE_ISCONNECT_USER + " integer not null);";
 
 
     //Table Activite

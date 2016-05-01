@@ -31,6 +31,7 @@
     <string name="menuCreerActivite">Créer une activité</string>
     <string name="menuModifProfil">Modifier le profil</string>
     <string name="menuAccueil">Accueil</string>
+    <string name="menuDeconnexion">Déconnexion</string>
 
 
     <string name="title_activity_ajout_activite">Nouvelle activité</string>

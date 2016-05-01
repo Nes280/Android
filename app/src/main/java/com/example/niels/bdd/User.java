@@ -1,7 +1,5 @@
 package com.example.niels.bdd;
 
-import java.sql.Date;
-
 /**
  * Created by Elsa on 07/04/2016.
  */
@@ -13,19 +11,21 @@ public class User {
     private String _pseudo;
     private String _password;
     private String _date;
+    private int _isConnect; //0 non connecté 1 connecté
 
     public User(){}
 
-    public User(String nom, String prenom, String pseudo, String mdp, String d)
+    public User(String nom, String prenom, String pseudo, String mdp, String d, int isConnect)
     {
         this._nom = nom;
         this._prenom = prenom;
         this._pseudo = pseudo;
         this._password = mdp;
         this._date = d;
+        this.set_isConnect(isConnect);
     }
 
-    public User(int i, String nom, String prenom, String pseudo, String mdp, String d)
+    public User(int i, String nom, String prenom, String pseudo, String mdp, String d, int isConnect)
     {
         this._id = i;
         this._nom = nom;
@@ -33,6 +33,7 @@ public class User {
         this._pseudo = pseudo;
         this._password = mdp;
         this._date = d;
+        this.set_isConnect(isConnect);
     }
 
     public int get_id() {
@@ -81,5 +82,13 @@ public class User {
 
     public void set_date(String d){
         this._date = d;
+    }
+
+    public int get_isConnect() {
+        return _isConnect;
+    }
+
+    public void set_isConnect(int _isConnect) {
+        this._isConnect = _isConnect;
     }
 }

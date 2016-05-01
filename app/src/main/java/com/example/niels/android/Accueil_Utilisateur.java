@@ -14,6 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.niels.bdd.BddUser;
+import com.example.niels.bdd.User;
+
 public class Accueil_Utilisateur extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -41,6 +44,8 @@ public class Accueil_Utilisateur extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
 
     }
 
@@ -88,13 +93,24 @@ public class Accueil_Utilisateur extends AppCompatActivity
             Intent intent = new Intent(Accueil_Utilisateur.this, AjoutActivite.class);
             startActivity(intent);
 
-        } /*else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.modifProfil) {
 
-        } else if (id == R.id.nav_manage) {
+       }
+       else if (id == R.id.deconnexion) {
+            BddUser db = new BddUser(Accueil_Utilisateur.this);
+            db.open();
 
-        } */else if (id == R.id.modifProfil) {
+            User u = db.getUserByIsConnected();
 
-       } /*else if (id == R.id.nav_send) {
+            db.setIsConnected(u.get_pseudo(), 0);
+
+            Intent intent = new Intent(Accueil_Utilisateur.this, MainActivity.class);
+            startActivity(intent);
+
+
+        } /*else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_send) {
 
         }*/
 

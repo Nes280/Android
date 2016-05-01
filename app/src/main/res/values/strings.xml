@@ -30,6 +30,8 @@
     <string name="menuCreerActivite">Create activity</string>
     <string name="menuModifProfil">Modify the profile</string>
     <string name="menuAccueil">Home</string>
+    <string name="menuDeconnexion">Disconnection</string>
+
 
     <string name="title_activity_ajout_activite">New activity</string>
     <string name="radio_public">Public</string>
