@@ -1,6 +1,8 @@
 package com.example.niels.android;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -10,9 +12,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.niels.bdd.BddUser;
 import com.example.niels.bdd.User;
@@ -45,8 +50,19 @@ public class Accueil_Utilisateur extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //récuperation du pseudo
+        BddUser db = new BddUser(Accueil_Utilisateur.this);
+        db.open();
+        User u = db.getUserByIsConnected();
 
+        //Mettre le pseudo dans le menu
+        View v =navigationView.getHeaderView(0);
+        TextView pseudo = (TextView) v.findViewById(R.id.pseudoTet);
+        //tx.setText("test");
+        //Log.e("pseudoUser", u.get_pseudo() + "");
+        pseudo.setText(u.get_pseudo());
 
+        db.close();
     }
 
     @Override

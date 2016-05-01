@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("isConneced ", us.get(i).get_isConnect() + " ");
                 }
 
+                db.close();
+
                 intent = new Intent(MainActivity.this, Accueil_Utilisateur.class);
                 startActivity(intent);
             }

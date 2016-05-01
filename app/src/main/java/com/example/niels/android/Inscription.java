@@ -133,6 +133,8 @@ public class Inscription extends AppCompatActivity {
                         //Ajout dans la bd locale
                         db.addUser(new User(n, p, ps, mdpHash, formater.format(dateJava),0));
 
+                        db.close();
+
                         /*List<User> u = db.getAllUsers();
                         Log.e("taille liste", u.size() + "");
                         for (int i = 0; i < u.size(); i++) {
