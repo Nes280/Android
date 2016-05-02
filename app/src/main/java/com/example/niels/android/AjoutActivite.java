@@ -3,17 +3,17 @@ package com.example.niels.android;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.Gravity;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -22,7 +22,9 @@ import android.widget.Toast;
 
 import com.example.niels.bdd.Activite;
 import com.example.niels.bdd.BddActivite;
+import com.example.niels.bdd.BddMembreActivite;
 import com.example.niels.bdd.BddUser;
+import com.example.niels.bdd.MembreActivite;
 import com.example.niels.bdd.User;
 
 public class AjoutActivite extends AppCompatActivity
@@ -30,6 +32,7 @@ public class AjoutActivite extends AppCompatActivity
 
     String nom, description;
     int publication;
+    Intent intent = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,8 +109,32 @@ public class AjoutActivite extends AppCompatActivity
                 {
                     BddActivite bd = new BddActivite(AjoutActivite.this);
                     bd.open();
-                    bd.addActivite(new Activite(nom, description, idUser, formater.format(dateJava), publication));
+
+                    //on test si le nom n'existe pas déja
+                    if (bd.isExistActivity(nom))
+                    {
+                        //existe deja
+                        Toast.makeText(AjoutActivite.this,R.string.name_already_exist_activity, Toast.LENGTH_LONG).show();
+                        return;
+
+                    }
+                    //si non le nom n'existe pas déjà donc on continue
+                    Activite a = new Activite(nom, description, idUser, formater.format(dateJava), publication);
+
+                    bd.addActivite(a);
+
+                    int[] i = bd.getIdByNames(nom);
+                    int idU = i[0];
+                    int idA = i[1];
+                    //on dit aussi que le proprietaire est membre de son activité
+                    BddMembreActivite bdMa = new BddMembreActivite(AjoutActivite.this);
+                    bdMa.open();
+                    bdMa.addMembreActivite(new MembreActivite(idA, idU, formater.format(dateJava)));
                     //Toast.makeText(AjoutActivite.this, bd."", Toast.LENGTH_LONG).show();
+
+                    //on va à l'activité main
+                    intent = new Intent(AjoutActivite.this, Accueil_Utilisateur.class);
+                    startActivity(intent);
 
                 }
             }

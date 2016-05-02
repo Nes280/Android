@@ -3,11 +3,9 @@ package com.example.niels.android;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -65,7 +63,18 @@ public class AccueilFragment extends ListFragment {
 
         User u = dbUser.getUserByIsConnected();
 
+        List<Activite> ac = dbActivite.getAllActivite();
+        Log.e("taille liste activite", ac.size() + "");
+        for (int i = 0; i < ac.size(); i++) {
+            Log.e("id activite",ac.get(i).get_idActivite()+"");
+            //Date d = u.get(i).get_date();
+            Log.e("nom activite", ac.get(i).get_nomActivite());
+            Log.e("id utilisateur ", ac.get(i).get_idUtilisateur()+"");
+            //Log.e("date ", u.get(i).get_date() + " ");
+        }
+
         List<MembreActivite> listMa = dbMembre.getMembreByIdUser(u.get_id());
+        Log.e("nombre actvité de l'utilisateur", listMa.size()+"");
         if(listMa == null){
             String c = getString(R.string.pasActivite);
             listAdapter.add(c);
@@ -73,7 +82,14 @@ public class AccueilFragment extends ListFragment {
         else {
             for (int i = 0; i < listMa.size(); i++) {
                 MembreActivite ma = listMa.get(i);
+                Log.e("id membre", ma.get_idActivite()+"");
                 Activite a = dbActivite.getActivitebyIdActivite(ma.get_idActivite());
+                /*if(a == null){
+                    Log.e("activite null", "activite null");
+                }
+                else {
+                    Log.e("activite non null", "activite non null");
+                }*/
                 listAdapter.add(a.get_nomActivite());
             }
         }

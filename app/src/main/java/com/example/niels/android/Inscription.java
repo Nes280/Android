@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.niels.Code.Hashage;
+import com.example.niels.Code.getExemple;
 import com.example.niels.bdd.BddUser;
 import com.example.niels.bdd.User;
 
@@ -128,7 +129,7 @@ public class Inscription extends AppCompatActivity {
                         String s = "test";
 
                         //A décommenter : Acces à la bd externe
-                        //new AccesBD().execute(s);
+                        new AccesBD().execute(s);
 
                         //Ajout dans la bd locale
                         db.addUser(new User(n, p, ps, mdpHash, formater.format(dateJava),0));
@@ -165,7 +166,16 @@ public class Inscription extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try {
-                return downloadUrl(params[0]);
+                getExemple e = new getExemple();
+                String host = "http://folionielsbenichou.franceserv.com";
+                String rep = null;
+
+                rep = e.run(host+"/Android/nouvelUtilisateur.php?nom=" +n+"&prenom="+p+"&pseudo="+ps+"&motDePasse="+mdpHash+"&date="+date);
+
+
+                Log.e("REPOSE", rep);
+                //return downloadUrl(params[0]);
+                return rep;
             } catch (IOException e) {
                 return "Unable to retrieve web page. URL maybe invalide ";
             }
@@ -189,10 +199,10 @@ public class Inscription extends AppCompatActivity {
         String pseudo = URLEncoder.encode(ps, "utf-8");
         String pass = URLEncoder.encode(mdpHash, "utf-8");
         String dateT = URLEncoder.encode(date, "utf-8");
-        //String host = "http://folionielsbenichou.franceserv.com";
-        String host = "http://192.168.1.10:8080";
-        String u = host+"/Android/nouvelUtilisateur.php?nom=" +nom+"&prenom="+prenom+"&pseudo="+ps+"&motDePasse="+mdpHash+"&date="+dateT;
-        Log.e("url" ,  u);
+        String host = "http://folionielsbenichou.franceserv.com";
+        //String host = "http://192.168.1.10:8080";
+        //String u = host+"/Android/nouvelUtilisateur.php?nom=" +nom+"&prenom="+prenom+"&pseudo="+ps+"&motDePasse="+mdpHash+"&date="+dateT;
+        //Log.e("url" ,  u);
         //URL url = new URL("http://folionielsbenichou.franceserv.com/Android/" +
         //            "nouvelUtilisateur.php?nom=" + n + "&prenom=" + p + "&pseudo=" +
         //            ps + "&motDePasse=" + "aaa" + "&date=" + date);
@@ -207,7 +217,9 @@ public class Inscription extends AppCompatActivity {
             urlConnection.setReadTimeout(10000);
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
-            urlConnection.connect();
+            urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0) Gecko/20100101 Firefox/45.0");
+            //urlConnection.connect();
+
 
             /*URL url = new URL("http://www.android.com/");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

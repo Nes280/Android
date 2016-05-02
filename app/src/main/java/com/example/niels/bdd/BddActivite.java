@@ -4,6 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Elsa on 07/04/2016.
@@ -51,7 +55,84 @@ public class BddActivite {
         bdd.insert(TABLE_ACTIVITE, null, values);
     }
 
-    public Activite getActivitebyOwner(int idUser){
+    public List<Activite> getAllActivite(){
+        List<Activite> activiteList = new ArrayList<Activite>();
+        String query = "select * from " + TABLE_ACTIVITE;
+        Cursor cursor = bdd.rawQuery(query, null);
+        if (cursor.moveToFirst()){
+            do{
+                Activite activite = new Activite();
+                activite.set_idActivite(Integer.parseInt(cursor.getString(0)));
+                activite.set_nomActivite(cursor.getString(1));
+                activite.set_description(cursor.getString(2));
+                activite.set_idUtilisateur(Integer.parseInt(cursor.getString(3)));
+                activite.set_dateCreation(cursor.getString(4));
+                activite.set_type(Integer.parseInt(cursor.getString(5)));
+                activiteList.add(activite);
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        return activiteList;
+    }
+
+    public int[] getIdByNames(String nom)
+    {
+        bdd = bddProjet.getReadableDatabase();
+
+        String whereClause = COLONNE_NOM_ACTIVITE + " = ? ";
+        String[] whereArgs = new String[] {
+                nom
+        };
+        Cursor cursor = bdd.query(TABLE_ACTIVITE,
+                new String[]{COLONNE_ID_ACTIVITE, COLONNE_ID_USER_ACTIVITE},
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null,
+                null);
+
+        if(cursor != null){
+            cursor.moveToFirst();
+        }
+
+        if(cursor.getCount() <= 0)
+            return null;
+
+        int[] i = new int[2];
+
+        i[0]=Integer.parseInt(cursor.getString(0));
+        i[1]=Integer.parseInt(cursor.getString(1));
+        return i;
+    }
+
+    public boolean isExistActivity(String nom)
+    {
+        bdd = bddProjet.getReadableDatabase();
+
+        String whereClause = COLONNE_NOM_ACTIVITE + " = ? ";
+        String[] whereArgs = new String[] {
+                nom+""
+        };
+        Cursor cursor = bdd.query(TABLE_ACTIVITE,
+                new String[]{COLONNE_ID_ACTIVITE},
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null,
+                null);
+
+        if(cursor != null){
+            cursor.moveToFirst();
+        }
+
+        if(cursor.getCount() <= 0)
+            return false;
+        else return true;
+    }
+
+    public Activite getActivitybyOwner(int idUser){
         bdd = bddProjet.getReadableDatabase();
 
         String whereClause = COLONNE_ID_USER_ACTIVITE + " = ? ";
@@ -88,7 +169,11 @@ public class BddActivite {
     public Activite getActivitebyIdActivite(int idActivite){
         bdd = bddProjet.getReadableDatabase();
 
-        String whereClause = COLONNE_ID_ACTIVITE + " = ? ";
+        String query = "select * from " + TABLE_ACTIVITE + " where " + COLONNE_ID_ACTIVITE + "=" + idActivite ;
+        Cursor cursor = bdd.rawQuery(query, null);
+
+
+        /*String whereClause = COLONNE_ID_ACTIVITE + " = ? ";
         String[] whereArgs = new String[] {
                 idActivite+""
         };
@@ -100,14 +185,17 @@ public class BddActivite {
                 null,
                 null,
                 null,
-                null);
+                null);*/
 
         if(cursor != null){
             cursor.moveToFirst();
         }
 
-        if(cursor.getCount() <= 0)
+        if(cursor.getCount() <= 0){
+            Log.e("cursor null", "null cursor");
             return null;
+
+        }
 
         Activite activite = new Activite();
         activite.set_idActivite(Integer.parseInt(cursor.getString(0)));
