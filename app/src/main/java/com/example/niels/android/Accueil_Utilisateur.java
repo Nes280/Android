@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,7 +62,8 @@ public class Accueil_Utilisateur extends AppCompatActivity
         //tx.setText("test");
         //Log.e("pseudoUser", u.get_pseudo() + "");
         pseudo.setText(u.get_pseudo());
-
+        pseudo.setTextSize(20);
+        pseudo.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         db.close();
     }
 

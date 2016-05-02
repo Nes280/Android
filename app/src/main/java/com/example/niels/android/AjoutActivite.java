@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.niels.bdd.Activite;
@@ -53,6 +55,20 @@ public class AjoutActivite extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        BddUser db = new BddUser(AjoutActivite.this);
+        db.open();
+        User u = db.getUserByIsConnected();
+
+        //Mettre le pseudo dans le menu
+        View v =navigationView.getHeaderView(0);
+        TextView pseudo = (TextView) v.findViewById(R.id.pseudoTet);
+        //tx.setText("test");
+        //Log.e("pseudoUser", u.get_pseudo() + "");
+        pseudo.setText(u.get_pseudo());
+        pseudo.setTextSize(20);
+        pseudo.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        db.close();
 
         //Recuperer les informations
         final EditText tb_nom = (EditText) findViewById(R.id.editText);
@@ -147,9 +163,15 @@ public class AjoutActivite extends AppCompatActivity
 
         }
         else if (id == R.id.deconnexion) {
+            BddUser db = new BddUser(AjoutActivite.this);
+            db.open();
 
-            /*Intent intent = new Intent(AjoutActivite.this, Accueil_Utilisateur.class);
-            startActivity(intent);*/
+            User u = db.getUserByIsConnected();
+
+            db.setIsConnected(u.get_pseudo(), 0);
+            db.close();
+            Intent intent = new Intent(AjoutActivite.this, Accueil_Utilisateur.class);
+            startActivity(intent);
         }
         /*else if (id == R.id.nav_share) {
 
