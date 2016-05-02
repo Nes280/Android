@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         //Appuie sur bouton Inscription
         ((Button) findViewById(R.id.registration)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,8 +115,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
 
     }
 

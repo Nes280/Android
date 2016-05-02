@@ -170,7 +170,7 @@ public class AjoutActivite extends AppCompatActivity
 
             db.setIsConnected(u.get_pseudo(), 0);
             db.close();
-            Intent intent = new Intent(AjoutActivite.this, Accueil_Utilisateur.class);
+            Intent intent = new Intent(AjoutActivite.this, MainActivity.class);
             startActivity(intent);
         }
         /*else if (id == R.id.nav_share) {
