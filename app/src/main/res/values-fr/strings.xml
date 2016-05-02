@@ -26,6 +26,8 @@
     <string name="verifExistancePseudo">Le pseudo n\'existe pas</string>
     <string name="verifConnexionPassword">Mauvaises informations</string>
     <string name="demandeDeConnexion">Vous devez vous connecter à internet</string>
+    <string name="pasActivite">Vous n\'avez pas d\'activité</string>
+
 
     <string name="menuAutresActivite">Autres activités</string>
     <string name="menuCreerActivite">Créer une activité</string>

@@ -11,8 +11,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.niels.bdd.Activite;
+import com.example.niels.bdd.BddActivite;
+import com.example.niels.bdd.BddMembreActivite;
+import com.example.niels.bdd.BddUser;
+import com.example.niels.bdd.MembreActivite;
+import com.example.niels.bdd.User;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -30,21 +38,49 @@ public class AccueilFragment extends ListFragment {
 
     boolean mDualPane;
     int mCurCheckPosition = 0;
+    private ArrayAdapter<String> listAdapter ;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         //Lecture de la base de données pour avoir les activités de l'utilisateur
-        String[] contact = new String[] {
-                "Venus a 555", "Earth zds 444", "Mars",
-                "Jupiter", "Saturn", "Uranus", "Neptune"};
+        String[] contact = new String[] {};
+        /*
+                "Venus a 555", "Earth zds 444", "Mars elsa",
+                "Jupiter", "Saturn", "Uranus", "Neptune"};*/
         ArrayList<String> contactList = new ArrayList<String>();
         contactList.addAll(Arrays.asList(contact));
 
+        listAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, contactList);
+
+        //Connexion à la base de données
+        BddMembreActivite dbMembre = new BddMembreActivite(getActivity());
+        BddUser dbUser = new BddUser(getActivity());
+        BddActivite dbActivite = new BddActivite(getActivity());
+
+        dbUser.open();
+        dbMembre.open();
+        dbActivite.open();
+
+        User u = dbUser.getUserByIsConnected();
+
+        List<MembreActivite> listMa = dbMembre.getMembreByIdUser(u.get_id());
+        if(listMa == null){
+            String c = getString(R.string.pasActivite);
+            listAdapter.add(c);
+        }
+        else {
+            for (int i = 0; i < listMa.size(); i++) {
+                MembreActivite ma = listMa.get(i);
+                Activite a = dbActivite.getActivitebyIdActivite(ma.get_idActivite());
+                listAdapter.add(a.get_nomActivite());
+            }
+        }
         // Populate list with our static array of titles.
-        setListAdapter(new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_activated_1, contactList));
+        //listAdapter.add("Test");
+        //setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, contactList));
+        setListAdapter(listAdapter);
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
