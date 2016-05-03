@@ -74,12 +74,12 @@ public class AccueilFragment extends ListFragment {
         }
 
         List<MembreActivite> listMa = dbMembre.getMembreByIdUser(u.get_id());
-        Log.e("nombre actvité de l'utilisateur", listMa.size()+"");
         if(listMa == null){
             String c = getString(R.string.pasActivite);
             listAdapter.add(c);
         }
         else {
+            //Log.e("nombre actvité de l'utilisateur", listMa.size()+"");
             for (int i = 0; i < listMa.size(); i++) {
                 MembreActivite ma = listMa.get(i);
                 Log.e("id membre", ma.get_idActivite()+"");

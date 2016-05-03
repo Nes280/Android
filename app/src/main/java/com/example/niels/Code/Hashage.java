@@ -15,6 +15,7 @@ import static android.util.Base64.encodeToString;
 public class Hashage {
 
     private String SHAHash;
+    private String MD5Hash;
     public static int NO_OPTIONS=0;
 
     public Hashage(){}
@@ -56,5 +57,32 @@ public class Hashage {
         }
 
         return SHAHash;
+    }
+
+    //MD5
+    public String computeMD5Hash(String password)
+    {
+        MessageDigest digest = null;
+        try {
+            // Create MD5 Hash
+            digest = MessageDigest.getInstance("MD5");
+            digest.update(password.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            StringBuffer MD5Hash = new StringBuffer();
+            for (int i = 0; i < messageDigest.length; i++)
+            {
+                String h = Integer.toHexString(0xFF & messageDigest[i]);
+                while (h.length() < 2)
+                    h = "0" + h;
+                MD5Hash.append(h);
+            }
+
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        return MD5Hash.toString();
     }
 }

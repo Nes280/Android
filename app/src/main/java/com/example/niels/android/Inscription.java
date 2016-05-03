@@ -19,9 +19,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.niels.Code.Hashage;
+import com.example.niels.Code.Md5;
 import com.example.niels.Code.getExemple;
 import com.example.niels.bdd.BddUser;
 import com.example.niels.bdd.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,6 +37,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.concurrent.ExecutionException;
 
 
 public class Inscription extends AppCompatActivity {
@@ -40,6 +45,8 @@ public class Inscription extends AppCompatActivity {
     Intent intent = null;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     String n, p, ps, mdpHash, date;
+
+    String rep = null;
 
 
     @Override
@@ -88,11 +95,11 @@ public class Inscription extends AppCompatActivity {
                 db.open();
 
                 //Verification pseudo
-                User user = db.getUserByPseudo(ps);
+                /*User user = db.getUserByPseudo(ps);
                 if (user != null) {
                     Toast.makeText(Inscription.this, R.string.verifPseudo, Toast.LENGTH_LONG).show();
                     return;
-                }
+                }*/
 
                 //Ajout dans la base de données
                 //Toast.makeText(Inscription.this, "Insertion", Toast.LENGTH_LONG).show();
@@ -109,6 +116,34 @@ public class Inscription extends AppCompatActivity {
                     ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                     NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
                     if (networkInfo != null && networkInfo.isConnected()) {
+
+                        AccesBD a = new AccesBD();
+                        String urlUtilisateur = "/Android/recupUtilisateur.php?pseudo="+ps;
+                        a.execute(urlUtilisateur);
+                        try {
+                            a.get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+
+                        String response = rep;
+                        String valeur = null;
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            //JSONObject newJson = jsonObject.getJSONObject("state");
+                            valeur = jsonObject.getString("state");
+                            Log.e("resultat json " , valeur);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        if(valeur.equals("1")){
+                            Toast.makeText(Inscription.this, R.string.verifPseudo, Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
                         //Toast.makeText(Inscription.this, "connecté", Toast.LENGTH_LONG).show();
                         //Date du jours
                         String format = "dd/MM/yy H:mm:ss";
@@ -121,15 +156,29 @@ public class Inscription extends AppCompatActivity {
                         Log.e("Date Sql" , formater.format(dateSql) + "" );*/
 
                         //Crypter le mot de passe
-                        Hashage h = new Hashage();
-                        mdpHash = h.computeSHAHash(mdp);
+                        /*Hashage h = new Hashage();
+                        mdpHash = h.computeMD5Hash(mdp);*/
+                        Md5 m = new Md5(mdp);
+                        String mdpHash = m.getCode();
+
                         Log.e("mdp crypte", mdpHash + " ");
 
                         date = formater.format(dateJava);
                         String s = "test";
 
                         //A décommenter : Acces à la bd externe
-                        new AccesBD().execute(s);
+                        String url = "/Android/nouvelUtilisateur.php?nom=" +n+"&prenom="+p+"&pseudo="+ps+"&motDePasse="+mdpHash+"&date="+date;
+                        AccesBD ab = new AccesBD();
+                        ab.execute(url);
+                        try {
+                            a.get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+
+                        Log.e("rep dans code", rep + "");
 
                         //Ajout dans la bd locale
                         db.addUser(new User(n, p, ps, mdpHash, formater.format(dateJava),0));
@@ -168,11 +217,10 @@ public class Inscription extends AppCompatActivity {
             try {
                 getExemple e = new getExemple();
                 String host = "http://folionielsbenichou.franceserv.com";
-                String rep = null;
+                //String rep = null;
 
-                rep = e.run(host+"/Android/nouvelUtilisateur.php?nom=" +n+"&prenom="+p+"&pseudo="+ps+"&motDePasse="+mdpHash+"&date="+date);
-
-
+                //rep = e.run(host+"/Android/nouvelUtilisateur.php?nom=" +n+"&prenom="+p+"&pseudo="+ps+"&motDePasse="+mdpHash+"&date="+date);
+                rep = e.run(host+params[0]);
                 Log.e("REPOSE", rep);
                 //return downloadUrl(params[0]);
                 return rep;
@@ -183,12 +231,13 @@ public class Inscription extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.e("rep" , " res " + result);
-            Toast.makeText(Inscription.this, "Response " + result, Toast.LENGTH_LONG).show();
+            rep = result;
+            //Log.e("rep" , " res " + result);
+            //Toast.makeText(Inscription.this, "Response " + result, Toast.LENGTH_LONG).show();
         }
     }
 
-    private String downloadUrl(String myurl) throws IOException {
+    /*private String downloadUrl(String myurl) throws IOException {
         InputStream is = null;
         int len = 500;
         //Afficher l'url
@@ -233,7 +282,7 @@ public class Inscription extends AppCompatActivity {
 
 
 
-            int response = urlConnection.getResponseCode();
+            /*int response = urlConnection.getResponseCode();
             //Toast.makeText(Inscription.this, "Response " + response, Toast.LENGTH_LONG).show();
             Log.e("resultat", response + " ");
             is = urlConnection.getInputStream();
@@ -258,10 +307,10 @@ public class Inscription extends AppCompatActivity {
         }
 
         return myurl;
-    }
+    }*/
 
 
-    private static String readStream(InputStream is) {
+    /*private static String readStream(InputStream is) {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
@@ -281,15 +330,15 @@ public class Inscription extends AppCompatActivity {
             }
         }
         return sb.toString();
-    }
+    }*/
 
-    public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
+    /*public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
         Reader reader = null;
         reader = new InputStreamReader(stream, "UTF-8");
         char[] buffer = new char[len];
         reader.read(buffer);
         return new String(buffer);
-    }
+    }*/
 
 
 }
