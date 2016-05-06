@@ -3,12 +3,15 @@ package com.example.niels.android;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.niels.Code.getExemple;
 import com.example.niels.bdd.Activite;
 import com.example.niels.bdd.BddActivite;
 import com.example.niels.bdd.BddMembreActivite;
@@ -16,9 +19,14 @@ import com.example.niels.bdd.BddUser;
 import com.example.niels.bdd.MembreActivite;
 import com.example.niels.bdd.User;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -37,6 +45,7 @@ public class AccueilFragment extends ListFragment {
     boolean mDualPane;
     int mCurCheckPosition = 0;
     private ArrayAdapter<String> listAdapter ;
+    String rep = null;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -62,6 +71,68 @@ public class AccueilFragment extends ListFragment {
         dbActivite.open();
 
         User u = dbUser.getUserByIsConnected();
+        String pseudo = u.get_pseudo();
+
+        String urlUtilisateur = "/Android/recupUtilisateur.php?pseudo="+pseudo;
+        AccesBD acUtilisateur = new AccesBD();
+        acUtilisateur.execute(urlUtilisateur);
+        try {
+            acUtilisateur.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        String response = rep;
+        String valeur = null;
+
+        String identifiant = null;
+
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            //JSONObject newJson = jsonObject.getJSONObject("state");
+            valeur = jsonObject.getString("state");
+            Log.e("resultat json " , valeur);
+
+            JSONObject utilisateur = jsonObject.getJSONObject("utilisateur");
+            identifiant = utilisateur.getString("id");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
+        String url = "/Android/recupMembre.php?utilisateur="+identifiant;
+        AccesBD acbd = new AccesBD();
+        acbd.execute(url);
+        try {
+            acbd.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        Log.e("reponse recupMembre", rep);
+
+        try {
+            JSONObject jsonObject = new JSONObject(rep);
+            valeur = jsonObject.getString("state");
+            Log.e("resultat json membre" , valeur);
+            if(valeur.equals("0")){
+                Toast.makeText(getActivity(), R.string.pasActivite, Toast.LENGTH_LONG).show();
+                //return;
+            }
+
+            /*JSONObject utilisateur = jsonObject.getJSONObject("utilisateur");
+            identifiant = utilisateur.getString("id");*/
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
         List<Activite> ac = dbActivite.getAllActivite();
         Log.e("taille liste activite", ac.size() + "");
@@ -166,6 +237,34 @@ public class AccueilFragment extends ListFragment {
             intent.setClass(getActivity(), DetailsActivity.class);
             intent.putExtra("index", index);
             startActivity(intent);
+        }
+    }
+
+
+    private class AccesBD extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                getExemple e = new getExemple();
+                String host = "http://folionielsbenichou.franceserv.com";
+                //String rep = null;
+
+                //rep = e.run(host+"/Android/nouvelUtilisateur.php?nom=" +n+"&prenom="+p+"&pseudo="+ps+"&motDePasse="+mdpHash+"&date="+date);
+                rep = e.run(host+params[0]);
+                Log.e("REPONSE FRAGMENT", rep);
+                //return downloadUrl(params[0]);
+                return rep;
+            } catch (IOException e) {
+                return "Unable to retrieve web page. URL maybe invalide ";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            rep = result;
+            //Log.e("rep" , " res " + result);
+            //Toast.makeText(Inscription.this, "Response " + result, Toast.LENGTH_LONG).show();
         }
     }
 

@@ -77,7 +77,7 @@ public class Accueil_Utilisateur extends AppCompatActivity
         db.close();
 
 
-        int permissionCheck = ContextCompat.checkSelfPermission(Accueil_Utilisateur.this,
+        /*int permissionCheck = ContextCompat.checkSelfPermission(Accueil_Utilisateur.this,
                 Manifest.permission.INTERNET);
 
         int permissionCheck2 = ContextCompat.checkSelfPermission(Accueil_Utilisateur.this,
@@ -97,9 +97,7 @@ public class Accueil_Utilisateur extends AppCompatActivity
                     new String[]{Manifest.permission.INTERNET},
                     REQUEST_CODE_ASK_PERMISSIONS);
             Log.e("erreur", "permission denied ");
-        }
-
-
+        }*/
 
     }
 
