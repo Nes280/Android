@@ -94,7 +94,13 @@ public class MainActivity extends AppCompatActivity {
 
                         String response = rep;
                         String valeur = null;
+
+                        String nom = null;
+                        String prenom = null;
+                        String pseudo = null;
+                        String date = null;
                         String mdpBD = null;
+
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             //JSONObject newJson = jsonObject.getJSONObject("state");
@@ -105,7 +111,11 @@ public class MainActivity extends AppCompatActivity {
                                 return;
                             }
                             JSONObject utilisateur = jsonObject.getJSONObject("utilisateur");
+                            nom = utilisateur.getString("nom");
+                            prenom = utilisateur.getString("prenom");
+                            pseudo = utilisateur.getString("pseudo");
                             mdpBD = utilisateur.getString("motDePasse");
+                            date = utilisateur.getString("date");
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -118,12 +128,17 @@ public class MainActivity extends AppCompatActivity {
 
                         db.updateAll();
 
-                        /*User u = db.getUserByPseudo(p);
-                        //Le pseudo n'existe pas
+                        User u = db.getUserByPseudo(p);
+                        //Le pseudo n'existe pas il faut inserer dans BD Sqlite
                         if (u == null) {
-                            Toast.makeText(MainActivity.this, R.string.verifExistancePseudo, Toast.LENGTH_LONG).show();
-                            return;
-                        }*/
+                            Log.e("nom ", nom);
+                            Log.e("prenom", prenom);
+                            Log.e("pseudo", pseudo);
+                            Log.e("mdp", mdpBD);
+                            Log.e("date", date);
+                            User utilisateur = new User(nom, prenom, pseudo,mdpBD, date, 0);
+                            db.addUser(utilisateur);
+                        }
                         //String mdpUser = u.get_password();
 
                         //Verification du mot de passe
