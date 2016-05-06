@@ -12,6 +12,7 @@
     tools:context="com.example.niels.android.Accueil_Utilisateur"
     tools:showIn="@layout/app_bar_accueil__utilisateur">
 
+    <include layout="@layout/content_accueil" />
 
 
 </RelativeLayout>

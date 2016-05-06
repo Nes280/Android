@@ -1,12 +1,18 @@
 package com.example.niels.android;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,12 +25,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.niels.bdd.BddUser;
 import com.example.niels.bdd.User;
 
 public class Accueil_Utilisateur extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +75,32 @@ public class Accueil_Utilisateur extends AppCompatActivity
         pseudo.setTextSize(20);
         pseudo.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         db.close();
+
+
+        int permissionCheck = ContextCompat.checkSelfPermission(Accueil_Utilisateur.this,
+                Manifest.permission.INTERNET);
+
+        int permissionCheck2 = ContextCompat.checkSelfPermission(Accueil_Utilisateur.this,
+                Manifest.permission.ACCESS_NETWORK_STATE);
+
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED && permissionCheck2 == PackageManager.PERMISSION_GRANTED) {
+            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Accueil_Utilisateur.this.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()) {
+
+
+            } else {
+                Toast.makeText(Accueil_Utilisateur.this, R.string.demandeDeConnexion, Toast.LENGTH_LONG).show();
+            }
+        } else {
+            ActivityCompat.requestPermissions(Accueil_Utilisateur.this,
+                    new String[]{Manifest.permission.INTERNET},
+                    REQUEST_CODE_ASK_PERMISSIONS);
+            Log.e("erreur", "permission denied ");
+        }
+
+
+
     }
 
     @Override
