@@ -54,9 +54,6 @@ public class AccueilFragment extends ListFragment {
 
         //Lecture de la base de données pour avoir les activités de l'utilisateur
         String[] contact = new String[] {};
-        /*
-                "Venus a 555", "Earth zds 444", "Mars elsa",
-                "Jupiter", "Saturn", "Uranus", "Neptune"};*/
         ArrayList<String> contactList = new ArrayList<String>();
         contactList.addAll(Arrays.asList(contact));
 
@@ -103,8 +100,7 @@ public class AccueilFragment extends ListFragment {
             e.printStackTrace();
         }
 
-
-
+        //Recuperation des activités dont l'utilisateur est membre
         String url = "/Android/recupMembre.php?utilisateur="+identifiant;
         AccesBD acbd = new AccesBD();
         acbd.execute(url);
@@ -172,44 +168,12 @@ public class AccueilFragment extends ListFragment {
         }
 
 
-        /*List<Activite> ac = dbActivite.getAllActivite();
-        Log.e("taille liste activite", ac.size() + "");
-        for (int i = 0; i < ac.size(); i++) {
-            Log.e("id activite",ac.get(i).get_idActivite()+"");
-            //Date d = u.get(i).get_date();
-            Log.e("nom activite", ac.get(i).get_nomActivite());
-            Log.e("id utilisateur ", ac.get(i).get_idUtilisateur()+"");
-            //Log.e("date ", u.get(i).get_date() + " ");
-        }
 
-        List<MembreActivite> listMa = dbMembre.getMembreByIdUser(u.get_id());
-        if(listMa == null){
-            String c = getString(R.string.pasActivite);
-            listAdapter.add(c);
-        }
-        else {
-            //Log.e("nombre actvité de l'utilisateur", listMa.size()+"");
-            for (int i = 0; i < listMa.size(); i++) {
-                MembreActivite ma = listMa.get(i);
-                Log.e("id membre", ma.get_idActivite()+"");
-                Activite a = dbActivite.getActivitebyIdActivite(ma.get_idActivite());
-                if(a == null){
-                    Log.e("activite null", "activite null");
-                }
-                else {
-                    Log.e("activite non null", "activite non null");
-                }
-                listAdapter.add(a.get_nomActivite());
-            }
-        }*/
-        // Populate list with our static array of titles.
-        //listAdapter.add("Test");
-        //setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, contactList));
         setListAdapter(listAdapter);
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
-        /*View detailsFrame = getActivity().findViewById(R.id.details);
+        /*View detailsFrame = getActivity().findViewById(R.id.detail);
         mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
 
         if (savedInstanceState != null) {
