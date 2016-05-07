@@ -19,6 +19,7 @@ import com.example.niels.bdd.BddUser;
 import com.example.niels.bdd.MembreActivite;
 import com.example.niels.bdd.User;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -120,21 +121,58 @@ public class AccueilFragment extends ListFragment {
         try {
             JSONObject jsonObject = new JSONObject(rep);
             valeur = jsonObject.getString("state");
-            Log.e("resultat json membre" , valeur);
+            //Log.e("resultat json membre" , valeur);
             if(valeur.equals("0")){
                 Toast.makeText(getActivity(), R.string.pasActivite, Toast.LENGTH_LONG).show();
-                //return;
+                String chaine = getString(R.string.pasActivite);
+                listAdapter.add(chaine);
+            }
+            else{
+                JSONArray jsonActivites = jsonObject.getJSONArray("Activites");
+                int tailleListe = jsonActivites.length();
+                //Log.e("nb activite" , tailleListe + "");
+
+                String chaine = "Vous avez " + tailleListe + " activités";
+
+                for(int i = 0; i < tailleListe; i++){
+                    JSONObject c = jsonActivites.getJSONObject(i);
+                    String idActivite = c.getString("Activite");
+                    //Log.e("object",idActivite + "");
+
+                    //Recuperation de l'activité
+                    String urlActivite = "/Android/recupActivite.php?activite="+idActivite;
+                    AccesBD activiteAcces = new AccesBD();
+                    activiteAcces.execute(urlActivite);
+                    try {
+                        activiteAcces.get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Log.e("reponse recupActivite", rep);
+                    JSONObject jsonActivite = new JSONObject(rep);
+                    valeur = jsonActivite.getString("state");
+                    JSONArray jsonActiviteInfo = jsonActivite.getJSONArray("activite");
+                    Log.e("obNomActivite", jsonActiviteInfo + "");
+
+                    JSONObject objNomActivite = jsonActiviteInfo.getJSONObject(0);
+                    Log.e("obNomActivite", objNomActivite + "");
+                    String nomActivite = objNomActivite.getString("nom activite");
+                    listAdapter.add(nomActivite);
+
+                }
+                //listAdapter.add(chaine);
             }
 
-            /*JSONObject utilisateur = jsonObject.getJSONObject("utilisateur");
-            identifiant = utilisateur.getString("id");*/
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
 
-        List<Activite> ac = dbActivite.getAllActivite();
+        /*List<Activite> ac = dbActivite.getAllActivite();
         Log.e("taille liste activite", ac.size() + "");
         for (int i = 0; i < ac.size(); i++) {
             Log.e("id activite",ac.get(i).get_idActivite()+"");
@@ -155,15 +193,15 @@ public class AccueilFragment extends ListFragment {
                 MembreActivite ma = listMa.get(i);
                 Log.e("id membre", ma.get_idActivite()+"");
                 Activite a = dbActivite.getActivitebyIdActivite(ma.get_idActivite());
-                /*if(a == null){
+                if(a == null){
                     Log.e("activite null", "activite null");
                 }
                 else {
                     Log.e("activite non null", "activite non null");
-                }*/
+                }
                 listAdapter.add(a.get_nomActivite());
             }
-        }
+        }*/
         // Populate list with our static array of titles.
         //listAdapter.add("Test");
         //setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, contactList));
