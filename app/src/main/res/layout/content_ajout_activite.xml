@@ -36,20 +36,11 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
+
     <RadioGroup
-        android:id="@+id/radioSex"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-    </RadioGroup>
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_toRightOf="@+id/radioSex"
-        android:layout_toEndOf="@+id/radioSex"
-        android:layout_below="@+id/editText2"
-        android:layout_above="@+id/btn_activity">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText2">
 
         <RadioButton
             android:id="@+id/radioPrive"
@@ -77,11 +68,5 @@
             android:layout_alignParentEnd="true" />
     </RadioGroup>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/send_activity"
-        android:id="@+id/btn_activity"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

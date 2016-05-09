@@ -13,6 +13,7 @@
     <string name="password_confim">Confirm pasword</string>
 
     <string name="connection">Connection</string>
+    <string name="user_home">User home</string>
     <string name="registration">Registration</string>
     <string name="title_activity_accueil">Accueil</string>
     <string name="title_activity_details">DetailsActivity</string>

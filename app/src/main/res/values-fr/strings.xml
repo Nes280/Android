@@ -14,6 +14,7 @@
     <string name="password_confim">Mot de passe de confirmation</string>
 
     <string name="connection">Connexion</string>
+    <string name="user_home">Accueil utilisateur</string>
     <string name="registration">Inscription</string>
     <string name="title_activity_accueil">Accueil</string>
     <string name="title_activity_details">DetailsActivity</string>

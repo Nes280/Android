@@ -1,6 +1,7 @@
 package com.example.niels.android;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -10,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +28,14 @@ import com.example.niels.bdd.BddMembreActivite;
 import com.example.niels.bdd.BddUser;
 import com.example.niels.bdd.MembreActivite;
 import com.example.niels.bdd.User;
+import com.example.niels.Code.getExemple;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 public class AjoutActivite extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,6 +43,11 @@ public class AjoutActivite extends AppCompatActivity
     String nom, description;
     int publication;
     Intent intent = null;
+    String rep = null;
+    String ps ="";
+    int idUtil =0;
+    String response = rep;
+    String valeur = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +55,6 @@ public class AjoutActivite extends AppCompatActivity
         setContentView(R.layout.activity_ajout_activite);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -78,8 +84,9 @@ public class AjoutActivite extends AppCompatActivity
         final EditText tb_description = (EditText) findViewById(R.id.editText2);
         final RadioButton br_publication = (RadioButton) findViewById(R.id.radioPublique);
 
-        //bouton d'envoi
-        ((Button) findViewById(R.id.btn_activity)).setOnClickListener(new View.OnClickListener() {
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -88,6 +95,7 @@ public class AjoutActivite extends AppCompatActivity
                 dbd.open();
                 User u = dbd.getUserByIsConnected();
                 int idUser = u.get_id();
+                ps = u.get_pseudo();
 
                 //creation de la date
                 String format = "dd/MM/yy H:mm:ss";
@@ -131,6 +139,85 @@ public class AjoutActivite extends AppCompatActivity
                     bdMa.open();
                     bdMa.addMembreActivite(new MembreActivite(idA, idU, formater.format(dateJava)));
                     //Toast.makeText(AjoutActivite.this, bd."", Toast.LENGTH_LONG).show();
+                    //recupUtilisateur.php
+                    //on recupere l'id en BD ex
+                    String url = "/Android/recupUtilisateur.php?pseudo="+ps;
+                    AccesBD acutilisateur = new AccesBD();
+                    acutilisateur.execute(url);
+                    try {acutilisateur.get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+
+                    String response = rep;
+                    String valeur = null;
+                    try {
+                        JSONObject jsonUtilisateur = new JSONObject(rep);
+                        JSONObject jsonUtilisateurInfo = jsonUtilisateur.getJSONObject("utilisateur");
+                        idUtil = Integer.parseInt(jsonUtilisateurInfo.getString("id")+"");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    //on ajoute également dans la BD externe
+                    String url1 = "/Android/nouvelleActivite.php?nom="+nom+"&description="+description+"&date="+formater.format(dateJava)+"&type="+publication+"&proprietaire="+idUtil;
+                    AccesBD acActivite = new AccesBD();
+                    acActivite.execute(url1);
+                    try {acActivite.get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        //JSONObject newJson = jsonObject.getJSONObject("state");
+                        valeur = jsonObject.getString("state");
+                        Log.e("resultat json ### ", valeur);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    //on recupere l'id de l'activité nouvellement créée
+                    String url2 = "/Android/recupActiviteNom.php?activite="+nom;
+                    AccesBD recActivite = new AccesBD();
+                    recActivite.execute(url2);
+                    try {recActivite.get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+
+                    String response2 = rep;
+                    String valeur2 = null;
+                    int idActivite = 0;
+                    try {
+                        JSONObject jsonActivite = new JSONObject(rep);
+                        JSONArray jsonActiviteInfo = jsonActivite.getJSONArray("activite");
+                        JSONObject objNomActivite = jsonActiviteInfo.getJSONObject(0);
+                        idActivite = Integer.parseInt(objNomActivite.getString("id activite")+"");
+                        Log.e("id activité ####", objNomActivite + "");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    //on lie l'utilisateur a sonactivité via la table membre
+                    String url3 = "/Android/ajoutMembre.php?utilisateur="+idUtil+"&activite="+idActivite+"&date="+formater.format(dateJava);
+                    AccesBD acMembre = new AccesBD();
+                    acMembre.execute(url3);
+                    try {acMembre.get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+
 
                     //on va à l'activité main
                     intent = new Intent(AjoutActivite.this, Accueil_Utilisateur.class);
@@ -139,6 +226,11 @@ public class AjoutActivite extends AppCompatActivity
                 }
             }
         });
+
+        /*//bouton d'envoi
+        ((Button) findViewById(R.id.btn_activity)).setOnClickListener(new View.OnClickListener() {
+
+        });*/
     }
 
     @Override
@@ -209,5 +301,31 @@ public class AjoutActivite extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    private class AccesBD extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                getExemple e = new getExemple();
+                String host = "http://folionielsbenichou.franceserv.com";
+                //String rep = null;
+
+                //rep = e.run(host+"/Android/nouvelUtilisateur.php?nom=" +n+"&prenom="+p+"&pseudo="+ps+"&motDePasse="+mdpHash+"&date="+date);
+                rep = e.run(host+params[0]);
+                Log.e("REPOSE", rep);
+                //return downloadUrl(params[0]);
+                return rep;
+            } catch (IOException e) {
+                return "Unable to retrieve web page. URL maybe invalide ";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            rep = result;
+            //Log.e("rep" , " res " + result);
+            //Toast.makeText(Inscription.this, "Response " + result, Toast.LENGTH_LONG).show();
+        }
     }
 }
