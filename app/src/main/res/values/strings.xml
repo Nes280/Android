@@ -51,5 +51,8 @@
     <string name="title_activity_accueil__utilisateur">Accueil_Utilisateur</string>
     <string name="title_activity_ajout_evenement">AjoutEvenement</string>
 
+    <string name="name_evenement">Evenement name</string>
+
+
 
 </resources>

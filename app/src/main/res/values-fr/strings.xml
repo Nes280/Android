@@ -46,5 +46,7 @@
     <string name="success_activity">L\'activitée a bien été créée.</string>
     <string name="name_already_exist_activity">Le nom existe déjà.</string>
 
+    <string name="name_evenement">Nom de l\'évenement</string>
+
 
 </resources>
