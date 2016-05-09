@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.niels.AjoutEvenement;
 import com.example.niels.bdd.BddUser;
 import com.example.niels.bdd.User;
 
@@ -146,7 +147,8 @@ public class Accueil_Utilisateur extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.modifProfil) {
-
+            Intent intent = new Intent(Accueil_Utilisateur.this, AjoutEvenement.class);
+            startActivity(intent);
        }
        else if (id == R.id.deconnexion) {
             BddUser db = new BddUser(Accueil_Utilisateur.this);
