@@ -17,6 +17,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -57,14 +58,14 @@ public class AjoutEvenement extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -74,6 +75,20 @@ public class AjoutEvenement extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //récuperation du pseudo
+        BddUser db = new BddUser(AjoutEvenement.this);
+        db.open();
+        User u = db.getUserByIsConnected();
+
+        //Mettre le pseudo dans le menu
+        View v =navigationView.getHeaderView(0);
+        TextView pseudo = (TextView) v.findViewById(R.id.pseudoTet);
+        pseudo.setText(u.get_pseudo());
+        pseudo.setTextSize(20);
+        pseudo.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        db.close();
+
 
         //Recuperation des informations de l'évenement
         final TextView nomEvenement = (TextView) findViewById(R.id.nom);
@@ -308,19 +323,37 @@ public class AjoutEvenement extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if(id == R.id.accueil){
+            Intent intent = new Intent(AjoutEvenement.this, Accueil_Utilisateur.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.autresActivite) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.creerActivite) {
+            Intent intent = new Intent(AjoutEvenement.this, AjoutActivite.class);
+            startActivity(intent);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.modifProfil) {
+            /*Intent intent = new Intent(AjoutEvenement.this, AjoutEvenement.class);
+            startActivity(intent);*/
+        }
+        else if (id == R.id.deconnexion) {
+            BddUser db = new BddUser(AjoutEvenement.this);
+            db.open();
 
-        } else if (id == R.id.nav_manage) {
+            User u = db.getUserByIsConnected();
 
-        } else if (id == R.id.nav_share) {
+            db.setIsConnected(u.get_pseudo(), 0);
+
+            Intent intent = new Intent(AjoutEvenement.this, MainActivity.class);
+            startActivity(intent);
+
+
+        }/* else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
