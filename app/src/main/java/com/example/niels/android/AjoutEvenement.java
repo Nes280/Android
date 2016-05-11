@@ -46,12 +46,9 @@ public class AjoutEvenement extends AppCompatActivity
 
     Intent intent =  null;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
-    static final int REQUEST_LOCATION = 2;
     String rep = null;
-    private LocationManager locationManager;
     Location location;
     LocationManager lm;
-    String bestProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +79,7 @@ public class AjoutEvenement extends AppCompatActivity
         final TextView nomEvenement = (TextView) findViewById(R.id.nom);
         final TextView descriptionEvenement = (TextView) findViewById(R.id.description);
 
+        //Clique pour créer evenement
         ((Button) findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,8 +93,6 @@ public class AjoutEvenement extends AppCompatActivity
                     return;
                 }
 
-                //Verification que l'evenement est unique par rapport à l'activité
-                //A faire mais pas script
 
                 //Recuperer la date du jour
                 String format = "dd/MM/yy H:mm:ss";
@@ -122,9 +118,9 @@ public class AjoutEvenement extends AppCompatActivity
                 int permissionCheck3 = ContextCompat.checkSelfPermission(AjoutEvenement.this,
                         Manifest.permission.ACCESS_FINE_LOCATION);
 
+                //Vérification permission
                 if (permissionCheck == PackageManager.PERMISSION_GRANTED && permissionCheck2 == PackageManager.PERMISSION_GRANTED
                         && permissionCheck3 == PackageManager.PERMISSION_GRANTED) {
-                    //Toast.makeText(Inscription.this, "Permission", Toast.LENGTH_LONG).show();
                     ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                     NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
                     if (networkInfo != null && networkInfo.isConnected()) {
@@ -147,7 +143,6 @@ public class AjoutEvenement extends AppCompatActivity
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            //JSONObject newJson = jsonObject.getJSONObject("state");
                             valeur = jsonObject.getString("state");
                             Log.e("resultat json " , valeur);
                             if(valeur.equals("0")){
@@ -162,6 +157,37 @@ public class AjoutEvenement extends AppCompatActivity
 
                         //Recuperer l'id de l'activité
                         //A faire
+                        String idActivite = "4";
+
+                        //Verification que l'evenement est unique par rapport à l'activité
+                        //id activité en dur
+                        AccesBD verifNom = new AccesBD();
+                        String urlVerifNom = "/Android/isExisteNomEve.php?activite="+idActivite+"&nom="+nomE;
+                        verifNom.execute(urlVerifNom);
+                        try {
+                            verifNom.get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+
+                        String responseNom = rep;
+                        Log.e("script nom eve", responseNom);
+                        String valeurNom = null;
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(responseNom);
+                            valeurNom = jsonObject.getString("state");
+                            Log.e("resultat valeur eve" , valeurNom);
+                            if(valeurNom.equals("0")){
+                                Toast.makeText(AjoutEvenement.this, R.string.verifNomEvenement, Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
 
                         //Recuperer la latitude et la longitude
                         lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
@@ -174,23 +200,42 @@ public class AjoutEvenement extends AppCompatActivity
 
                         location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
+                        double longitude;
+                        double latitude;
+
                         if(location != null){
-                            double longitude = location.getLongitude();
-                            double latitude = location.getLatitude();
+                            longitude = location.getLongitude();
+                            latitude = location.getLatitude();
 
                             Log.e("latitude", latitude + "");
                             Log.e("longitude", longitude + "");
                         }
                         else
                         {
-                            //A faire
                             Log.e("location ", "null");
-                            Toast.makeText(AjoutEvenement.this, "Activez la localisation", Toast.LENGTH_LONG).show();
+                            Toast.makeText(AjoutEvenement.this, R.string.verifActivationLocalisation, Toast.LENGTH_LONG).show();
                             return;
                         }
 
-                        /*intent = new Intent(AjoutEvenement.this, Accueil_Utilisateur.class);
-                        startActivity(intent);*/
+                        String latitudeS = String.valueOf(latitude);
+                        String longitudeS = String.valueOf(longitude);
+
+                        //Insertion dans la bd Externe
+                        AccesBD addEvenement = new AccesBD();
+                        String urlAddEvenement = "/Android/nouvelEvenement.php?latitude="+latitudeS+"&longitude="+longitudeS+
+                                "&nom="+nomE+"&description="+descriptionE+"&photo=null&date=" + date +
+                                "&utilisateur="+identifiantUtilisateur + "&activite=" + idActivite;
+                        addEvenement.execute(urlAddEvenement);
+                        try {
+                            addEvenement.get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+
+                        intent = new Intent(AjoutEvenement.this, Accueil_Utilisateur.class);
+                        startActivity(intent);
                     } else {
                         Toast.makeText(AjoutEvenement.this, R.string.demandeDeConnexion, Toast.LENGTH_LONG).show();
                     }
