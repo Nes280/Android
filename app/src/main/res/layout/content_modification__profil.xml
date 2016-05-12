@@ -12,4 +12,37 @@
     tools:context="com.example.niels.android.Modification_Profil"
     tools:showIn="@layout/app_bar_modification__profil">
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/first_name"
+        android:ems="10"
+        android:id="@+id/prenom"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="@string/last_name"
+        android:ems="10"
+        android:id="@+id/nom"
+        android:layout_below="@+id/prenom"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/prenom"
+        android:layout_alignEnd="@+id/prenom" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/buttonChanger"
+        android:id="@+id/button"
+        android:layout_below="@+id/nom"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

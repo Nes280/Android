@@ -14,7 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.niels.bdd.BddUser;
 import com.example.niels.bdd.User;
@@ -51,6 +53,22 @@ public class ChangementPassword extends AppCompatActivity
         pseudo.setTextSize(20);
         pseudo.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         db.close();
+
+        ((Button) findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ChangementPassword.this, "A faire", Toast.LENGTH_LONG).show();
+
+                //verifier que l'ancien password est le même que celui en BD
+
+                //Verfier le nombre de caractère des 2 nouveaux mots de passe
+                //Verifier que ca soit les mêmes
+
+                //Faire un lien vers la bd externe
+                //Mais manque le script
+
+            }
+        });
     }
 
     @Override

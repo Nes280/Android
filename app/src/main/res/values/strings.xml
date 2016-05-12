@@ -58,5 +58,8 @@
     <string name="title_activity_modification__profil">Edit profil</string>
     <string name="title_activity_changement_password">Change password</string>
 
+    <string name="buttonChanger">Change</string>
+    <string name="newPassword">New password</string>
+    <string name="oldPassword">Old password</string>
 
 </resources>
