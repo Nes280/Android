@@ -128,7 +128,7 @@ public class AccueilFragment extends ListFragment {
                 int tailleListe = jsonActivites.length();
                 //Log.e("nb activite" , tailleListe + "");
 
-                String chaine = "Vous avez " + tailleListe + " activités";
+                //String chaine = "Vous avez " + tailleListe + " activités";
 
                 for(int i = 0; i < tailleListe; i++){
                     JSONObject c = jsonActivites.getJSONObject(i);
@@ -173,9 +173,14 @@ public class AccueilFragment extends ListFragment {
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
-        /*View detailsFrame = getActivity().findViewById(R.id.detail);
+       View detailsFrame = getActivity().findViewById(R.id.fragment);
         mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
-
+        /*
+        boolean a = detailsFrame == null;
+        //boolean b = detailsFrame.getVisibility() == View.VISIBLE;
+        Log.e("TEST1:","##############################detailsFrame == null-->"+a);
+       // Log.e("TEST2:","##############################-->detailsFrame.getVisibility() == View.VISIBLE"+b);
+*/
         if (savedInstanceState != null) {
             // Restore last state for checked position.
             mCurCheckPosition = savedInstanceState.getInt("curChoice", 0);
@@ -186,7 +191,7 @@ public class AccueilFragment extends ListFragment {
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
             // Make sure our UI is in the correct state.
             showDetails(mCurCheckPosition);
-        }*/
+        }
     }
 
     @Override
@@ -197,6 +202,7 @@ public class AccueilFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+
         showDetails(position);
     }
 
@@ -207,8 +213,9 @@ public class AccueilFragment extends ListFragment {
      */
     void showDetails(int index) {
         mCurCheckPosition = index;
-
+        //Log.e("FRAGMENT:","###############################################VALEUR mDualPane->"+mDualPane);
         if (mDualPane) {
+           // Log.e("FRAGMENT:","###########################################VALEUR mDualPane->"+mDualPane);
             // We can display everything in-place with fragments, so update
             // the list to highlight the selected item and show the data.
             getListView().setItemChecked(index, true);
@@ -224,9 +231,9 @@ public class AccueilFragment extends ListFragment {
                 // with this one inside the frame.
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 if (index == 0) {
-                    ft.replace(R.id.detail, details);
+                    ft.replace(R.id.details, details);
                 } else {
-                    //ft.replace(R.id.a_item, details);
+                    ft.replace(R.id.details, details);
                 }
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
