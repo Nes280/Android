@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -46,6 +45,14 @@
         <activity
             android:name=".AjoutEvenement"
             android:label="@string/title_activity_ajout_evenement"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Modification_Profil"
+            android:label="@string/title_activity_modification__profil"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ChangementPassword"
+            android:label="@string/title_activity_changement_password"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

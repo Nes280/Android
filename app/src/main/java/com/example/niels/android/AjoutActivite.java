@@ -281,7 +281,12 @@ public class AjoutActivite extends AppCompatActivity
             startActivity(intent);
         }
         else if (id == R.id.modifProfil) {
-
+            Intent intent = new Intent(AjoutActivite.this, Modification_Profil.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.changePassword){
+            Intent intent = new Intent(AjoutActivite.this, ChangementPassword.class);
+            startActivity(intent);
         }
         else if (id == R.id.deconnexion) {
             BddUser db = new BddUser(AjoutActivite.this);

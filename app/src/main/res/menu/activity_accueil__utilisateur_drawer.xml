@@ -24,6 +24,9 @@
                 android:id="@+id/modifProfil"
                 android:title="@string/menuModifProfil" />
             <item
+                android:id="@+id/changePassword"
+                android:title="@string/menuChangePassword" />
+            <item
                 android:id="@+id/deconnexion"
                 android:title="@string/menuDeconnexion" />
         </menu>

@@ -34,6 +34,7 @@
     <string name="menuAutresActivite">Other activities</string>
     <string name="menuCreerActivite">Create activity</string>
     <string name="menuModifProfil">Modify the profile</string>
+    <string name="menuChangePassword">Change password</string>
     <string name="menuAccueil">Home</string>
     <string name="menuDeconnexion">Disconnection</string>
 
@@ -54,7 +55,8 @@
     <string name="title_activity_ajout_evenement">New event</string>
 
     <string name="name_evenement">Evenement name</string>
-
+    <string name="title_activity_modification__profil">Edit profil</string>
+    <string name="title_activity_changement_password">Change password</string>
 
 
 </resources>
