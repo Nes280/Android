@@ -85,8 +85,7 @@ public class AjoutActivite extends AppCompatActivity
         final RadioButton br_publication = (RadioButton) findViewById(R.id.radioPublique);
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -119,10 +118,9 @@ public class AjoutActivite extends AppCompatActivity
                     bd.open();
 
                     //on test si le nom n'existe pas déja
-                    if (bd.isExistActivity(nom))
-                    {
+                    if (bd.isExistActivity(nom)) {
                         //existe deja
-                        Toast.makeText(AjoutActivite.this,R.string.name_already_exist_activity, Toast.LENGTH_LONG).show();
+                        Toast.makeText(AjoutActivite.this, R.string.name_already_exist_activity, Toast.LENGTH_LONG).show();
                         return;
 
                     }
@@ -141,10 +139,11 @@ public class AjoutActivite extends AppCompatActivity
                     //Toast.makeText(AjoutActivite.this, bd."", Toast.LENGTH_LONG).show();
                     //recupUtilisateur.php
                     //on recupere l'id en BD ex
-                    String url = "/Android/recupUtilisateur.php?pseudo="+ps;
+                    String url = "/Android/recupUtilisateur.php?pseudo=" + ps;
                     AccesBD acutilisateur = new AccesBD();
                     acutilisateur.execute(url);
-                    try {acutilisateur.get();
+                    try {
+                        acutilisateur.get();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {
@@ -156,17 +155,18 @@ public class AjoutActivite extends AppCompatActivity
                     try {
                         JSONObject jsonUtilisateur = new JSONObject(rep);
                         JSONObject jsonUtilisateurInfo = jsonUtilisateur.getJSONObject("utilisateur");
-                        idUtil = Integer.parseInt(jsonUtilisateurInfo.getString("id")+"");
+                        idUtil = Integer.parseInt(jsonUtilisateurInfo.getString("id") + "");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
 
                     //on ajoute également dans la BD externe
-                    String url1 = "/Android/nouvelleActivite.php?nom="+nom+"&description="+description+"&date="+formater.format(dateJava)+"&type="+publication+"&proprietaire="+idUtil;
+                    String url1 = "/Android/nouvelleActivite.php?nom=" + nom + "&description=" + description + "&date=" + formater.format(dateJava) + "&type=" + publication + "&proprietaire=" + idUtil;
                     AccesBD acActivite = new AccesBD();
                     acActivite.execute(url1);
-                    try {acActivite.get();
+                    try {
+                        acActivite.get();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {
@@ -184,10 +184,11 @@ public class AjoutActivite extends AppCompatActivity
                     }
 
                     //on recupere l'id de l'activité nouvellement créée
-                    String url2 = "/Android/recupActiviteNom.php?activite="+nom;
+                    String url2 = "/Android/recupActiviteNom.php?activite=" + nom;
                     AccesBD recActivite = new AccesBD();
                     recActivite.execute(url2);
-                    try {recActivite.get();
+                    try {
+                        recActivite.get();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {
@@ -201,17 +202,18 @@ public class AjoutActivite extends AppCompatActivity
                         JSONObject jsonActivite = new JSONObject(rep);
                         JSONArray jsonActiviteInfo = jsonActivite.getJSONArray("activite");
                         JSONObject objNomActivite = jsonActiviteInfo.getJSONObject(0);
-                        idActivite = Integer.parseInt(objNomActivite.getString("id activite")+"");
+                        idActivite = Integer.parseInt(objNomActivite.getString("id activite") + "");
                         Log.e("id activité ####", objNomActivite + "");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
                     //on lie l'utilisateur a sonactivité via la table membre
-                    String url3 = "/Android/ajoutMembre.php?utilisateur="+idUtil+"&activite="+idActivite+"&date="+formater.format(dateJava);
+                    String url3 = "/Android/ajoutMembre.php?utilisateur=" + idUtil + "&activite=" + idActivite + "&date=" + formater.format(dateJava);
                     AccesBD acMembre = new AccesBD();
                     acMembre.execute(url3);
-                    try {acMembre.get();
+                    try {
+                        acMembre.get();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {
