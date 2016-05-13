@@ -26,6 +26,8 @@
     <string name="verifPseudo">Pseudo déjà existant</string>
     <string name="verifExistancePseudo">Le pseudo n\'existe pas</string>
     <string name="verifConnexionPassword">Mauvaises informations</string>
+    <string name="verifNomEvenement">Le nom existe déjà pour cette activité</string>
+    <string name="verifActivationLocalisation">Activez la localisation</string>
     <string name="demandeDeConnexion">Vous devez vous connecter à internet</string>
     <string name="pasActivite">Vous n\'avez pas d\'activité</string>
 
@@ -33,6 +35,7 @@
     <string name="menuAutresActivite">Autres activités</string>
     <string name="menuCreerActivite">Créer une activité</string>
     <string name="menuModifProfil">Modifier le profil</string>
+    <string name="menuChangePassword">Changer le mot de passe</string>
     <string name="menuAccueil">Accueil</string>
     <string name="menuDeconnexion">Déconnexion</string>
 
@@ -45,6 +48,21 @@
     <string name="empty_field_activity">Tous les champs doivent être remplis.</string>
     <string name="success_activity">L\'activitée a bien été créée.</string>
     <string name="name_already_exist_activity">Le nom existe déjà.</string>
+
+    <string name="name_evenement">Nom de l\'évenement</string>
+
+    <string name="title_activity_ajout_evenement">Nouvel événement</string>
+
+    <string name="title_activity_modification__profil">Modification du profil</string>
+    <string name="title_activity_changement_password">Changement du mot de passe</string>
+
+    <string name="buttonChanger">Changer</string>
+    <string name="newPassword">Nouveau mot de passe</string>
+    <string name="oldPassword">Ancien mot de passe</string>
+
+
+
+
 
 
 </resources>

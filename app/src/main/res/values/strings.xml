@@ -25,6 +25,8 @@
     <string name="verifPseudo">Existing nickname</string>
     <string name="verifExistancePseudo">The nickname does not exist</string>
     <string name="verifConnexionPassword">Bad information</string>
+    <string name="verifNomEvenement">The name already exists for this activity</string>
+    <string name="verifActivationLocalisation">Turn location</string>
     <string name="demandeDeConnexion">You must connect to internet</string>
     <string name="pasActivite">You have no activity</string>
 
@@ -32,6 +34,7 @@
     <string name="menuAutresActivite">Other activities</string>
     <string name="menuCreerActivite">Create activity</string>
     <string name="menuModifProfil">Modify the profile</string>
+    <string name="menuChangePassword">Change password</string>
     <string name="menuAccueil">Home</string>
     <string name="menuDeconnexion">Disconnection</string>
 
@@ -49,7 +52,14 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_accueil__utilisateur">Accueil_Utilisateur</string>
-    <string name="title_activity_ajout_evenement">AjoutEvenement</string>
+    <string name="title_activity_ajout_evenement">New event</string>
 
+    <string name="name_evenement">Evenement name</string>
+    <string name="title_activity_modification__profil">Edit profil</string>
+    <string name="title_activity_changement_password">Change password</string>
+
+    <string name="buttonChanger">Change</string>
+    <string name="newPassword">New password</string>
+    <string name="oldPassword">Old password</string>
 
 </resources>

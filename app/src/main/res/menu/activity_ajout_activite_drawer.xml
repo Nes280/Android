@@ -3,13 +3,11 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/autresActivite"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menuAutresActivite" />
-        <item
             android:id="@+id/accueil"
-            android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menuAccueil" />
+        <item
+            android:id="@+id/autresActivite"
+            android:title="@string/menuAutresActivite" />
         <!--<item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
@@ -24,11 +22,12 @@
         <menu>
             <item
                 android:id="@+id/modifProfil"
-                android:icon="@drawable/ic_menu_share"
                 android:title="@string/menuModifProfil" />
             <item
+                android:id="@+id/changePassword"
+                android:title="@string/menuChangePassword" />
+            <item
                 android:id="@+id/deconnexion"
-                android:icon="@drawable/ic_menu_send"
                 android:title="@string/menuDeconnexion" />
         </menu>
     </item>

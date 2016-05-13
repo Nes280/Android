@@ -40,7 +40,8 @@
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText2">
+        android:layout_below="@+id/editText2"
+        android:id="@+id/radioGroup">
 
         <RadioButton
             android:id="@+id/radioPrive"
@@ -67,6 +68,14 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
     </RadioGroup>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send_activity"
+        android:id="@+id/button"
+        android:layout_below="@+id/radioGroup"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
