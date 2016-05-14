@@ -54,7 +54,7 @@ public class AccueilFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         listActivite = new ArrayList<String[]>();
-        //Lecture de la base de données pour avoir les activités de l'utilisateur
+
         String[] contact = new String[] {};
         ArrayList<String> contactList = new ArrayList<String>();
         contactList.addAll(Arrays.asList(contact));

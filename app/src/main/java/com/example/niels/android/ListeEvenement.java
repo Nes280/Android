@@ -1,29 +1,20 @@
 package com.example.niels.android;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.TextView;
-import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-import com.example.niels.bdd.BddUser;
-import com.example.niels.bdd.User;
+import java.util.ArrayList;
+
 
 public class ListeEvenement extends AppCompatActivity {
-
-    @Override
-    public Intent getIntent() {
-        return super.getIntent();
-    }
+    private ListView mListView;
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +23,23 @@ public class ListeEvenement extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Bundle id = getIntent().getExtras();
-        String idActivite = (String)id.get("id");
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
-        if (idActivite != null)
-        {
-            Log.e("ID ACTIVITE----------->",idActivite);
-        }
+        mListView = (ListView) findViewById(R.id.listView);
 
+        Bundle b = getIntent().getExtras();
+        String id = (String)b.get("id");
+        ArrayList<String> evenements = new ArrayList<String>();
+        evenements.add(id);
+        adapter = new ArrayAdapter<String>(this, R.layout.simple_row, evenements);
+        mListView.setAdapter(adapter);
 
 
     }

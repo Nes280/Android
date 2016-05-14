@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.niels.bdd.Activite;
 
@@ -94,10 +95,12 @@ public class DetailsFragment extends Fragment{
         voir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+               Intent intent = new Intent();
                 intent.setClass(getActivity(), ListeEvenement.class);
                 intent.putExtra("id", list[0]);
                 startActivity(intent);
+                //Toast.makeText(getActivity(),"Pas disponible pour le moment", Toast.LENGTH_LONG).show();
+
             }
         });
         ajout.setOnClickListener(new View.OnClickListener() {
