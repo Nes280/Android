@@ -1,7 +1,9 @@
 package com.example.niels.android;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +55,7 @@ public class DetailsFragment extends Fragment{
 
             return null;
         }
-        String[] list = getShownList();
+        final String[] list = getShownList();
         //ScrollView scroller = new ScrollView(getActivity());
         LinearLayout layout = new LinearLayout(getActivity());
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -88,9 +90,28 @@ public class DetailsFragment extends Fragment{
         type.setText(getString(R.string.type)+": "+typePublication);
         ajout.setText(getString(R.string.add_event));
         voir.setText(getString(R.string.show_events));
+
+        voir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), ListeEvenement.class);
+                intent.putExtra("id", list[0]);
+                startActivity(intent);
+            }
+        });
+        ajout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), AjoutEvenement.class);
+                intent.putExtra("id", list[0]);
+                startActivity(intent);
+            }
+        });
+
         return layout;
 
-
-
     }
+
 }

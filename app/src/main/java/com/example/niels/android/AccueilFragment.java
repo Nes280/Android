@@ -201,6 +201,7 @@ public class AccueilFragment extends ListFragment {
             // Make sure our UI is in the correct state.
             showDetails(mCurCheckPosition);
         }
+
     }
 
     @Override

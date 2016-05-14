@@ -25,7 +25,9 @@ public class DetailsActivity extends AppCompatActivity {
             // During initial setup, plug in the details fragment.
             DetailsFragment details = new DetailsFragment();
             details.setArguments(getIntent().getExtras());
+
             getFragmentManager().beginTransaction().add(android.R.id.content, details).commit();
+
         }
     }
 

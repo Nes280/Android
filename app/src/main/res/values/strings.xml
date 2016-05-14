@@ -66,5 +66,6 @@
     <string name="buttonChanger">Change</string>
     <string name="newPassword">New password</string>
     <string name="oldPassword">Old password</string>
+    <string name="title_activity_liste_evenement">ListeEvenement</string>
 
 </resources>
