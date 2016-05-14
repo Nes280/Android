@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -60,10 +61,12 @@ public class DetailsFragment extends Fragment{
         TextView description = new TextView(getActivity());
         TextView date = new TextView(getActivity());
         TextView type = new TextView(getActivity());
-        int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+        Button ajout = new Button(getActivity());
+        Button voir = new Button(getActivity());
+        /*int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 4, getActivity().getResources().getDisplayMetrics());
 
-        /*nomActivite.setPadding(padding, padding, padding, padding);
+        nomActivite.setPadding(padding, padding, padding, padding);
         description.setPadding(padding, padding, padding, padding);
         date.setPadding(padding+20,padding+20,padding+20,padding+20);
         type.setPadding(padding+30,padding+30,padding+30,padding+30);*/
@@ -73,6 +76,8 @@ public class DetailsFragment extends Fragment{
         layout.addView(description);
         layout.addView(date);
         layout.addView(type);
+        layout.addView(ajout);
+        layout.addView(voir);
 
         nomActivite.setText(list[1]);
         description.setText(getString(R.string.description)+": "+list[2]);
@@ -81,6 +86,8 @@ public class DetailsFragment extends Fragment{
         if (list[4].equals("1")) typePublication = getString(R.string.radio_private)+"";
         else typePublication = getString(R.string.radio_public)+"";
         type.setText(getString(R.string.type)+": "+typePublication);
+        ajout.setText(getString(R.string.add_event));
+        voir.setText(getString(R.string.show_events));
         return layout;
 
 

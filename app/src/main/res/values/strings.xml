@@ -50,6 +50,8 @@
     <string name="empty_field_activity">All field must be completed.</string>
     <string name="success_activity">Activity have been crated.</string>
     <string name="name_already_exist_activity">Name already exist.</string>
+    <string name="show_events">Show events</string>
+    <string name="add_event">Add new event</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
