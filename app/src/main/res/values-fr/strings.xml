@@ -50,7 +50,7 @@
     <string name="name_already_exist_activity">Le nom existe déjà.</string>
 
     <string name="name_evenement">Nom de l\'évenement</string>
-
+    <string name="btn_addEve">Ajouter un événement</string>
     <string name="title_activity_ajout_evenement">Nouvel événement</string>
 
     <string name="title_activity_modification__profil">Modification du profil</string>

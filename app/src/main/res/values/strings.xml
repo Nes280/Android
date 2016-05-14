@@ -54,7 +54,8 @@
     <string name="title_activity_accueil__utilisateur">Accueil_Utilisateur</string>
     <string name="title_activity_ajout_evenement">New event</string>
 
-    <string name="name_evenement">Evenement name</string>
+    <string name="name_evenement">Event name</string>
+    <string name="btn_addEve">Add an event </string>
     <string name="title_activity_modification__profil">Edit profil</string>
     <string name="title_activity_changement_password">Change password</string>
 
