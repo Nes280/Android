@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -52,15 +53,35 @@ public class DetailsFragment extends Fragment{
             return null;
         }
         String[] list = getShownList();
-        View detailsFrame = getActivity().findViewById(R.id.fragment);
-        ScrollView scroller = new ScrollView(getActivity());
+        //ScrollView scroller = new ScrollView(getActivity());
+        LinearLayout layout = new LinearLayout(getActivity());
+        layout.setOrientation(LinearLayout.VERTICAL);
         TextView nomActivite = new TextView(getActivity());
+        TextView description = new TextView(getActivity());
+        TextView date = new TextView(getActivity());
+        TextView type = new TextView(getActivity());
         int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 4, getActivity().getResources().getDisplayMetrics());
-        nomActivite.setPadding(padding, padding, padding, padding);
-        scroller.addView(nomActivite);
-        nomActivite.setText(list[1] + " "+ list[2]);
-        return scroller;
+
+        /*nomActivite.setPadding(padding, padding, padding, padding);
+        description.setPadding(padding, padding, padding, padding);
+        date.setPadding(padding+20,padding+20,padding+20,padding+20);
+        type.setPadding(padding+30,padding+30,padding+30,padding+30);*/
+
+
+        layout.addView(nomActivite);
+        layout.addView(description);
+        layout.addView(date);
+        layout.addView(type);
+
+        nomActivite.setText(list[1]);
+        description.setText(getString(R.string.description)+": "+list[2]);
+        date.setText(getString(R.string.date)+": "+list[3]);
+        String typePublication;
+        if (list[4].equals("1")) typePublication = getString(R.string.radio_private)+"";
+        else typePublication = getString(R.string.radio_public)+"";
+        type.setText(getString(R.string.type)+": "+typePublication);
+        return layout;
 
 
 

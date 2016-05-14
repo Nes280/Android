@@ -43,6 +43,8 @@
     <string name="title_activity_ajout_activite">Nouvelle activité</string>
     <string name="radio_public">Publique</string>
     <string name="radio_private">Privée</string>
+    <string name="date">Date</string>
+    <string name="type">Type de publication</string>
     <string name="name_activity">Nom de l\'activité</string>
     <string name="send_activity">Créer</string>
     <string name="empty_field_activity">Tous les champs doivent être remplis.</string>
