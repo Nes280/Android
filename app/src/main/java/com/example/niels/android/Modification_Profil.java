@@ -14,7 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.niels.bdd.BddUser;
 import com.example.niels.bdd.User;
@@ -52,6 +54,32 @@ public class Modification_Profil extends AppCompatActivity
         pseudo.setTextSize(20);
         pseudo.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         db.close();
+
+        final TextView prenomT = (TextView) findViewById(R.id.prenom);
+        prenomT.setText(u.get_prenom());
+        final TextView nomT = (TextView) findViewById(R.id.nom);
+        nomT.setText(u.get_nom());
+
+        ((Button) findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Modification_Profil.this, "A faire", Toast.LENGTH_LONG).show();
+
+                String prenom = prenomT.getText().toString();
+                String nom = nomT.getText().toString();
+
+                //Verifier que les champs ne sont pas vides
+                if(prenom.isEmpty() || nom.isEmpty()){
+                    Toast.makeText(Modification_Profil.this, R.string.verifChamps, Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                //Faire un lien vers la bd externe
+                //Mais manque le script
+
+            }
+        });
+
     }
 
     @Override

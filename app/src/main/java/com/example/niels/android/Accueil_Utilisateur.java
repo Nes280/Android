@@ -140,6 +140,10 @@ public class Accueil_Utilisateur extends AppCompatActivity
             Intent intent = new Intent(Accueil_Utilisateur.this, AjoutEvenement.class);
             startActivity(intent);
        }
+        else if(id == R.id.changePassword){
+            Intent intent = new Intent(Accueil_Utilisateur.this, ChangementPassword.class);
+            startActivity(intent);
+        }
        else if (id == R.id.deconnexion) {
             BddUser db = new BddUser(Accueil_Utilisateur.this);
             db.open();
