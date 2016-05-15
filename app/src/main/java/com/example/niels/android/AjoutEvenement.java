@@ -330,7 +330,8 @@ public class AjoutEvenement extends AppCompatActivity
             startActivity(intent);
         }
         else if (id == R.id.autresActivite) {
-            // Handle the camera action
+            Intent intent = new Intent(AjoutEvenement.this, AutresActivites.class);
+            startActivity(intent);
         } else if (id == R.id.creerActivite) {
             Intent intent = new Intent(AjoutEvenement.this, AjoutActivite.class);
             startActivity(intent);

@@ -131,7 +131,8 @@ public class Accueil_Utilisateur extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.autresActivite) {
-            // Handle the camera action
+            Intent intent = new Intent(Accueil_Utilisateur.this, AutresActivites.class);
+            startActivity(intent);
         } else if (id == R.id.creerActivite) {
             Intent intent = new Intent(Accueil_Utilisateur.this, AjoutActivite.class);
             startActivity(intent);

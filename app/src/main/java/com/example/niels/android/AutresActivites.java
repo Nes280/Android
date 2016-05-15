@@ -14,22 +14,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.niels.bdd.BddUser;
 import com.example.niels.bdd.User;
 
-public class ChangementPassword extends AppCompatActivity
+public class AutresActivites extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_changement_password);
+        setContentView(R.layout.activity_autres_activites);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -40,9 +47,8 @@ public class ChangementPassword extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         //récuperation du pseudo
-        BddUser db = new BddUser(ChangementPassword.this);
+        BddUser db = new BddUser(AutresActivites.this);
         db.open();
         User u = db.getUserByIsConnected();
 
@@ -53,22 +59,6 @@ public class ChangementPassword extends AppCompatActivity
         pseudo.setTextSize(20);
         pseudo.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         db.close();
-
-        ((Button) findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ChangementPassword.this, "A faire", Toast.LENGTH_LONG).show();
-
-                //verifier que l'ancien password est le même que celui en BD
-
-                //Verfier le nombre de caractère des 2 nouveaux mots de passe
-                //Verifier que ca soit les mêmes
-
-                //Faire un lien vers la bd externe
-                //Mais manque le script
-
-            }
-        });
     }
 
     @Override
@@ -84,7 +74,7 @@ public class ChangementPassword extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.changement_password, menu);
+        getMenuInflater().inflate(R.menu.autres_activites, menu);
         return true;
     }
 
@@ -110,37 +100,35 @@ public class ChangementPassword extends AppCompatActivity
         int id = item.getItemId();
 
         if(id == R.id.accueil){
-            Intent intent = new Intent(ChangementPassword.this, Accueil_Utilisateur.class);
+            Intent intent = new Intent(AutresActivites.this, Accueil_Utilisateur.class);
             startActivity(intent);
         }
-        else if (id == R.id.autresActivite) {
-            Intent intent = new Intent(ChangementPassword.this, AutresActivites.class);
-            startActivity(intent);
-        } else if (id == R.id.creerActivite) {
-            Intent intent = new Intent(ChangementPassword.this, AjoutActivite.class);
+        else if (id == R.id.creerActivite) {
+            Intent intent = new Intent(AutresActivites.this, AjoutActivite.class);
             startActivity(intent);
 
         } else if (id == R.id.modifProfil) {
-            Intent intent = new Intent(ChangementPassword.this, Modification_Profil.class);
+            Intent intent = new Intent(AutresActivites.this, Modification_Profil.class);
             startActivity(intent);
         }
         else if(id == R.id.changePassword){
-            Intent intent = new Intent(ChangementPassword.this, ChangementPassword.class);
+            Intent intent = new Intent(AutresActivites.this, ChangementPassword.class);
             startActivity(intent);
         }
         else if (id == R.id.deconnexion) {
-            BddUser db = new BddUser(ChangementPassword.this);
+            BddUser db = new BddUser(AutresActivites.this);
             db.open();
 
             User u = db.getUserByIsConnected();
 
             db.setIsConnected(u.get_pseudo(), 0);
 
-            Intent intent = new Intent(ChangementPassword.this, MainActivity.class);
+            Intent intent = new Intent(AutresActivites.this, MainActivity.class);
             startActivity(intent);
 
 
         }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

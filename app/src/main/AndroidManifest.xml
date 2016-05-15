@@ -58,6 +58,10 @@
             android:name=".ListeEvenement"
             android:label="@string/title_activity_liste_evenement"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AutresActivites"
+            android:label="@string/title_activity_autres_activites"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

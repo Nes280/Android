@@ -125,7 +125,8 @@ public class Modification_Profil extends AppCompatActivity
             startActivity(intent);
         }
         else if (id == R.id.autresActivite) {
-            // Handle the camera action
+            Intent intent = new Intent(Modification_Profil.this, AutresActivites.class);
+            startActivity(intent);
         } else if (id == R.id.creerActivite) {
             Intent intent = new Intent(Modification_Profil.this, AjoutActivite.class);
             startActivity(intent);
