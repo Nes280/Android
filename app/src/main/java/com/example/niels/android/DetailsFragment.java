@@ -2,6 +2,7 @@ package com.example.niels.android;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.util.TypedValue;
@@ -66,14 +67,21 @@ public class DetailsFragment extends Fragment{
         TextView type = new TextView(getActivity());
         Button ajout = new Button(getActivity());
         Button voir = new Button(getActivity());
-        /*int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+        int taille = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 4, getActivity().getResources().getDisplayMetrics());
-
+/*
         nomActivite.setPadding(padding, padding, padding, padding);
         description.setPadding(padding, padding, padding, padding);
         date.setPadding(padding+20,padding+20,padding+20,padding+20);
         type.setPadding(padding+30,padding+30,padding+30,padding+30);*/
 
+        nomActivite.setPadding(20,5,0,5);
+        description.setPadding(20,0,0,0);
+        date.setPadding(20, 0, 0, 0);
+        type.setPadding(20,0,0,20);
+
+        nomActivite.setTextSize(20);
+        nomActivite.setTextColor(Color.parseColor("#0099CC"));
 
         layout.addView(nomActivite);
         layout.addView(description);
