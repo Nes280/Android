@@ -108,7 +108,6 @@ public class AjoutEvenement extends AppCompatActivity
                     return;
                 }
 
-
                 //Recuperer la date du jour
                 String format = "dd/MM/yy H:mm:ss";
                 java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
@@ -172,7 +171,10 @@ public class AjoutEvenement extends AppCompatActivity
 
                         //Recuperer l'id de l'activité
                         //A faire
-                        String idActivite = "4";
+                        //String idActivite = "4";
+                        intent = getIntent();
+                        Log.e("id actitivité", intent.getStringExtra("id"));
+                        String idActivite = intent.getStringExtra("id");
 
                         //Verification que l'evenement est unique par rapport à l'activité
                         //id activité en dur
