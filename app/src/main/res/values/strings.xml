@@ -59,6 +59,7 @@
     <string name="title_activity_ajout_evenement">New event</string>
 
     <string name="name_evenement">Event name</string>
+    <string name="photo">Feature not available for the moment.</string>
     <string name="btn_addEve">Add an event </string>
     <string name="title_activity_modification__profil">Edit profil</string>
     <string name="title_activity_changement_password">Change password</string>

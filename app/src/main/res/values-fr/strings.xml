@@ -54,6 +54,7 @@
     <string name="add_event">Ajouter un événement</string>
 
     <string name="name_evenement">Nom de l\'évenement</string>
+    <string name="photo">Fonctionnalité non disponible pour le moment.</string>
     <string name="btn_addEve">Ajouter un événement</string>
     <string name="title_activity_ajout_evenement">Nouvel événement</string>
 
