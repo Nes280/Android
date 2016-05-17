@@ -1,9 +1,18 @@
 package com.example.niels.android;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -18,11 +27,20 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.niels.Code.getExemple;
 import com.example.niels.bdd.BddUser;
 import com.example.niels.bdd.User;
 
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+
 public class Modification_Profil extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    Intent intent = null;
+    String rep = null;
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +63,7 @@ public class Modification_Profil extends AppCompatActivity
         //récuperation du pseudo
         BddUser db = new BddUser(Modification_Profil.this);
         db.open();
-        User u = db.getUserByIsConnected();
+        final User u = db.getUserByIsConnected();
 
         //Mettre le pseudo dans le menu
         View v =navigationView.getHeaderView(0);
@@ -74,10 +92,50 @@ public class Modification_Profil extends AppCompatActivity
                     return;
                 }
 
-                //Faire un lien vers la bd externe
-                //Mais manque le script
+                //Demande de permission
+                int permissionCheck = ContextCompat.checkSelfPermission(Modification_Profil.this,
+                        Manifest.permission.INTERNET);
 
-            }
+                int permissionCheck2 = ContextCompat.checkSelfPermission(Modification_Profil.this,
+                        Manifest.permission.ACCESS_NETWORK_STATE);
+
+                if (permissionCheck == PackageManager.PERMISSION_GRANTED && permissionCheck2 == PackageManager.PERMISSION_GRANTED) {
+                    //Toast.makeText(Inscription.this, "Permission", Toast.LENGTH_LONG).show();
+                    ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                    if (networkInfo != null && networkInfo.isConnected()) {
+
+                        AccesBD a = new AccesBD();
+                        String urlUtilisateur = "/Android/modifUtilisateur.php?pseudo="+u.get_pseudo()+"&nom="+nom+"&prenom="
+                                +prenom+"&pass="+u.get_password();
+                        a.execute(urlUtilisateur);
+                        try {
+                            a.get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+
+                        BddUser db = new BddUser(Modification_Profil.this);
+                        db.open();
+
+                        db.setNomPrenom(u.get_pseudo(), nom, prenom);
+                        db.close();
+
+                        //on va à l'activité main
+                        intent = new Intent(Modification_Profil.this, Accueil_Utilisateur.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(Modification_Profil.this, R.string.demandeDeConnexion, Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    ActivityCompat.requestPermissions(Modification_Profil.this,
+                            new String[]{Manifest.permission.INTERNET},
+                            REQUEST_CODE_ASK_PERMISSIONS);
+                    Log.e("erreur", "permission denied ");
+                }
+          }
         });
 
     }
@@ -156,5 +214,32 @@ public class Modification_Profil extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private class AccesBD extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                getExemple e = new getExemple();
+                String host = "http://folionielsbenichou.franceserv.com";
+                //String rep = null;
+
+                //rep = e.run(host+"/Android/nouvelUtilisateur.php?nom=" +n+"&prenom="+p+"&pseudo="+ps+"&motDePasse="+mdpHash+"&date="+date);
+                rep = e.run(host+params[0]);
+                Log.e("REPOSE", rep);
+                //return downloadUrl(params[0]);
+                return rep;
+            } catch (IOException e) {
+                return "Unable to retrieve web page. URL maybe invalide ";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            rep = result;
+            //Log.e("rep" , " res " + result);
+            //Toast.makeText(Inscription.this, "Response " + result, Toast.LENGTH_LONG).show();
+        }
     }
 }

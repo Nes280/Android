@@ -178,6 +178,13 @@ public class BddUser {
         Log.e("c setIsConnected" , c.getCount() + " " + pseudo + " " + valeur);
     }
 
+    public void setNomPrenom(String pseudo, String nom, String prenom){
+        Cursor c = bdd.rawQuery("UPDATE "+ TABLE_USER + " SET "+ COLONNE_NOM_USER + " = \"" + nom + "\" , " +
+                COLONNE_PRENOM_USER + " = \"" + prenom +
+                "\" WHERE " + COLONNE_PSEUDO_USER + " = \""+pseudo+"\"", null);
+        Log.e("c setNomPrenom" , c.getCount() + " " + pseudo + " " + nom + " " + prenom);
+    }
+
     public void updateAll(){
         int valeur = 0;
         Cursor c = bdd.rawQuery("UPDATE "+ TABLE_USER + " SET "+ COLONNE_ISCONNECT_USER + " = " + valeur, null);
