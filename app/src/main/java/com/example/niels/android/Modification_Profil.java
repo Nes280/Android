@@ -81,7 +81,7 @@ public class Modification_Profil extends AppCompatActivity
         ((Button) findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Modification_Profil.this, "A faire", Toast.LENGTH_LONG).show();
+                //Toast.makeText(Modification_Profil.this, "A faire", Toast.LENGTH_LONG).show();
 
                 String prenom = prenomT.getText().toString();
                 String nom = nomT.getText().toString();

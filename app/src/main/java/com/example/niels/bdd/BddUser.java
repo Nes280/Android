@@ -185,6 +185,12 @@ public class BddUser {
         Log.e("c setNomPrenom" , c.getCount() + " " + pseudo + " " + nom + " " + prenom);
     }
 
+    public void setPassword(String pseudo, String mdp){
+        Cursor c = bdd.rawQuery("UPDATE "+ TABLE_USER + " SET "+ COLONNE_PASSWORD_USER + " = \"" + mdp +
+                "\" WHERE " + COLONNE_PSEUDO_USER + " = \""+pseudo+"\"", null);
+        Log.e("c setIsConnected" , c.getCount() + " " + pseudo + " " + mdp);
+    }
+
     public void updateAll(){
         int valeur = 0;
         Cursor c = bdd.rawQuery("UPDATE "+ TABLE_USER + " SET "+ COLONNE_ISCONNECT_USER + " = " + valeur, null);
