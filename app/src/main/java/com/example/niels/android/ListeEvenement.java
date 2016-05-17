@@ -1,5 +1,6 @@
 package com.example.niels.android;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.niels.Code.getExemple;
@@ -26,6 +28,9 @@ public class ListeEvenement extends AppCompatActivity {
     private ListView mListView;
     private ArrayAdapter<String> adapter;
     String rep = null;
+    Intent intent = null;
+    double lat = 0.0;
+    double lon = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,8 @@ public class ListeEvenement extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
 
         mListView = (ListView) findViewById(R.id.listView);
 
@@ -61,47 +68,59 @@ public class ListeEvenement extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        String response2 = rep;
-        String valeur2 = null;
+        String response = rep;
+        String valeur = null;
         int idEve = 0;
-        double lat = 0.0;
-        double lon = 0.0;
+
         String nom = "";
         String desc = "";
         String photo = "";
         String date = "";
         int idUser = 0;
-
+//TODO tester si il y a des evenements
         try {
             JSONObject jsonEvenements = new JSONObject(rep);
-            JSONArray jsonEveInfo = jsonEvenements.getJSONArray("evenement");
-
-            for (int i = 0; i<jsonEveInfo.length();i++)
+            valeur = jsonEvenements.getString("state");
+            if (valeur.equals("1"))
             {
-                JSONObject objNomActivite = jsonEveInfo.getJSONObject(i);
-                idEve = Integer.parseInt(objNomActivite.getString("id evenement") + "");
-                idUser = Integer.parseInt(objNomActivite.getString("idUtilisateur") + "");
-                lat = Double.parseDouble(objNomActivite.getString("latitude GPS") + "");
-                lon = Double.parseDouble(objNomActivite.getString("longitude GPS") + "");
-                nom = objNomActivite.getString("nom evenement");
-                desc = objNomActivite.getString("description");
-                photo = objNomActivite.getString("photo");
-                date = objNomActivite.getString("date");
+                JSONArray jsonEveInfo = jsonEvenements.getJSONArray("evenement");
 
-                evenements.add(nom);
-                evenements.add(getString(R.string.description)+" : "+desc);
-                evenements.add(getString(R.string.date)+" : "+date);
-                evenements.add(getString(R.string.photo));
+                for (int i = 0; i<jsonEveInfo.length();i++)
+                {
+                    JSONObject objNomActivite = jsonEveInfo.getJSONObject(i);
+                    idEve = Integer.parseInt(objNomActivite.getString("id evenement") + "");
+                    idUser = Integer.parseInt(objNomActivite.getString("idUtilisateur") + "");
+                    lat = Double.parseDouble(objNomActivite.getString("latitude GPS") + "");
+                    lon = Double.parseDouble(objNomActivite.getString("longitude GPS") + "");
+                    nom = objNomActivite.getString("nom evenement");
+                    desc = objNomActivite.getString("description");
+                    photo = objNomActivite.getString("photo");
+                    date = objNomActivite.getString("date");
+
+                    evenements.add(nom);
+                    evenements.add(getString(R.string.description)+" : "+desc);
+                    evenements.add(getString(R.string.date)+" : "+date);
+                    evenements.add(getString(R.string.photo));
+                }
             }
+            else  evenements.add(getString(R.string.no_event));
+
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        evenements.add(id);
         adapter = new ArrayAdapter<String>(this, R.layout.simple_row, evenements);
         mListView.setAdapter(adapter);
-
+        ((Button) findViewById(R.id.button2)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(ListeEvenement.this, DetailsEvent.class);
+                intent.putExtra("lat", lat);
+                intent.putExtra("lon", lon);
+                startActivity(intent);
+            }
+        });
 
     }
     private class AccesBD extends AsyncTask<String, Void, String> {
