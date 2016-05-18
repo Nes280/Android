@@ -221,19 +221,42 @@ public class ListeEvenements extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if(id == R.id.accueil){
+            Intent intent = new Intent(ListeEvenements.this, Accueil_Utilisateur.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.autresActivite) {
+            Intent intent = new Intent(ListeEvenements.this, AutresActivites.class);
+            startActivity(intent);
+        } else if (id == R.id.creerActivite) {
+            Intent intent = new Intent(ListeEvenements.this, AjoutActivite.class);
+            startActivity(intent);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.modifProfil) {
+            Intent intent = new Intent(ListeEvenements.this, Modification_Profil.class);
+            startActivity(intent);
+        }
+        else if(id == R.id.changePassword){
+            Intent intent = new Intent(ListeEvenements.this, ChangementPassword.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.deconnexion) {
+            BddUser db = new BddUser(ListeEvenements.this);
+            db.open();
 
-        } else if (id == R.id.nav_manage) {
+            User u = db.getUserByIsConnected();
 
-        } else if (id == R.id.nav_share) {
+            db.setIsConnected(u.get_pseudo(), 0);
+
+            Intent intent = new Intent(ListeEvenements.this, MainActivity.class);
+            startActivity(intent);
+
+
+        }/* else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

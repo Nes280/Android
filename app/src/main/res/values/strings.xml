@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android</string>
+    <string name="app_name">NiEls</string>
 
     <string name="title_activity_main">Home</string>
     <string name="title_activity_inscription">Inscription</string>
