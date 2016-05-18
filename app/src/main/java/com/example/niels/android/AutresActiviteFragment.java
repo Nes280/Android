@@ -89,8 +89,8 @@ public class AutresActiviteFragment extends ListFragment {
             e.printStackTrace();
         }
 
-        //Recuperation des activités dont l'utilisateur est membre
-        String url = "/Android/recupMembre.php?utilisateur="+identifiant;
+        //Recuperation des activités dont l'utilisateur n'est pas membre
+        String url = "/Android/recupAutresActivites.php?utilisateur="+identifiant;
         AccesBD acbd = new AccesBD();
         acbd.execute(url);
         try {
@@ -113,19 +113,25 @@ public class AutresActiviteFragment extends ListFragment {
                 listAdapter.add(chaine);
             }
             else{
-                JSONArray jsonActivites = jsonObject.getJSONArray("Activites");
+                JSONArray jsonActivites = jsonObject.getJSONArray("activite");
                 int tailleListe = jsonActivites.length();
-                //Log.e("nb activite" , tailleListe + "");
+                Log.e("nb activite" , tailleListe + "");
 
                 //String chaine = "Vous avez " + tailleListe + " activités";
 
                 for(int i = 0; i < tailleListe; i++){
                     JSONObject c = jsonActivites.getJSONObject(i);
-                    String idActivite = c.getString("Activite");
+                    String id = c.getString("id activite");
+                    String nomActivite = c.getString("nom activite");
+                    String description = c.getString("description");
+                    String date = c.getString("date");
+                    String type = c.getString("type");
+                    String prop = c.getString("id utilisateur");
+
                     //Log.e("object",idActivite + "");
 
                     //Recuperation de l'activité
-                    String urlActivite = "/Android/recupActivite.php?activite="+idActivite;
+                    /*String urlActivite = "/Android/recupActivite.php?activite="+idActivite;
                     AccesBD activiteAcces = new AccesBD();
                     activiteAcces.execute(urlActivite);
                     try {
@@ -149,7 +155,7 @@ public class AutresActiviteFragment extends ListFragment {
                     String description = objMonActivite.getString("description");
                     String date = objMonActivite.getString("date");
                     String type = objMonActivite.getString("type");
-                    String  prop = objMonActivite.getString("id utilisateur");
+                    String  prop = objMonActivite.getString("id utilisateur");*/
 
                     listAdapter.add(nomActivite);
                     String liste[] = {id, nomActivite, description, date, type, prop};
@@ -219,13 +225,13 @@ public class AutresActiviteFragment extends ListFragment {
             getListView().setItemChecked(index, true);
 
             // Check what fragment is currently shown, replace if needed.
-            DetailsFragment details = (DetailsFragment)
+            DetailsAutresActivites details = (DetailsAutresActivites)
                     getFragmentManager().findFragmentById(R.id.detail);
             if (details == null || details.getShownId() != index) {
 
                 // Make new fragment to show this selection
                 String[] list = listActivite.get(index);
-                details = DetailsFragment.newInstance(list, index);
+                details = DetailsAutresActivites.newInstance(list, index);
 
                 // Execute a transaction, replacing any existing fragment
                 // with this one inside the frame.
@@ -241,7 +247,7 @@ public class AutresActiviteFragment extends ListFragment {
             // Otherwise we need to launch a new activity to display
             // the dialog fragment with selected text.
             Intent intent = new Intent();
-            intent.setClass(getActivity(), DetailsActivity.class);
+            intent.setClass(getActivity(), DetailsAutresActivites.class);
             String[] list = listActivite.get(index);
             intent.putExtra("list", list);
             intent.putExtra("index", index);
