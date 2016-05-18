@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/include"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
+                android:text="@string/commentaires"
                 android:id="@+id/textViewCommentaires"
                 android:layout_marginTop="10dp"/>
 

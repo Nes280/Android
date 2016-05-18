@@ -79,6 +79,8 @@
     <string name="title_activity_details_evenement">DetailsEvenement</string>
     <string name="title_activity_map_event">MapEvent</string>
     <string name="title_activity_liste_evenements">ListeEvenements</string>
+
     <string name="face">face</string>
+    <string name="commentaires">Comments</string>
 
 </resources>
