@@ -12,4 +12,6 @@
     tools:context="com.example.niels.android.AutresActivites"
     tools:showIn="@layout/app_bar_autres_activites">
 
+    <include layout="@layout/content_autres_activite"/>
+
 </RelativeLayout>
