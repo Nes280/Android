@@ -100,8 +100,7 @@ public class ChangementPassword extends AppCompatActivity
                 Log.e("mdp bd", u.get_password() + "");
                 Log.e("mdp hash ", oldPHash);
                 if(!oldPHash.equals(u.get_password())){
-                    //A changer
-                    Toast.makeText(ChangementPassword.this, "Mauvais mot de passe", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ChangementPassword.this, R.string.verifAncienPassword, Toast.LENGTH_LONG).show();
                     return;
                 }
 

@@ -27,6 +27,7 @@
     <string name="verifConnexionPassword">Bad information</string>
     <string name="verifNomEvenement">The name already exists for this activity</string>
     <string name="verifActivationLocalisation">Turn location</string>
+    <string name="verifAncienPassword">Old password wrong</string>
     <string name="demandeDeConnexion">You must connect to internet</string>
     <string name="pasActivite">You have no activity</string>
 

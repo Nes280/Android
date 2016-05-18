@@ -28,6 +28,7 @@
     <string name="verifConnexionPassword">Mauvaises informations</string>
     <string name="verifNomEvenement">Le nom existe déjà pour cette activité</string>
     <string name="verifActivationLocalisation">Activez la localisation</string>
+    <string name="verifAncienPassword">Ancien mot de passe mauvais</string>
     <string name="demandeDeConnexion">Vous devez vous connecter à internet</string>
     <string name="pasActivite">Vous n\'avez pas d\'activité</string>
 
