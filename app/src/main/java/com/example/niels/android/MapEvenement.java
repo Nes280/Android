@@ -23,6 +23,8 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
     double lon = 0.0;
     private ArrayAdapter<String> adapter;
     private ListView mListView;
+    private ArrayAdapter<String> adapter2;
+    private ListView mListView2;
     ArrayList<String> paramEve = new ArrayList<String>();
 
     @Override
@@ -42,7 +44,10 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
         String date = (TextView) findViewById(R.id.textView3);*/
 
         ArrayList<String> contenue = new ArrayList<String>();
+        ArrayList<String> commentaire = new ArrayList<String>();
+
         mListView = (ListView) findViewById(R.id.listView2);
+        mListView2 = (ListView) findViewById(R.id.listCommentaires);
 
         nom.setText((String) b.get("nom"));
         String de = (String) b.get("desc");
@@ -55,6 +60,10 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
 
         adapter = new ArrayAdapter<String>(this, R.layout.simple_row, contenue);
         mListView.setAdapter(adapter);
+
+        commentaire.add("test\n blabla blabla");
+        adapter2 = new ArrayAdapter<String>(this, R.layout.simple_row, commentaire);
+        mListView2.setAdapter(adapter2);
 
     }
 
