@@ -3,7 +3,9 @@ package com.example.niels.android;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +14,17 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.niels.Code.getExemple;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+
 /**
  * Created by Elsa on 18/05/2016.
  */
 public class DetailsAutresActivites extends Fragment {
+
+    String rep = null;
 
     public static DetailsAutresActivites newInstance( String[] list, int index) {
         DetailsAutresActivites f = new DetailsAutresActivites();
@@ -66,7 +75,7 @@ public class DetailsAutresActivites extends Fragment {
         nomActivite.setPadding(20,5,0,5);
         description.setPadding(20,0,0,0);
         date.setPadding(20, 0, 0, 0);
-        type.setPadding(20,0,0,20);
+        type.setPadding(20, 0, 0, 20);
 
         nomActivite.setTextSize(20);
         nomActivite.setTextColor(Color.parseColor("#0099CC"));
@@ -85,32 +94,69 @@ public class DetailsAutresActivites extends Fragment {
         if (list[4].equals("1")) typePublication = getString(R.string.radio_private)+"";
         else typePublication = getString(R.string.radio_public)+"";
         type.setText(getString(R.string.type)+": "+typePublication);
-        ajout.setText(getString(R.string.add_event));
-        //voir.setText(getString(R.string.show_events));
+        //A changer
+        //ajout.setText(getString(R.string.add_event));
+        ajout.setText("Rejoindre");
 
-        /*voir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), ListeEvenements.class);
-                intent.putExtra("id", list[0]);
-                startActivity(intent);
-                //Toast.makeText(getActivity(),"Pas disponible pour le moment", Toast.LENGTH_LONG).show();
-
-            }
-        });*/
         ajout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), AjoutEvenement.class);
-                intent.putExtra("id", list[0]);
+
+                //Date du jours
+                String format = "dd/MM/yy H:mm:ss";
+                java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
+                java.util.Date dateJava = new java.util.Date();
+                String date = formater.format(dateJava);
+
+                String url3 = "/Android/ajoutMembre.php?utilisateur=" + list[6] + "&activite=" + list[0] +
+                        "&date=" + date;
+                AccesBD acMembre = new AccesBD();
+                acMembre.execute(url3);
+                try {
+                    acMembre.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                intent.setClass(getActivity(), Accueil_Utilisateur.class);
+                //intent.putExtra("id", list[0]);
                 startActivity(intent);
             }
         });
 
         return layout;
 
+    }
+
+
+    private class AccesBD extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                getExemple e = new getExemple();
+                String host = "http://folionielsbenichou.franceserv.com";
+                //String rep = null;
+
+                //rep = e.run(host+"/Android/nouvelUtilisateur.php?nom=" +n+"&prenom="+p+"&pseudo="+ps+"&motDePasse="+mdpHash+"&date="+date);
+                rep = e.run(host+params[0]);
+                Log.e("REPOSE", rep);
+                //return downloadUrl(params[0]);
+                return rep;
+            } catch (IOException e) {
+                return "Unable to retrieve web page. URL maybe invalide ";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            rep = result;
+            //Log.e("rep" , " res " + result);
+            //Toast.makeText(Inscription.this, "Response " + result, Toast.LENGTH_LONG).show();
+        }
     }
 
 }

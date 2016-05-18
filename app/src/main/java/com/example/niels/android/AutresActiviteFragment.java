@@ -158,7 +158,7 @@ public class AutresActiviteFragment extends ListFragment {
                     String  prop = objMonActivite.getString("id utilisateur");*/
 
                     listAdapter.add(nomActivite);
-                    String liste[] = {id, nomActivite, description, date, type, prop};
+                    String liste[] = {id, nomActivite, description, date, type, prop, identifiant};
                     listActivite.add(liste); ;
 
                 }
