@@ -120,7 +120,8 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
                     JSONObject objMonCommentaire = jsonCommentairesInfo.getJSONObject(i);
                     //Log.e("obNomActivite", objNomActivite + "");
                     String unCommentaire = objMonCommentaire.getString("commentaire");
-                    lesCommentaires.add(new Commentaire("Auteur",unCommentaire));
+                    String auteur = objMonCommentaire.getString("utilisateur");
+                    lesCommentaires.add(new Commentaire(auteur,unCommentaire));
 
                 }
 
