@@ -3,6 +3,8 @@ package com.example.niels.android;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -19,6 +21,8 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     double lat = 0.0;
     double lon = 0.0;
+    private ArrayAdapter<String> adapter;
+    private ListView mListView;
     ArrayList<String> paramEve = new ArrayList<String>();
 
     @Override
@@ -33,15 +37,24 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
         Bundle b = getIntent().getExtras();
        // paramEve = (ArrayList<String>)b.get("array");
 
-        TextView nom = (TextView) findViewById(R.id.textView);
-        TextView desc = (TextView) findViewById(R.id.textView2);
-        TextView date = (TextView) findViewById(R.id.textView3);
+        TextView nom = (TextView) findViewById(R.id.textView);/*
+        String desc = (TextView) findViewById(R.id.textView2);
+        String date = (TextView) findViewById(R.id.textView3);*/
+
+        ArrayList<String> contenue = new ArrayList<String>();
+        mListView = (ListView) findViewById(R.id.listView2);
 
         nom.setText((String) b.get("nom"));
         String de = (String) b.get("desc");
         String da = (String) b.get("date");
-        desc.setText(getString(R.string.description) + " : "+de);
-        date.setText(getString(R.string.date) + " : "+da);
+        String desc = (getString(R.string.description) + " : "+de);
+        String date = (getString(R.string.date) + " : "+da);
+
+        contenue.add(desc);
+        contenue.add(date);
+
+        adapter = new ArrayAdapter<String>(this, R.layout.simple_row, contenue);
+        mListView.setAdapter(adapter);
 
     }
 
