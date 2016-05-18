@@ -88,6 +88,10 @@
         <activity
             android:name=".DetailsEvenement"
             android:label="@string/title_activity_details_evenement"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ListeEvenements"
+            android:label="@string/title_activity_liste_evenements"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

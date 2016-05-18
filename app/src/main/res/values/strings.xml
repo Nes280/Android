@@ -76,5 +76,7 @@
     <string name="title_activity_autres_activites">AutresActivites</string>
     <string name="title_activity_details_event">Map</string>
     <string name="title_activity_details_evenement">DetailsEvenement</string>
+    <string name="title_activity_map_event">MapEvent</string>
+    <string name="title_activity_liste_evenements">ListeEvenements</string>
 
 </resources>

@@ -104,7 +104,7 @@ public class DetailsFragment extends Fragment{
             @Override
             public void onClick(View v) {
                Intent intent = new Intent();
-                intent.setClass(getActivity(), ListeEvenement.class);
+                intent.setClass(getActivity(), ListeEvenements.class);
                 intent.putExtra("id", list[0]);
                 startActivity(intent);
                 //Toast.makeText(getActivity(),"Pas disponible pour le moment", Toast.LENGTH_LONG).show();
