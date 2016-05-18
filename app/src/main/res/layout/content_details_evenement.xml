@@ -53,6 +53,21 @@
                 android:layout_below="@+id/listView2"
 
                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/include"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/textViewCommentaires"
+                android:layout_marginTop="10dp"/>
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:id="@+id/listCommentaires"
+                android:layout_below="@+id/textViewCommentaires"/>
         </RelativeLayout>
     </ScrollView>
 

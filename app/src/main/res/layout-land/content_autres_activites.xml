@@ -4,11 +4,13 @@
 
     <fragment android:name="com.example.niels.android.AutresActiviteFragment"
         android:id="@+id/fragment" android:layout_weight="1.00"
-        android:layout_width="0px" android:layout_height="match_parent" />
+        android:layout_width="0px" android:layout_height="match_parent"
+        android:layout_marginTop="50dp"/>
 
     <FrameLayout android:id="@+id/details" android:layout_weight="1.13"
         android:layout_width="0px" android:layout_height="match_parent"
-        android:background="?android:attr/detailsElementBackground" >
+        android:background="?android:attr/detailsElementBackground"
+        android:layout_marginTop="50dp">
 
 
     </FrameLayout>
