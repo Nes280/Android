@@ -51,6 +51,7 @@ public class ListeEvenements extends AppCompatActivity
     String photo = "";
     String date = "";
     String idUser = "";
+    String idA = "";
     Hashtable<Integer, ArrayList<String>> contenueEvenement = new Hashtable<Integer, ArrayList<String>>();
 
     @Override
@@ -96,11 +97,11 @@ public class ListeEvenements extends AppCompatActivity
         ScrollView liste = (ScrollView) findViewById(R.id.scrollView);
 
         Bundle b = getIntent().getExtras();
-        String id = (String) b.get("id");
+        idA = (String) b.get("id");
         ArrayList<String> evenements = new ArrayList<String>();
 
         //on recupère les evenements en BD
-        String url = "/Android/recupEvenement.php?activite=" + id;
+        String url = "/Android/recupEvenement.php?activite=" + idA;
         AccesBD recActivite = new AccesBD();
         recActivite.execute(url);
         try {
@@ -168,7 +169,9 @@ public class ListeEvenements extends AppCompatActivity
                 ArrayList<String>liste = contenueEvenement.get(position);
                 Intent intent = new Intent();
                 //Log.e("LOG####",liste.get((position ) * 8) + 4+" "+liste.get((position ) * 8) + 2+)
+                //8 parcequ'il y a 8 paramètres par evenement donc position*8 permet de se placer au debut de la liste de l'evenement position
                 intent.setClass(ListeEvenements.this, MapEvenement.class);
+                intent.putExtra("idActivite", idA);
                 intent.putExtra("nom", liste.get((((position) * 8) + 4)));
                 intent.putExtra("desc", liste.get((((position ) * 8) + 5)));
                 intent.putExtra("date", liste.get((((position ) * 8) + 7)));

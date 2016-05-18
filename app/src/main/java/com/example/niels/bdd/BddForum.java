@@ -11,7 +11,7 @@ public class BddForum {
     private static final String TABLE_FORUM = "forum";
     private static final String COLONNE_ID_USER_FORUM = "idUser";
     private static final String COLONNE_ID_ACTIVITE_FORUM = "idActivite";
-    private static final String COLONNE_COMMENTAIRE_FORUM = "commentaire";
+    private static final String COLONNE_COMMENTAIRE_FORUM = "Commentaire";
     private static final String COLONNE_DATE_FORUM = "date";
 
     private SQLiteDatabase bdd;

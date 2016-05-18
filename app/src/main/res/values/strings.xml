@@ -81,6 +81,8 @@
     <string name="title_activity_liste_evenements">ListeEvenements</string>
 
     <string name="face">face</string>
+
     <string name="commentaires">Comments</string>
+    <string name="no_comment">The event haven\'t yet any comments.</string>
 
 </resources>

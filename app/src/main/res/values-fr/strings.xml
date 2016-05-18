@@ -68,7 +68,9 @@
     <string name="newPassword">Nouveau mot de passe</string>
     <string name="oldPassword">Ancien mot de passe</string>
     <string name="face">face</string>
+
     <string name="commentaires">Commentaires</string>
+    <string name="no_comment">L\'événement n\'à pas encore de commentaires.</string>
 
 
 </resources>
