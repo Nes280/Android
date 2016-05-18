@@ -61,13 +61,24 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/commentaires"
                 android:id="@+id/textViewCommentaires"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="30dp"
+                />
 
             <ListView
                 android:layout_width="wrap_content"
-                android:layout_height="300dp"
+                android:layout_height="250dp"
                 android:id="@+id/listCommentaires"
-                android:layout_below="@+id/textViewCommentaires"/>
+                android:layout_below="@+id/btn_commentaire"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_pageComm"
+                android:id="@+id/btn_commentaire"
+                android:layout_alignTop="@+id/textViewCommentaires"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
         </RelativeLayout>
     </ScrollView>
 

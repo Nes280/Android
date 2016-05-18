@@ -84,5 +84,9 @@
 
     <string name="commentaires">Comments</string>
     <string name="no_comment">The event haven\'t yet any comments.</string>
+    <string name="title_activity_ajout_commentaire">AjoutCommentaire</string>
+    <string name="your_comment">Your comment : </string>
+    <string name="btn_addCom">Comment</string>
+    <string name="btn_pageComm">Add a comment</string>
 
 </resources>

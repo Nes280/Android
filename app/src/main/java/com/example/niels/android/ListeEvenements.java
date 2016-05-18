@@ -173,6 +173,7 @@ public class ListeEvenements extends AppCompatActivity
                 intent.setClass(ListeEvenements.this, MapEvenement.class);
                 intent.putExtra("idActivite", idA);
                 intent.putExtra("nom", liste.get((((position) * 8) + 4)));
+                intent.putExtra("idUser", liste.get((((position) * 8) + 1)));
                 intent.putExtra("desc", liste.get((((position ) * 8) + 5)));
                 intent.putExtra("date", liste.get((((position ) * 8) + 7)));
                 intent.putExtra("lat", liste.get((((position ) * 8) + 2)));

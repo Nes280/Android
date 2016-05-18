@@ -1,13 +1,16 @@
 package com.example.niels.android;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,6 +47,8 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
     ArrayList<String> paramEve = new ArrayList<String>();
     String rep = null;
     String idActivite;
+    String idUser;
+    Intent intent = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +71,21 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
 
         mListView = (ListView) findViewById(R.id.listView2);
         mListView2 = (ListView) findViewById(R.id.listCommentaires);
+        mListView2.setOnTouchListener(new View.OnTouchListener() {
+            // Setting on Touch Listener for handling the touch inside ScrollView
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
 
         nom.setText((String) b.get("nom"));
         String de = (String) b.get("desc");
         String da = (String) b.get("date");
         idActivite = (String) b.get("idActivite");
+        idUser = (String) b.get("idUser");
         String desc = (getString(R.string.description) + " : "+de);
         String date = (getString(R.string.date) + " : "+da);
 
@@ -88,7 +103,18 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
         adapter2 = new CommentaireAdapter(this, lesCommentaires);
         mListView2.setAdapter(adapter2);
 
+        ((Button) findViewById(R.id.btn_commentaire)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(MapEvenement.this, AjoutCommentaire.class);
+                intent.putExtra("idUser",idUser);
+                intent.putExtra("idActivite",idActivite);
+                startActivity(intent);
+            }
+        });
+
     }
+
 
     private List<Commentaire> recupCommentaires()
     {
@@ -182,6 +208,9 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
         // Add a marker in Sydney and move the camera
         LatLng ici = new LatLng(lat, lon);
         mMap.addMarker(new MarkerOptions().position(ici).title(getString(R.string.location_event)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(ici));
+        float zoomLevel = (float) 15.0; //This goes up to 21
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ici, zoomLevel));
+
     }
+
 }

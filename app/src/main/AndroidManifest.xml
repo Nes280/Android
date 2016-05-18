@@ -88,6 +88,10 @@
         <activity
             android:name=".ListeEvenements"
             android:label="@string/title_activity_liste_evenements"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AjoutCommentaire"
+            android:label="@string/title_activity_ajout_commentaire"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
