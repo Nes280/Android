@@ -16,10 +16,10 @@ import java.util.List;
 /**
  * Created by Niels on 18/05/2016.
  */
-public class CommentaireAdapter extends ArrayAdapter<Commentaire> {
+public class CommentaireAdapter extends ArrayAdapter<Commentaires> {
 
     //tweets est la liste des models à afficher
-    public CommentaireAdapter(Context context, List<Commentaire> commentaires) {
+    public CommentaireAdapter(Context context, List<Commentaires> commentaires) {
         super(context, 0, commentaires);
     }
 
@@ -40,7 +40,7 @@ public class CommentaireAdapter extends ArrayAdapter<Commentaire> {
         }
 
         //getItem(position) va récupérer l'item [position] de la List<Tweet> tweets
-        Commentaire commentaire = getItem(position);
+        Commentaires commentaire = getItem(position);
 
         //il ne reste plus qu'à remplir notre vue
         viewHolder.auteur.setText(commentaire.getAuteur());

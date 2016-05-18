@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.niels.Code.Commentaire;
 import com.example.niels.Code.CommentaireAdapter;
+import com.example.niels.Code.Commentaires;
 import com.example.niels.Code.getExemple;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -98,7 +98,7 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
 
         //commentaire.add("test\n blabla blabla");
 
-        List<Commentaire> lesCommentaires = recupCommentaires();
+        List<Commentaires> lesCommentaires = recupCommentaires();
         //Log.e("COMM : ",lesCommentaires.toString());
         adapter2 = new CommentaireAdapter(this, lesCommentaires);
         mListView2.setAdapter(adapter2);
@@ -116,10 +116,10 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    private List<Commentaire> recupCommentaires()
+    private List<Commentaires> recupCommentaires()
     {
         String valeur = null;
-        List<Commentaire> lesCommentaires = new ArrayList<Commentaire>();
+        List<Commentaires> lesCommentaires = new ArrayList<Commentaires>();
         //Recuperation de l'activité
         String urlActivite = "/Android/recupCommentaires.php?activite="+idActivite;
         AccesBD activiteAcces = new AccesBD();
@@ -147,12 +147,12 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
                     //Log.e("obNomActivite", objNomActivite + "");
                     String unCommentaire = objMonCommentaire.getString("commentaire");
                     String auteur = objMonCommentaire.getString("utilisateur");
-                    lesCommentaires.add(new Commentaire(auteur,unCommentaire));
+                    lesCommentaires.add(new Commentaires(auteur,unCommentaire));
 
                 }
 
             }
-            else lesCommentaires.add(new Commentaire(" ", getString(R.string.no_comment)));
+            else lesCommentaires.add(new Commentaires(" ", getString(R.string.no_comment)));
 
         }catch (JSONException e) {
             e.printStackTrace();
