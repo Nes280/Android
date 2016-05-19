@@ -236,17 +236,19 @@ public class AccueilFragment extends ListFragment {
             if (details == null || details.getShownId() != index) {
 
                 // Make new fragment to show this selection
-                String[] list = listActivite.get(index);
-                details = DetailsFragment.newInstance(list, index);
+                if (!listActivite.isEmpty()) {
+                    String[] list = listActivite.get(index);
+                    details = DetailsFragment.newInstance(list, index);
 
-                // Execute a transaction, replacing any existing fragment
-                // with this one inside the frame.
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    // Execute a transaction, replacing any existing fragment
+                    // with this one inside the frame.
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-                ft.replace(R.id.details, details);
+                    ft.replace(R.id.details, details);
 
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                    ft.commit();
+                }
             }
 
         } else {
