@@ -1,10 +1,17 @@
 package com.example.niels.android;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -21,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.niels.Code.getExemple;
 import com.example.niels.bdd.BddUser;
@@ -53,6 +61,7 @@ public class ListeEvenements extends AppCompatActivity
     String idUser = "";
     String idA = "";
     Hashtable<Integer, ArrayList<String>> contenueEvenement = new Hashtable<Integer, ArrayList<String>>();
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,112 +88,157 @@ public class ListeEvenements extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //récuperation du pseudo
-        BddUser db = new BddUser(ListeEvenements.this);
-        db.open();
-        User u = db.getUserByIsConnected();
+        //Demande de permission
+        int permissionCheck = ContextCompat.checkSelfPermission(ListeEvenements.this,
+                Manifest.permission.INTERNET);
 
-        //Mettre le pseudo dans le menu
-        View v =navigationView.getHeaderView(0);
-        TextView pseudo = (TextView) v.findViewById(R.id.pseudoTet);
-        pseudo.setText(u.get_pseudo());
-        pseudo.setTextSize(20);
-        pseudo.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-        db.close();
+        int permissionCheck2 = ContextCompat.checkSelfPermission(ListeEvenements.this,
+                Manifest.permission.ACCESS_NETWORK_STATE);
 
+        int permissionCheck3 = ContextCompat.checkSelfPermission(ListeEvenements.this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
 
-        mListView = (ListView) findViewById(R.id.liste_evenements);
-        ScrollView liste = (ScrollView) findViewById(R.id.scrollView);
+        //Vérification permission
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED && permissionCheck2 == PackageManager.PERMISSION_GRANTED
+                && permissionCheck3 == PackageManager.PERMISSION_GRANTED) {
+            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()) {
 
-        Bundle b = getIntent().getExtras();
-        idA = (String) b.get("id");
-        ArrayList<String> evenements = new ArrayList<String>();
+                //récuperation du pseudo
+                BddUser db = new BddUser(ListeEvenements.this);
+                db.open();
+                User u = db.getUserByIsConnected();
 
-        //on recupère les evenements en BD
-        String url = "/Android/recupEvenement.php?activite=" + idA;
-        AccesBD recActivite = new AccesBD();
-        recActivite.execute(url);
-        try {
-            recActivite.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-        String response = rep;
-        String valeur = null;
+                //Mettre le pseudo dans le menu
+                View v =navigationView.getHeaderView(0);
+                TextView pseudo = (TextView) v.findViewById(R.id.pseudoTet);
+                pseudo.setText(u.get_pseudo());
+                pseudo.setTextSize(20);
+                pseudo.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+                db.close();
 
 
-        try {
-            JSONObject jsonEvenements = new JSONObject(rep);
-            valeur = jsonEvenements.getString("state");
-            if (valeur.equals("1")) {
-                JSONArray jsonEveInfo = jsonEvenements.getJSONArray("evenement");
+                mListView = (ListView) findViewById(R.id.liste_evenements);
+                ScrollView liste = (ScrollView) findViewById(R.id.scrollView);
 
-                for (int i = 0; i < jsonEveInfo.length(); i++) {
-                    //paramEve.clear();
-                    JSONObject objNomActivite = jsonEveInfo.getJSONObject(i);
-                    idEve = objNomActivite.getString("id evenement");
-                    idUser = objNomActivite.getString("idUtilisateur");
-                    lat = objNomActivite.getString("latitude GPS");
-                    lon = objNomActivite.getString("longitude GPS");
-                    nom = objNomActivite.getString("nom evenement");
-                    desc = objNomActivite.getString("description");
-                    photo = objNomActivite.getString("photo");
-                    date = objNomActivite.getString("date");
+                Bundle b = getIntent().getExtras();
+                idA = (String) b.get("id");
+                ArrayList<String> evenements = new ArrayList<String>();
 
-                    evenements.add("\n" + nom.toUpperCase() + "\n\n" +
-                                    getString(R.string.description) + " : " + desc + "\n" +
-                                    getString(R.string.date) + " : " + date + "\n" +
-                                    getString(R.string.photo) + "\n"
-                    );
-
-                    paramEve.add(idEve);
-                    paramEve.add(idUser);
-                    paramEve.add(lat);
-                    paramEve.add(lon);
-                    paramEve.add(nom);
-                    paramEve.add(desc);
-                    paramEve.add(photo);
-                    paramEve.add(date);
-
-                    contenueEvenement.put(i,paramEve);
+                //on recupère les evenements en BD
+                String url = "/Android/recupEvenement.php?activite=" + idA;
+                AccesBD recActivite = new AccesBD();
+                recActivite.execute(url);
+                try {
+                    recActivite.get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
                 }
-            } else evenements.add(getString(R.string.no_event));
+
+                String response = rep;
+                String valeur = null;
 
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+                try {
+                    JSONObject jsonEvenements = new JSONObject(rep);
+                    valeur = jsonEvenements.getString("state");
+                    if (valeur.equals("1")) {
+                        JSONArray jsonEveInfo = jsonEvenements.getJSONArray("evenement");
+
+                        for (int i = 0; i < jsonEveInfo.length(); i++) {
+                            //paramEve.clear();
+                            JSONObject objNomActivite = jsonEveInfo.getJSONObject(i);
+                            idEve = objNomActivite.getString("id evenement");
+                            idUser = objNomActivite.getString("idUtilisateur");
+                            lat = objNomActivite.getString("latitude GPS");
+                            lon = objNomActivite.getString("longitude GPS");
+                            nom = objNomActivite.getString("nom evenement");
+                            desc = objNomActivite.getString("description");
+                            photo = objNomActivite.getString("photo");
+                            date = objNomActivite.getString("date");
+
+                            evenements.add("\n" + nom.toUpperCase() + "\n\n" +
+                                            getString(R.string.description) + " : " + desc + "\n" +
+                                            getString(R.string.date) + " : " + date + "\n" +
+                                            getString(R.string.photo) + "\n"
+                            );
+
+                            paramEve.add(idEve);
+                            paramEve.add(idUser);
+                            paramEve.add(lat);
+                            paramEve.add(lon);
+                            paramEve.add(nom);
+                            paramEve.add(desc);
+                            paramEve.add(photo);
+                            paramEve.add(date);
+
+                            contenueEvenement.put(i,paramEve);
+                        }
+                    } else evenements.add(getString(R.string.no_event));
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                adapter = new ArrayAdapter<String>(this, R.layout.simple_row, evenements);
+
+                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+
+                        Log.e("LOG---->", contenueEvenement.get(position).toString());
+                        ArrayList<String>liste = contenueEvenement.get(position);
+                        Intent intent = new Intent();
+                        //Log.e("LOG####",liste.get((position ) * 8) + 4+" "+liste.get((position ) * 8) + 2+)
+                        //8 parcequ'il y a 8 paramètres par evenement donc position*8 permet de se placer au debut de la liste de l'evenement position
+                        intent.setClass(ListeEvenements.this, MapEvenement.class);
+                        intent.putExtra("idActivite", idA);
+                        intent.putExtra("nom", liste.get((((position) * 8) + 4)));
+                        intent.putExtra("idUser", liste.get((((position) * 8) + 1)));
+                        intent.putExtra("desc", liste.get((((position ) * 8) + 5)));
+                        intent.putExtra("date", liste.get((((position ) * 8) + 7)));
+                        intent.putExtra("lat", liste.get((((position ) * 8) + 2)));
+                        intent.putExtra("lon", liste.get((((position ) * 8) + 3)));
+                        startActivity(intent);
+                    }
+                });
+
+                mListView.setAdapter(adapter);
+            } else {
+                Toast.makeText(ListeEvenements.this, R.string.demandeDeConnexion, Toast.LENGTH_LONG).show();
+            }
+        } else
+        {
+            ActivityCompat.requestPermissions(ListeEvenements.this,
+                    new String[]{Manifest.permission.INTERNET},
+                    REQUEST_CODE_ASK_PERMISSIONS);
+
+            ActivityCompat.requestPermissions(ListeEvenements.this,
+                    new String[]{Manifest.permission.ACCESS_NETWORK_STATE},
+                    REQUEST_CODE_ASK_PERMISSIONS);
+
+            ActivityCompat.requestPermissions(
+                    ListeEvenements.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    1);
+
+            boolean i = checkLocationPermission();
+
+            Log.e("erreur", "permission denied " + i);
+
         }
 
-        adapter = new ArrayAdapter<String>(this, R.layout.simple_row, evenements);
+    }
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-
-                Log.e("LOG---->", contenueEvenement.get(position).toString());
-                ArrayList<String>liste = contenueEvenement.get(position);
-                Intent intent = new Intent();
-                //Log.e("LOG####",liste.get((position ) * 8) + 4+" "+liste.get((position ) * 8) + 2+)
-                //8 parcequ'il y a 8 paramètres par evenement donc position*8 permet de se placer au debut de la liste de l'evenement position
-                intent.setClass(ListeEvenements.this, MapEvenement.class);
-                intent.putExtra("idActivite", idA);
-                intent.putExtra("nom", liste.get((((position) * 8) + 4)));
-                intent.putExtra("idUser", liste.get((((position) * 8) + 1)));
-                intent.putExtra("desc", liste.get((((position ) * 8) + 5)));
-                intent.putExtra("date", liste.get((((position ) * 8) + 7)));
-                intent.putExtra("lat", liste.get((((position ) * 8) + 2)));
-                intent.putExtra("lon", liste.get((((position ) * 8) + 3)));
-                startActivity(intent);
-            }
-        });
-
-        mListView.setAdapter(adapter);
-
-
+    public boolean checkLocationPermission()
+    {
+        String permission = "android.permission.ACCESS_FINE_LOCATION";
+        int res = this.checkCallingOrSelfPermission(permission);
+        return (res == PackageManager.PERMISSION_GRANTED);
     }
 
     @Override

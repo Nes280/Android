@@ -1,10 +1,18 @@
 package com.example.niels.android;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.niels.Code.getExemple;
 import com.example.niels.bdd.BddUser;
@@ -30,6 +39,8 @@ public class AjoutCommentaire extends AppCompatActivity
     String idUser;
     Intent intent;
     String rep = null;
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,33 +66,80 @@ public class AjoutCommentaire extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //Demande de permission
+        int permissionCheck = ContextCompat.checkSelfPermission(AjoutCommentaire.this,
+                Manifest.permission.INTERNET);
 
-        Bundle b = getIntent().getExtras();
-        idActivite = (String) b.get("idActivite");
-        idUser = (String) b.get("idUser");
-        final TextView leCommentaire = (TextView)findViewById(R.id.editText3);
+        int permissionCheck2 = ContextCompat.checkSelfPermission(AjoutCommentaire.this,
+                Manifest.permission.ACCESS_NETWORK_STATE);
+
+        int permissionCheck3 = ContextCompat.checkSelfPermission(AjoutCommentaire.this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+
+        //Vérification permission
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED && permissionCheck2 == PackageManager.PERMISSION_GRANTED
+                && permissionCheck3 == PackageManager.PERMISSION_GRANTED) {
+            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()) {
+
+                Bundle b = getIntent().getExtras();
+                idActivite = (String) b.get("idActivite");
+                idUser = (String) b.get("idUser");
+                final TextView leCommentaire = (TextView)findViewById(R.id.editText3);
 
 
-                ((Button) findViewById(R.id.button2)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String contenue = (String)leCommentaire.getText().toString();
-                int user = Integer.parseInt(idUser);
-                int activite = Integer.parseInt(idActivite);
+                        ((Button) findViewById(R.id.button2)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String contenue = (String)leCommentaire.getText().toString();
+                        int user = Integer.parseInt(idUser);
+                        int activite = Integer.parseInt(idActivite);
 
-                String format = "dd/MM/yy H:mm:ss";
-                java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
-                java.util.Date dateJava = new java.util.Date();
+                        String format = "dd/MM/yy H:mm:ss";
+                        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
+                        java.util.Date dateJava = new java.util.Date();
 
-                addCommentaite(contenue,user,activite, formater.format(dateJava));
+                        addCommentaite(contenue,user,activite, formater.format(dateJava));
+                        /*
+                        intent = new Intent(AjoutCommentaire.this, AjoutCommentaire.class);
+                        intent.putExtra("idUser", idUser);
+                        intent.putExtra("idActivite", idActivite);
 
-                intent = new Intent(AjoutCommentaire.this, AjoutCommentaire.class);
-                intent.putExtra("idUser", idUser);
-                intent.putExtra("idActivite", idActivite);
-
-                startActivity(intent);
+                        startActivity(intent);
+                        */
+                        AjoutCommentaire.this.finish();
+                    }
+                });
+            } else {
+                Toast.makeText(AjoutCommentaire.this, R.string.demandeDeConnexion, Toast.LENGTH_LONG).show();
             }
-        });
+        } else
+        {
+            ActivityCompat.requestPermissions(AjoutCommentaire.this,
+                    new String[]{Manifest.permission.INTERNET},
+                    REQUEST_CODE_ASK_PERMISSIONS);
+
+            ActivityCompat.requestPermissions(AjoutCommentaire.this,
+                    new String[]{Manifest.permission.ACCESS_NETWORK_STATE},
+                    REQUEST_CODE_ASK_PERMISSIONS);
+
+            ActivityCompat.requestPermissions(
+                    AjoutCommentaire.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    1);
+
+            boolean i = checkLocationPermission();
+
+            //Log.e("erreur", "permission denied " + i);
+
+        }
+    }
+
+    public boolean checkLocationPermission()
+    {
+        String permission = "android.permission.ACCESS_FINE_LOCATION";
+        int res = this.checkCallingOrSelfPermission(permission);
+        return (res == PackageManager.PERMISSION_GRANTED);
     }
 
     private void addCommentaite(String commentaire, int user, int activite, String date)

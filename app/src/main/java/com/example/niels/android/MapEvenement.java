@@ -1,9 +1,16 @@
 package com.example.niels.android;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -14,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.niels.Code.CommentaireAdapter;
 import com.example.niels.Code.Commentaires;
@@ -49,6 +57,7 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
     String idActivite;
     String idUser;
     Intent intent = null;
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,60 +68,106 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        Bundle b = getIntent().getExtras();
-       // paramEve = (ArrayList<String>)b.get("array");
+        //Demande de permission
+        int permissionCheck = ContextCompat.checkSelfPermission(MapEvenement.this,
+                Manifest.permission.INTERNET);
 
-        TextView nom = (TextView) findViewById(R.id.textView);/*
-        String desc = (TextView) findViewById(R.id.textView2);
-        String date = (TextView) findViewById(R.id.textView3);*/
+        int permissionCheck2 = ContextCompat.checkSelfPermission(MapEvenement.this,
+                Manifest.permission.ACCESS_NETWORK_STATE);
 
-        ArrayList<String> contenue = new ArrayList<String>();
-       // ArrayList<String> commentaire = new ArrayList<String>();
+        int permissionCheck3 = ContextCompat.checkSelfPermission(MapEvenement.this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
 
-        mListView = (ListView) findViewById(R.id.listView2);
-        mListView2 = (ListView) findViewById(R.id.listCommentaires);
-        mListView2.setOnTouchListener(new View.OnTouchListener() {
-            // Setting on Touch Listener for handling the touch inside ScrollView
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // Disallow the touch request for parent scroll on touch of child view
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
+        //Vérification permission
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED && permissionCheck2 == PackageManager.PERMISSION_GRANTED
+                && permissionCheck3 == PackageManager.PERMISSION_GRANTED) {
+            ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()) {
+
+                Bundle b = getIntent().getExtras();
+               // paramEve = (ArrayList<String>)b.get("array");
+
+                TextView nom = (TextView) findViewById(R.id.textView);/*
+                String desc = (TextView) findViewById(R.id.textView2);
+                String date = (TextView) findViewById(R.id.textView3);*/
+
+                ArrayList<String> contenue = new ArrayList<String>();
+               // ArrayList<String> commentaire = new ArrayList<String>();
+
+                mListView = (ListView) findViewById(R.id.listView2);
+                mListView2 = (ListView) findViewById(R.id.listCommentaires);
+                mListView2.setOnTouchListener(new View.OnTouchListener() {
+                    // Setting on Touch Listener for handling the touch inside ScrollView
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        // Disallow the touch request for parent scroll on touch of child view
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        return false;
+                    }
+                });
+
+                nom.setText((String) b.get("nom"));
+                String de = (String) b.get("desc");
+                String da = (String) b.get("date");
+                idActivite = (String) b.get("idActivite");
+                idUser = (String) b.get("idUser");
+                String desc = (getString(R.string.description) + " : "+de);
+                String date = (getString(R.string.date) + " : "+da);
+
+                contenue.add(desc);
+                contenue.add(date);
+
+                adapter = new ArrayAdapter<String>(MapEvenement.this, R.layout.simple_row, contenue);
+                mListView.setAdapter(adapter);
+
+
+                //commentaire.add("test\n blabla blabla");
+
+                List<Commentaires> lesCommentaires = recupCommentaires();
+                //Log.e("COMM : ",lesCommentaires.toString());
+                adapter2 = new CommentaireAdapter(this, lesCommentaires);
+                mListView2.setAdapter(adapter2);
+
+                ((Button) findViewById(R.id.btn_commentaire)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        intent = new Intent(MapEvenement.this, AjoutCommentaire.class);
+                        intent.putExtra("idUser",idUser);
+                        intent.putExtra("idActivite",idActivite);
+                        startActivity(intent);
+                    }
+                });
+            } else {
+                Toast.makeText(MapEvenement.this, R.string.demandeDeConnexion, Toast.LENGTH_LONG).show();
             }
-        });
+        } else
+        {
+            ActivityCompat.requestPermissions(MapEvenement.this,
+                    new String[]{Manifest.permission.INTERNET},
+                    REQUEST_CODE_ASK_PERMISSIONS);
 
-        nom.setText((String) b.get("nom"));
-        String de = (String) b.get("desc");
-        String da = (String) b.get("date");
-        idActivite = (String) b.get("idActivite");
-        idUser = (String) b.get("idUser");
-        String desc = (getString(R.string.description) + " : "+de);
-        String date = (getString(R.string.date) + " : "+da);
+            ActivityCompat.requestPermissions(MapEvenement.this,
+                    new String[]{Manifest.permission.ACCESS_NETWORK_STATE},
+                    REQUEST_CODE_ASK_PERMISSIONS);
 
-        contenue.add(desc);
-        contenue.add(date);
+            ActivityCompat.requestPermissions(
+                    MapEvenement.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    1);
 
-        adapter = new ArrayAdapter<String>(MapEvenement.this, R.layout.simple_row, contenue);
-        mListView.setAdapter(adapter);
+            boolean i = checkLocationPermission();
 
+            Log.e("erreur", "permission denied " + i);
 
-        //commentaire.add("test\n blabla blabla");
+        }
 
-        List<Commentaires> lesCommentaires = recupCommentaires();
-        //Log.e("COMM : ",lesCommentaires.toString());
-        adapter2 = new CommentaireAdapter(this, lesCommentaires);
-        mListView2.setAdapter(adapter2);
+    }
 
-        ((Button) findViewById(R.id.btn_commentaire)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intent = new Intent(MapEvenement.this, AjoutCommentaire.class);
-                intent.putExtra("idUser",idUser);
-                intent.putExtra("idActivite",idActivite);
-                startActivity(intent);
-            }
-        });
-
+    public boolean checkLocationPermission()
+    {
+        String permission = "android.permission.ACCESS_FINE_LOCATION";
+        int res = this.checkCallingOrSelfPermission(permission);
+        return (res == PackageManager.PERMISSION_GRANTED);
     }
 
 
