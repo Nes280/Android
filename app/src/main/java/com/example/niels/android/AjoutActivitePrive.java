@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -51,15 +52,16 @@ public class AjoutActivitePrive extends AppCompatActivity
 
         final TextView lePseudo = (TextView)findViewById(R.id.pseudo);
         Bundle b = getIntent().getExtras();
-        idActivite = (String) b.get("idActivite");
+        idActivite = (String) b.get("id");
 
         navigationView.setNavigationItemSelectedListener(this);
-        ((Button) findViewById(R.id.button2)).setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.button3)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String pseudo = (String)lePseudo.getText().toString();
+                //Log.e("PSeudo---->",pseudo);
                 int activite = Integer.parseInt(idActivite);
-
+                //Log.e("idActivite---->",activite+"");
                 String format = "dd/MM/yy H:mm:ss";
                 java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
                 java.util.Date dateJava = new java.util.Date();
@@ -74,6 +76,7 @@ public class AjoutActivitePrive extends AppCompatActivity
     private void partage(String pseudo, int activite, String date)
     {
         String urlActivite = "Android/ajoutMembrePrive.php?utilisateur="+pseudo+"&activite="+activite+"&date="+date;
+        Log.e("URL : ", urlActivite);
         AccesBD activiteAcces = new AccesBD();
         activiteAcces.execute(urlActivite);
         try {
