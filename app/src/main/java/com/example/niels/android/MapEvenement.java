@@ -7,18 +7,15 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +23,8 @@ import android.widget.Toast;
 import com.example.niels.Code.CommentaireAdapter;
 import com.example.niels.Code.Commentaires;
 import com.example.niels.Code.getExemple;
+import com.example.niels.bdd.BddUser;
+import com.example.niels.bdd.User;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -38,7 +37,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.CookieHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -56,6 +54,7 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
     String rep = null;
     String idActivite;
     String idUser;
+    String utilisateurConnecte;
     Intent intent = null;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
@@ -87,6 +86,11 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
 
                 Bundle b = getIntent().getExtras();
                // paramEve = (ArrayList<String>)b.get("array");
+
+                BddUser bd = new BddUser(this);
+                bd.open();
+                User u = bd.getUserByIsConnected();
+                utilisateurConnecte = u.get_pseudo();
 
                 TextView nom = (TextView) findViewById(R.id.textView);/*
                 String desc = (TextView) findViewById(R.id.textView2);
@@ -133,7 +137,7 @@ public class MapEvenement extends FragmentActivity implements OnMapReadyCallback
                     @Override
                     public void onClick(View v) {
                         intent = new Intent(MapEvenement.this, AjoutCommentaire.class);
-                        intent.putExtra("idUser",idUser);
+                        intent.putExtra("idUser",utilisateurConnecte);
                         intent.putExtra("idActivite",idActivite);
                         startActivity(intent);
                     }

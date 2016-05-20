@@ -77,7 +77,7 @@
     <string name="face">Portrait</string>
 
     <string name="commentaires">Commentaires</string>
-    <string name="no_comment">L\'événement n\'à pas encore de commentaires.</string>
+    <string name="no_comment">L\'événement n\'a pas encore de commentaires.</string>
     <string name="your_comment">Votre commentaire : </string>
     <string name="btn_pageComm">Ajouter un commentaire</string>
     <string name="btn_addCom">Commenter</string>
