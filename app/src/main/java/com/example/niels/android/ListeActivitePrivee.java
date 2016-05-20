@@ -105,7 +105,7 @@ public class ListeActivitePrivee extends AppCompatActivity
             if (networkInfo != null && networkInfo.isConnected()) {
 
 
-                mListView = (ListView) findViewById(R.id.liste_evenements);
+                mListView = (ListView) findViewById(R.id.listeActivitePrivee);
                 ScrollView liste = (ScrollView) findViewById(R.id.scrollView);
 
                 ArrayList<String> evenements = new ArrayList<String>();
