@@ -60,6 +60,7 @@ public class ListeEvenements extends AppCompatActivity
     String date = "";
     String idUser = "";
     String idA = "";
+    String valeur;
     Hashtable<Integer, ArrayList<String>> contenueEvenement = new Hashtable<Integer, ArrayList<String>>();
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
@@ -70,14 +71,6 @@ public class ListeEvenements extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -139,7 +132,7 @@ public class ListeEvenements extends AppCompatActivity
                 }
 
                 String response = rep;
-                String valeur = null;
+                valeur = null;
 
 
                 try {
@@ -190,21 +183,22 @@ public class ListeEvenements extends AppCompatActivity
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-
-                        Log.e("LOG---->", contenueEvenement.get(position).toString());
-                        ArrayList<String>liste = contenueEvenement.get(position);
-                        Intent intent = new Intent();
-                        //Log.e("LOG####",liste.get((position ) * 8) + 4+" "+liste.get((position ) * 8) + 2+)
-                        //8 parcequ'il y a 8 paramètres par evenement donc position*8 permet de se placer au debut de la liste de l'evenement position
-                        intent.setClass(ListeEvenements.this, MapEvenement.class);
-                        intent.putExtra("idActivite", idA);
-                        intent.putExtra("nom", liste.get((((position) * 8) + 4)));
-                        intent.putExtra("idUser", liste.get((((position) * 8) + 1)));
-                        intent.putExtra("desc", liste.get((((position ) * 8) + 5)));
-                        intent.putExtra("date", liste.get((((position ) * 8) + 7)));
-                        intent.putExtra("lat", liste.get((((position ) * 8) + 2)));
-                        intent.putExtra("lon", liste.get((((position ) * 8) + 3)));
-                        startActivity(intent);
+                        if(valeur.equals("1")) {
+                            Log.e("LOG---->", contenueEvenement.get(position).toString());
+                            ArrayList<String> liste = contenueEvenement.get(position);
+                            Intent intent = new Intent();
+                            //Log.e("LOG####",liste.get((position ) * 8) + 4+" "+liste.get((position ) * 8) + 2+)
+                            //8 parcequ'il y a 8 paramètres par evenement donc position*8 permet de se placer au debut de la liste de l'evenement position
+                            intent.setClass(ListeEvenements.this, MapEvenement.class);
+                            intent.putExtra("idActivite", idA);
+                            intent.putExtra("nom", liste.get((((position) * 8) + 4)));
+                            intent.putExtra("idUser", liste.get((((position) * 8) + 1)));
+                            intent.putExtra("desc", liste.get((((position) * 8) + 5)));
+                            intent.putExtra("date", liste.get((((position) * 8) + 7)));
+                            intent.putExtra("lat", liste.get((((position) * 8) + 2)));
+                            intent.putExtra("lon", liste.get((((position) * 8) + 3)));
+                            startActivity(intent);
+                        }
                     }
                 });
 

@@ -251,11 +251,14 @@ public class AutresActiviteFragment extends ListFragment {
             // the dialog fragment with selected text.
             Intent intent = new Intent();
             intent.setClass(getActivity(), DetailsAutresA.class);
-            String[] list = listActivite.get(index);
-            intent.putExtra("list", list);
-            intent.putExtra("index", index);
-            startActivity(intent);
+            if(!listActivite.isEmpty()) {
+                String[] list = listActivite.get(index);
+                intent.putExtra("list", list);
+                intent.putExtra("index", index);
+                startActivity(intent);
+            }
         }
+
     }
 
 

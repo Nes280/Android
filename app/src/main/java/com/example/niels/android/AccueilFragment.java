@@ -120,7 +120,7 @@ public class AccueilFragment extends ListFragment {
             valeur = jsonObject.getString("state");
             //Log.e("resultat json membre" , valeur);
             if(valeur.equals("0")){
-                Toast.makeText(getActivity(), R.string.pasActivite, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(), R.string.pasActivite, Toast.LENGTH_LONG).show();
                 String chaine = getString(R.string.pasActivite);
                 listAdapter.add(chaine);
             }
@@ -256,10 +256,12 @@ public class AccueilFragment extends ListFragment {
             // the dialog fragment with selected text.
             Intent intent = new Intent();
             intent.setClass(getActivity(), DetailsActivity.class);
-            String[] list = listActivite.get(index);
-            intent.putExtra("list", list);
-            intent.putExtra("index", index);
-            startActivity(intent);
+            if(!listActivite.isEmpty()){
+                String[] list = listActivite.get(index);
+                intent.putExtra("list", list);
+                intent.putExtra("index", index);
+                startActivity(intent);
+            }
         }
     }
 

@@ -65,6 +65,11 @@
 
     <string name="title_activity_modification__profil">Modification du profil</string>
     <string name="title_activity_changement_password">Changement du mot de passe</string>
+    <string name="title_activity_liste_evenements">Liste d\'événements</string>
+    <string name="title_activity_autres_activites">Autres activités</string>
+    <string name="title_activity_ajout_commentaire">Ajout de commentaire</string>
+
+
 
     <string name="buttonChanger">Changer</string>
     <string name="newPassword">Nouveau mot de passe</string>

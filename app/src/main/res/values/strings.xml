@@ -75,17 +75,17 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_autres_activites">AutresActivites</string>
+    <string name="title_activity_autres_activites">Other activites</string>
     <string name="title_activity_details_event">Map</string>
     <string name="title_activity_details_evenement">DetailsEvenement</string>
     <string name="title_activity_map_event">MapEvent</string>
-    <string name="title_activity_liste_evenements">ListeEvenements</string>
+    <string name="title_activity_liste_evenements">List of Events</string>
 
     <string name="face">face</string>
 
     <string name="commentaires">Comments</string>
     <string name="no_comment">The event haven\'t yet any comments.</string>
-    <string name="title_activity_ajout_commentaire">AjoutCommentaire</string>
+    <string name="title_activity_ajout_commentaire">Add comment</string>
     <string name="your_comment">Your comment : </string>
     <string name="btn_addCom">Comment</string>
     <string name="btn_pageComm">Add a comment</string>

@@ -13,6 +13,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -48,15 +49,6 @@ public class AjoutCommentaire extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -65,6 +57,21 @@ public class AjoutCommentaire extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //récuperation du pseudo
+        BddUser db = new BddUser(AjoutCommentaire.this);
+        db.open();
+        User u = db.getUserByIsConnected();
+
+        //Mettre le pseudo dans le menu
+        View v =navigationView.getHeaderView(0);
+        TextView pseudo = (TextView) v.findViewById(R.id.pseudoTet);
+        //tx.setText("test");
+        //Log.e("pseudoUser", u.get_pseudo() + "");
+        pseudo.setText(u.get_pseudo());
+        pseudo.setTextSize(20);
+        pseudo.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        db.close();
 
         //Demande de permission
         int permissionCheck = ContextCompat.checkSelfPermission(AjoutCommentaire.this,
