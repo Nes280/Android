@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android</string>
+    <string name="app_name">NiEls</string>
 
     <string name="title_activity_main">Home</string>
     <string name="title_activity_inscription">Inscription</string>
@@ -27,6 +27,7 @@
     <string name="verifConnexionPassword">Bad information</string>
     <string name="verifNomEvenement">The name already exists for this activity</string>
     <string name="verifActivationLocalisation">Turn location</string>
+    <string name="verifAncienPassword">Old password wrong</string>
     <string name="demandeDeConnexion">You must connect to internet</string>
     <string name="pasActivite">You have no activity</string>
 
@@ -44,22 +45,48 @@
     <string name="radio_private">Private</string>
     <string name="name_activity">Activity name</string>
     <string name="description">Description</string>
+    <string name="date">Date</string>
+    <string name="type">Publication type</string>
     <string name="send_activity">Create</string>
     <string name="empty_field_activity">All field must be completed.</string>
     <string name="success_activity">Activity have been crated.</string>
     <string name="name_already_exist_activity">Name already exist.</string>
+    <string name="show_events">Show events</string>
+    <string name="add_event">Add new event</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_accueil__utilisateur">Accueil_Utilisateur</string>
     <string name="title_activity_ajout_evenement">New event</string>
 
-    <string name="name_evenement">Evenement name</string>
+    <string name="name_evenement">Event name</string>
+    <string name="photo">Feature not available for the moment.</string>
+    <string name="no_event">This activity haven\'t yet any events.</string>
+    <string name="btn_addEve">Add an event </string>
     <string name="title_activity_modification__profil">Edit profil</string>
     <string name="title_activity_changement_password">Change password</string>
 
     <string name="buttonChanger">Change</string>
     <string name="newPassword">New password</string>
     <string name="oldPassword">Old password</string>
+    <string name="title_activity_liste_evenement">ListeEvenement</string>
+    <string name="location_event">Location of the event</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_autres_activites">AutresActivites</string>
+    <string name="title_activity_details_event">Map</string>
+    <string name="title_activity_details_evenement">DetailsEvenement</string>
+    <string name="title_activity_map_event">MapEvent</string>
+    <string name="title_activity_liste_evenements">ListeEvenements</string>
+
+    <string name="face">face</string>
+
+    <string name="commentaires">Comments</string>
+    <string name="no_comment">The event haven\'t yet any comments.</string>
+    <string name="title_activity_ajout_commentaire">AjoutCommentaire</string>
+    <string name="your_comment">Your comment : </string>
+    <string name="btn_addCom">Comment</string>
+    <string name="btn_pageComm">Add a comment</string>
 
 </resources>

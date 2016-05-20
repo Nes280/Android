@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Android</string>
+    <string name="app_name">NiEls</string>
 
     <string name="title_activity_main">Accueil</string>
     <string name="title_activity_inscription">Inscription</string>
@@ -28,6 +28,7 @@
     <string name="verifConnexionPassword">Mauvaises informations</string>
     <string name="verifNomEvenement">Le nom existe déjà pour cette activité</string>
     <string name="verifActivationLocalisation">Activez la localisation</string>
+    <string name="verifAncienPassword">Ancien mot de passe mauvais</string>
     <string name="demandeDeConnexion">Vous devez vous connecter à internet</string>
     <string name="pasActivite">Vous n\'avez pas d\'activité</string>
 
@@ -43,15 +44,22 @@
     <string name="title_activity_ajout_activite">Nouvelle activité</string>
     <string name="radio_public">Publique</string>
     <string name="radio_private">Privée</string>
+    <string name="date">Date</string>
+    <string name="type">Type de publication</string>
     <string name="name_activity">Nom de l\'activité</string>
     <string name="send_activity">Créer</string>
     <string name="empty_field_activity">Tous les champs doivent être remplis.</string>
     <string name="success_activity">L\'activitée a bien été créée.</string>
     <string name="name_already_exist_activity">Le nom existe déjà.</string>
+    <string name="show_events">Voir les événements</string>
+    <string name="add_event">Ajouter un événement</string>
 
     <string name="name_evenement">Nom de l\'évenement</string>
-
+    <string name="no_event">Cette activité n\'a pas encore d\'événements.</string>
+    <string name="photo">Fonctionnalité non disponible pour le moment.</string>
+    <string name="btn_addEve">Ajouter un événement</string>
     <string name="title_activity_ajout_evenement">Nouvel événement</string>
+    <string name="location_event">Lieu de l\'événement</string>
 
     <string name="title_activity_modification__profil">Modification du profil</string>
     <string name="title_activity_changement_password">Changement du mot de passe</string>
@@ -59,10 +67,13 @@
     <string name="buttonChanger">Changer</string>
     <string name="newPassword">Nouveau mot de passe</string>
     <string name="oldPassword">Ancien mot de passe</string>
+    <string name="face">Portrait</string>
 
-
-
-
+    <string name="commentaires">Commentaires</string>
+    <string name="no_comment">L\'événement n\'à pas encore de commentaires.</string>
+    <string name="your_comment">Votre commentaire : </string>
+    <string name="btn_pageComm">Ajouter un commentaire</string>
+    <string name="btn_addCom">Commenter</string>
 
 
 </resources>

@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,17 +47,17 @@ public class AccueilFragment extends ListFragment {
     boolean mDualPane;
     int mCurCheckPosition = 0;
     private ArrayAdapter<String> listAdapter ;
+    private ArrayList<String[]> listActivite;
     String rep = null;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        listActivite = new ArrayList<String[]>();
 
-        //Lecture de la base de données pour avoir les activités de l'utilisateur
         String[] contact = new String[] {};
         ArrayList<String> contactList = new ArrayList<String>();
         contactList.addAll(Arrays.asList(contact));
-
         listAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1, contactList);
 
         //Connexion à la base de données
@@ -151,12 +152,20 @@ public class AccueilFragment extends ListFragment {
                     JSONObject jsonActivite = new JSONObject(rep);
                     valeur = jsonActivite.getString("state");
                     JSONArray jsonActiviteInfo = jsonActivite.getJSONArray("activite");
-                    Log.e("obNomActivite", jsonActiviteInfo + "");
+                    //Log.e("obNomActivite", jsonActiviteInfo + "");
 
-                    JSONObject objNomActivite = jsonActiviteInfo.getJSONObject(0);
-                    Log.e("obNomActivite", objNomActivite + "");
-                    String nomActivite = objNomActivite.getString("nom activite");
+                    JSONObject objMonActivite = jsonActiviteInfo.getJSONObject(0);
+                    //Log.e("obNomActivite", objNomActivite + "");
+                    String nomActivite = objMonActivite.getString("nom activite");
+                    String id = objMonActivite.getString("id activite");
+                    String description = objMonActivite.getString("description");
+                    String date = objMonActivite.getString("date");
+                    String type = objMonActivite.getString("type");
+                    String  prop = objMonActivite.getString("id utilisateur");
+
                     listAdapter.add(nomActivite);
+                    String liste[] = {id, nomActivite, description, date, type, prop};
+                    listActivite.add(liste); ;
 
                 }
                 //listAdapter.add(chaine);
@@ -192,6 +201,7 @@ public class AccueilFragment extends ListFragment {
             // Make sure our UI is in the correct state.
             showDetails(mCurCheckPosition);
         }
+
     }
 
     @Override
@@ -223,20 +233,22 @@ public class AccueilFragment extends ListFragment {
             // Check what fragment is currently shown, replace if needed.
             DetailsFragment details = (DetailsFragment)
                     getFragmentManager().findFragmentById(R.id.detail);
-            if (details == null || details.getShownIndex() != index) {
-                // Make new fragment to show this selection.
-                details = DetailsFragment.newInstance(index);
+            if (details == null || details.getShownId() != index) {
 
-                // Execute a transaction, replacing any existing fragment
-                // with this one inside the frame.
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                if (index == 0) {
+                // Make new fragment to show this selection
+                if (!listActivite.isEmpty()) {
+                    String[] list = listActivite.get(index);
+                    details = DetailsFragment.newInstance(list, index);
+
+                    // Execute a transaction, replacing any existing fragment
+                    // with this one inside the frame.
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+
                     ft.replace(R.id.details, details);
-                } else {
-                    ft.replace(R.id.details, details);
+
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                    ft.commit();
                 }
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
             }
 
         } else {
@@ -244,6 +256,8 @@ public class AccueilFragment extends ListFragment {
             // the dialog fragment with selected text.
             Intent intent = new Intent();
             intent.setClass(getActivity(), DetailsActivity.class);
+            String[] list = listActivite.get(index);
+            intent.putExtra("list", list);
             intent.putExtra("index", index);
             startActivity(intent);
         }
