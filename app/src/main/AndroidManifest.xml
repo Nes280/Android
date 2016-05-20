@@ -100,6 +100,10 @@
         <activity
             android:name=".ListeActivitePrivee"
             android:label="@string/title_activity_liste_activite_privee"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AjoutActivitePrive"
+            android:label="@string/title_activity_ajout_activite_prive"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

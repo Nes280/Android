@@ -85,6 +85,7 @@
     <string name="autresActivites">Vous êtes membre de toutes les activités publiques</string>
     <string name="gererActivitePrivee">Gerer mes activités privées</string>
 
-
+    <string name="partage">Entrez le pseudo de l\'utilisateur avec qui vous voulez partager votre activité privée.</string>
+    <string name="btn_partage">Partager</string>
 
 </resources>
