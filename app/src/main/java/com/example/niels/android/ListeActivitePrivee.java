@@ -145,8 +145,7 @@ public class ListeActivitePrivee extends AppCompatActivity
 
                             evenements.add("\n" + nomA.toUpperCase() + "\n\n" +
                                             getString(R.string.description) + " : " + description + "\n" +
-                                            getString(R.string.date) + " : " + date + "\n" +
-                                            getString(R.string.photo) + "\n"
+                                            getString(R.string.date) + " : " + date + "\n"
                             );
 
                             paramEve.add(idA);

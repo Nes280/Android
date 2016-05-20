@@ -100,14 +100,14 @@ public class AjoutCommentaire extends AppCompatActivity
                     @Override
                     public void onClick(View v) {
                         String contenue = (String)leCommentaire.getText().toString();
-                        int user = Integer.parseInt(idUser);
+
                         int activite = Integer.parseInt(idActivite);
 
                         String format = "dd/MM/yy H:mm:ss";
                         java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
                         java.util.Date dateJava = new java.util.Date();
 
-                        addCommentaite(contenue,user,activite, formater.format(dateJava));
+                        addCommentaite(contenue,idUser,activite, formater.format(dateJava));
                         /*
                         intent = new Intent(AjoutCommentaire.this, AjoutCommentaire.class);
                         intent.putExtra("idUser", idUser);
@@ -149,7 +149,7 @@ public class AjoutCommentaire extends AppCompatActivity
         return (res == PackageManager.PERMISSION_GRANTED);
     }
 
-    private void addCommentaite(String commentaire, int user, int activite, String date)
+    private void addCommentaite(String commentaire, String user, int activite, String date)
     {
         String urlActivite = "/Android/ajoutCommentaire.php?utilisateur="+user+"&activite="+activite+"&commentaire="+commentaire+"&date="+date;
         AccesBD activiteAcces = new AccesBD();
