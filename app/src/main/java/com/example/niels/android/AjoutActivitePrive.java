@@ -75,7 +75,7 @@ public class AjoutActivitePrive extends AppCompatActivity
 
     private void partage(String pseudo, int activite, String date)
     {
-        String urlActivite = "Android/ajoutMembrePrive.php?utilisateur="+pseudo+"&activite="+activite+"&date="+date;
+        String urlActivite = "/Android/ajoutMembrePrive.php?utilisateur="+pseudo+"&activite="+activite+"&date="+date;
         Log.e("URL : ", urlActivite);
         AccesBD activiteAcces = new AccesBD();
         activiteAcces.execute(urlActivite);
