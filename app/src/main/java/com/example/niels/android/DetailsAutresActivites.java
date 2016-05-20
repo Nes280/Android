@@ -94,9 +94,7 @@ public class DetailsAutresActivites extends Fragment {
         if (list[4].equals("1")) typePublication = getString(R.string.radio_private)+"";
         else typePublication = getString(R.string.radio_public)+"";
         type.setText(getString(R.string.type)+": "+typePublication);
-        //A changer
-        //ajout.setText(getString(R.string.add_event));
-        ajout.setText("Rejoindre");
+        ajout.setText(getString(R.string.rejoindre));
 
         ajout.setOnClickListener(new View.OnClickListener() {
             @Override
