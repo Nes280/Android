@@ -108,8 +108,8 @@ public class AutresActiviteFragment extends ListFragment {
             valeur = jsonObject.getString("state");
             //Log.e("resultat json membre" , valeur);
             if(valeur.equals("0")){
-                Toast.makeText(getActivity(), R.string.pasActivite, Toast.LENGTH_LONG).show();
-                String chaine = getString(R.string.pasActivite);
+                //Toast.makeText(getActivity(), R.string.pasActivite, Toast.LENGTH_LONG).show();
+                String chaine = getString(R.string.autresActivites);
                 listAdapter.add(chaine);
             }
             else{

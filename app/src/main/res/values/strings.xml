@@ -90,4 +90,6 @@
     <string name="btn_addCom">Comment</string>
     <string name="btn_pageComm">Add a comment</string>
 
+    <string name="autresActivites">You are member in all the public activities</string>
+
 </resources>
