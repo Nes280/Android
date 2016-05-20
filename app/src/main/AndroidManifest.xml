@@ -35,6 +35,10 @@
             android:label="@string/title_activity_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".DetailsAutresA"
+            android:label="@string/title_activity_details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".Accueil_Utilisateur"
             android:label="@string/user_home"
             android:theme="@style/AppTheme.NoActionBar" />

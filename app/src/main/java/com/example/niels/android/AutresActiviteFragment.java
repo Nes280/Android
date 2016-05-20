@@ -229,25 +229,28 @@ public class AutresActiviteFragment extends ListFragment {
                     getFragmentManager().findFragmentById(R.id.detail);
             if (details == null || details.getShownId() != index) {
 
-                // Make new fragment to show this selection
-                String[] list = listActivite.get(index);
-                details = DetailsAutresActivites.newInstance(list, index);
+                if(!listActivite.isEmpty()){
+                    // Make new fragment to show this selection
+                    String[] list = listActivite.get(index);
+                    details = DetailsAutresActivites.newInstance(list, index);
 
-                // Execute a transaction, replacing any existing fragment
-                // with this one inside the frame.
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    // Execute a transaction, replacing any existing fragment
+                    // with this one inside the frame.
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-                ft.replace(R.id.details, details);
+                    ft.replace(R.id.details, details);
 
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                    ft.commit();
+                }
+
             }
 
         } else {
             // Otherwise we need to launch a new activity to display
             // the dialog fragment with selected text.
             Intent intent = new Intent();
-            intent.setClass(getActivity(), DetailsAutresActivites.class);
+            intent.setClass(getActivity(), DetailsAutresA.class);
             String[] list = listActivite.get(index);
             intent.putExtra("list", list);
             intent.putExtra("index", index);
