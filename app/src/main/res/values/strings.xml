@@ -98,4 +98,7 @@
     <string name="partage">Put the name of the user with whom you want to share your private activity.</string>
     <string name="btn_partage">Share</string>
 
+    <string name="pasActivitePrivee">You have not private activity</string>
+
+
 </resources>

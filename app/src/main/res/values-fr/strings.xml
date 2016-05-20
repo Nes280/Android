@@ -87,5 +87,7 @@
 
     <string name="partage">Entrez le pseudo de l\'utilisateur avec qui vous voulez partager votre activité privée.</string>
     <string name="btn_partage">Partager</string>
+    
+    <string name="pasActivitePrivee">Vous n\'avez pas d\'activité privée</string>
 
 </resources>
