@@ -208,6 +208,11 @@ public class AjoutCommentaire extends AppCompatActivity
             Intent intent = new Intent(AjoutCommentaire.this, Accueil_Utilisateur.class);
             startActivity(intent);
         }
+        else if(id == R.id.gererActivitePrivee) {
+            Intent intent = new Intent(AjoutCommentaire.this, ListeActivitePrivee.class);
+            startActivity(intent);
+
+        }
         else if (id == R.id.modifProfil) {
             Intent intent = new Intent(AjoutCommentaire.this, Modification_Profil.class);
             startActivity(intent);

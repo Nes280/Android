@@ -214,7 +214,12 @@ public class ChangementPassword extends AppCompatActivity
             Intent intent = new Intent(ChangementPassword.this, AjoutActivite.class);
             startActivity(intent);
 
-        } else if (id == R.id.modifProfil) {
+        } else if(id == R.id.gererActivitePrivee) {
+            Intent intent = new Intent(ChangementPassword.this, ListeActivitePrivee.class);
+            startActivity(intent);
+
+        }
+        else if (id == R.id.modifProfil) {
             Intent intent = new Intent(ChangementPassword.this, Modification_Profil.class);
             startActivity(intent);
         }

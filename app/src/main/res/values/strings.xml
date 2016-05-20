@@ -91,5 +91,9 @@
     <string name="btn_pageComm">Add a comment</string>
 
     <string name="autresActivites">You are member in all the public activities</string>
+    <string name="title_activity_liste_activite_privee">ListeActivitePrivee</string>
+    <string name="gererActivitePrivee">Manage private activities</string>
+
+    Manage private activities
 
 </resources>

@@ -137,6 +137,10 @@ public class Accueil_Utilisateur extends AppCompatActivity
             Intent intent = new Intent(Accueil_Utilisateur.this, AjoutActivite.class);
             startActivity(intent);
 
+        }else if(id == R.id.gererActivitePrivee) {
+            Intent intent = new Intent(Accueil_Utilisateur.this, ListeActivitePrivee.class);
+            startActivity(intent);
+
         } else if (id == R.id.modifProfil) {
             Intent intent = new Intent(Accueil_Utilisateur.this, Modification_Profil.class);
             startActivity(intent);

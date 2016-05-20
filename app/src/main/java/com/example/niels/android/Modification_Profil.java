@@ -189,7 +189,11 @@ public class Modification_Profil extends AppCompatActivity
             Intent intent = new Intent(Modification_Profil.this, AjoutActivite.class);
             startActivity(intent);
 
-        } else if (id == R.id.modifProfil) {
+        } else if(id == R.id.gererActivitePrivee) {
+            Intent intent = new Intent(Modification_Profil.this, ListeActivitePrivee.class);
+            startActivity(intent);
+
+        }else if (id == R.id.modifProfil) {
             Intent intent = new Intent(Modification_Profil.this, Modification_Profil.class);
             startActivity(intent);
         }

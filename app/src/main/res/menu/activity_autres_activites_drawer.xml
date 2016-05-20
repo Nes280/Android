@@ -21,6 +21,9 @@
     <item android:title="Profil">
         <menu>
             <item
+                android:id="@+id/gererActivitePrivee"
+                android:title="@string/gererActivitePrivee" />
+            <item
                 android:id="@+id/modifProfil"
                 android:title="@string/menuModifProfil" />
             <item

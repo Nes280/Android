@@ -280,6 +280,11 @@ public class AjoutActivite extends AppCompatActivity
             Intent intent = new Intent(AjoutActivite.this, Accueil_Utilisateur.class);
             startActivity(intent);
         }
+        else if(id == R.id.gererActivitePrivee) {
+            Intent intent = new Intent(AjoutActivite.this, ListeActivitePrivee.class);
+            startActivity(intent);
+
+        }
         else if (id == R.id.modifProfil) {
             Intent intent = new Intent(AjoutActivite.this, Modification_Profil.class);
             startActivity(intent);

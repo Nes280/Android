@@ -336,7 +336,13 @@ public class AjoutEvenement extends AppCompatActivity
             Intent intent = new Intent(AjoutEvenement.this, AjoutActivite.class);
             startActivity(intent);
 
-        } else if (id == R.id.modifProfil) {
+        }
+        else if(id == R.id.gererActivitePrivee) {
+            Intent intent = new Intent(AjoutEvenement.this, ListeActivitePrivee.class);
+            startActivity(intent);
+
+        }
+        else if (id == R.id.modifProfil) {
             Intent intent = new Intent(AjoutEvenement.this, Modification_Profil.class);
             startActivity(intent);
         }
