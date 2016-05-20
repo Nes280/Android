@@ -91,9 +91,9 @@
     <string name="btn_pageComm">Add a comment</string>
 
     <string name="autresActivites">You are member in all the public activities</string>
-    <string name="title_activity_liste_activite_privee">ListeActivitePrivee</string>
+    <string name="title_activity_liste_activite_privee">List of private activities</string>
     <string name="gererActivitePrivee">Manage private activities</string>
-    <string name="title_activity_ajout_activite_prive">AjoutActivitePrive</string>
+    <string name="title_activity_ajout_activite_prive">Adding member to private activity</string>
 
     <string name="partage">Put the name of the user with whom you want to share your private activity.</string>
     <string name="btn_partage">Share</string>

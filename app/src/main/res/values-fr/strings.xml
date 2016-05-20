@@ -90,4 +90,8 @@
     
     <string name="pasActivitePrivee">Vous n\'avez pas d\'activité privée</string>
 
+    <string name="title_activity_liste_activite_privee">Liste des activités privées</string>
+    <string name="title_activity_ajout_activite_prive">Ajout de membre à l\'activité privée</string>
+
+
 </resources>
